@@ -22,7 +22,7 @@ type Story = StoryObj<typeof meta>;
 // More on writing stories with args: https://storybook.js.org/docs/react/writing-stories/args
 export const Empty: Story = {
   args: {
-    items: [],
+    data: [],
   },
 };
 
@@ -31,7 +31,7 @@ import { zGatewayAddressRegistryItem } from "@/types";
 const item = zGatewayAddressRegistryItem.parse(GatewayAddressRegistryItem);
 export const OneItem: Story = {
   args: {
-    items: [item],
+    data: [item],
   },
 };
 
@@ -44,6 +44,6 @@ const garCache = zGatewayAddressRegistryCache.parse(
 const items = extractGarItems(garCache);
 export const ManyItems: Story = {
   args: {
-    items,
+    data: items,
   },
 };
