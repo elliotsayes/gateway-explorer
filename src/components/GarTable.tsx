@@ -50,6 +50,31 @@ const columns: ColumnDef<z.infer<typeof zGatewayAddressRegistryItem>>[] = [
     accessorKey: "status",
     header: "Status",
   },
+  {
+    accessorKey: "ping",
+    header: "Ping",
+    cell: (cell) => {
+      const status = cell.row.original.ping.status;
+      switch (status) {
+        case "success":
+          return (
+            <span className="text-xs font-bold text-green-400/80">{cell.row.original.ping.value}ms</span>
+          )
+        case "pending":
+          return (
+            <div className="h-2 w-2 rounded-full bg-purple-400 animate-pulse" />
+          )
+        case "error":
+          return (
+            <div className="h-2 w-2 rounded-full bg-red-500" />
+          )
+        default:
+          return (
+            <div className="h-2 w-2 rounded-full bg-gray-400" />
+          )
+      }
+    }
+  }
 ]
 
 

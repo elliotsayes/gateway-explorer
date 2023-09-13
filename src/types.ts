@@ -37,10 +37,10 @@ export const zGatewayAddressRegistryItem = z.intersection(
     ping: z.discriminatedUnion("status", [
       z.object({ status: z.literal("unknown") }),
       z.object({ status: z.literal("pending") }),
-      z.object({ status: z.literal("error"), error: z.string() }),
+      z.object({ status: z.literal("error"), error: z.string().optional() }),
       z.object({
         status: z.literal("success"),
-        data: z.number().int().nonnegative(),
+        value: z.number().int().nonnegative(),
       }),
     ]),
   }),

@@ -35,6 +35,16 @@ export const OneItem: Story = {
   },
 };
 
+import GatewayAddressRegistryItems from "../fixtures/GatewayAddressRegistryItems.json";
+import { z } from "zod";
+export const MultipleItems: Story = {
+  args: {
+    data: z
+      .array(zGatewayAddressRegistryItem)
+      .parse(GatewayAddressRegistryItems),
+  },
+};
+
 import GatewayAddressRegistryCache from "../fixtures/GatewayAddressRegistryCache.json";
 import { zGatewayAddressRegistryCache } from "@/types";
 import { extractGarItems } from "@/lib/convert";
