@@ -1,9 +1,12 @@
 import { zGatewayAddressRegistryItem } from "@/types"
 import { z } from "zod"
+import * as React from "react"
 import {
   ColumnDef,
+  SortingState,
   flexRender,
   getCoreRowModel,
+  getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table"
 import {
@@ -16,6 +19,12 @@ import {
 } from "@/components/ui/table"
 import { ColumnSelection } from "./ColumnSelection"
 import { RefreshButton } from "./RefreshButton"
+import { 
+  ArrowUpDown,
+  ArrowDown,
+  ArrowUp
+} from "lucide-react"
+import { Button } from "./ui/button"
 
 interface Props {
   data: Array<z.infer<typeof zGatewayAddressRegistryItem>>
@@ -27,10 +36,12 @@ const columns: ColumnDef<z.infer<typeof zGatewayAddressRegistryItem>>[] = [
   //   header: "ID",
   // },
   {
-    accessorKey: "operatorStake",
-    header: "Operator Stake",
+    id: "Name",
+    accessorKey: "settings.label",
+    header: "Name",
   },
   {
+    id: "Domain",
     accessorKey: "settings.fqdn",
     header: "Domain",
     cell: (cell) => {
@@ -47,10 +58,12 @@ const columns: ColumnDef<z.infer<typeof zGatewayAddressRegistryItem>>[] = [
     }
   },
   {
-    accessorKey: "status",
-    header: "Status",
+    id: "Stake",
+    accessorKey: "operatorStake",
+    header: "Stake",
   },
   {
+    id: "Ping",
     accessorKey: "ping",
     header: "Ping",
     cell: (cell) => {
@@ -73,16 +86,34 @@ const columns: ColumnDef<z.infer<typeof zGatewayAddressRegistryItem>>[] = [
             <div className="h-2 w-2 rounded-full bg-gray-400" />
           )
       }
-    }
+    },
+    sortDescFirst: false,
+    sortingFn: (a, b) => {
+      if (a.original.ping.status === "success" && b.original.ping.status === "success") {
+        return a.original.ping.value - b.original.ping.value
+      } else if (a.original.ping.status === "success" && b.original.ping.status !== "success") {
+        return -1
+      } else if (a.original.ping.status !== "success" && b.original.ping.status === "success") {
+        return 1
+      }
+      return 0
+    },
   }
 ]
 
 
 const GarTable = ({ data }: Props) => {
+  const [sorting, setSorting] = React.useState<SortingState>([])
+
   const table = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
+    onSortingChange: setSorting,
+    getSortedRowModel: getSortedRowModel(),
+    state: {
+      sorting,
+    },
   })
  
   return (
@@ -101,10 +132,31 @@ const GarTable = ({ data }: Props) => {
                     <TableHead key={header.id}>
                       {header.isPlaceholder
                         ? null
-                        : flexRender(
+                        : (
+                          header.column.getCanSort() ? (
+                            <Button
+                              variant="ghost"
+                              onClick={() => header.column.toggleSorting(header.column.getIsSorted() === "asc")}
+                            >
+                              {flexRender(
+                                header.column.columnDef.header,
+                                header.getContext()
+                              )}
+                              {header.column.getIsSorted() ? (
+                                header.column.getIsSorted() === "asc" ? (
+                                  <ArrowUp className={`ml-2 h-4 w-4`} />
+                                ) : (
+                                  <ArrowDown className={`ml-2 h-4 w-4`} />
+                                )
+                              ) : (
+                                <ArrowUpDown className={`ml-2 h-4 w-4`} />
+                              )}
+                            </Button>
+                          ) : flexRender(
                             header.column.columnDef.header,
                             header.getContext()
-                          )}
+                          )
+                        )}
                     </TableHead>
                   )
                 })}

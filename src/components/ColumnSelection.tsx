@@ -36,10 +36,10 @@ export function ColumnSelection<TData>({
         <DropdownMenuSeparator />
         {table
           .getAllColumns()
-          // .filter(
-          //   (column) =>
-          //     typeof column.accessorFn !== "undefined" && column.getCanHide()
-          // )
+          .filter(
+            (column) =>
+              typeof column.accessorFn !== "undefined" && column.getCanHide()
+          )
           .map((column) => {
             return (
               <DropdownMenuCheckboxItem
@@ -48,7 +48,7 @@ export function ColumnSelection<TData>({
                 checked={column.getIsVisible()}
                 onCheckedChange={(value) => column.toggleVisibility(!!value)}
               >
-                {column.columnDef.header?.toString() ?? column.id}
+                {column.columnDef.id}
               </DropdownMenuCheckboxItem>
             )
           })}
