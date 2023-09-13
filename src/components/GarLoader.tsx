@@ -17,7 +17,7 @@ import { pingUpdater } from '@/lib/pinger';
 const GarLoader = () => {
   const [isPinging, setIsPinging] = useState(false)
 
-  const { data, isLoading, error, refetch } = useQuery(['gar'], async () => {
+  const { data, isLoading, isFetching, error, refetch } = useQuery(['gar'], async () => {
     const fetchResult = await fetch(defaultGARCacheURL);
     const fetchJson = await fetchResult.json();
     const garItems = extractGarItems(fetchJson);
@@ -52,7 +52,7 @@ const GarLoader = () => {
         <CardContent>
           <GarTable
             data={procData}
-            isRefreshing={isLoading || isPinging}
+            isRefreshing={isLoading || isFetching || isPinging}
             onRefresh={() => {refetch()}}
             onItemSelect={() => {}}
           />
