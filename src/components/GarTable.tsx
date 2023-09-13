@@ -102,8 +102,12 @@ const columns: ColumnDef<z.infer<typeof zGatewayAddressRegistryItem>>[] = [
         return -99999
       } else if (a.original.ping.status !== "success" && b.original.ping.status === "success") {
         return 99999
+      } else if (a.original.ping.status === "pending" && b.original.ping.status !== "pending") {
+        return -99999
+      } else if (a.original.ping.status !== "pending" && b.original.ping.status === "pending") {
+        return 99999
       }
-      return 99999
+      return 0
     },
     sortUndefined: 1,
   }
