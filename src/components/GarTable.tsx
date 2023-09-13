@@ -28,6 +28,9 @@ import { Button } from "./ui/button"
 
 interface Props {
   data: Array<z.infer<typeof zGatewayAddressRegistryItem>>
+  isRefreshing: boolean
+  onRefresh: () => void
+  onItemSelect: (item: z.infer<typeof zGatewayAddressRegistryItem>) => void
 }
 
 const columns: ColumnDef<z.infer<typeof zGatewayAddressRegistryItem>>[] = [
@@ -92,17 +95,18 @@ const columns: ColumnDef<z.infer<typeof zGatewayAddressRegistryItem>>[] = [
       if (a.original.ping.status === "success" && b.original.ping.status === "success") {
         return a.original.ping.value - b.original.ping.value
       } else if (a.original.ping.status === "success" && b.original.ping.status !== "success") {
-        return -1
+        return -99999
       } else if (a.original.ping.status !== "success" && b.original.ping.status === "success") {
-        return 1
+        return 99999
       }
-      return 0
+      return 99999
     },
+    sortUndefined: 1,
   }
 ]
 
 
-const GarTable = ({ data }: Props) => {
+const GarTable = ({ data, isRefreshing, onRefresh, onItemSelect }: Props) => {
   const [sorting, setSorting] = React.useState<SortingState>([])
 
   const table = useReactTable({
@@ -118,9 +122,9 @@ const GarTable = ({ data }: Props) => {
  
   return (
     <div>
-      <div className="py-2 w-full text-right">
+      <div className="pb-2 w-full text-right">
         <ColumnSelection table={table} />
-        <RefreshButton onClick={() => {}} isRefreshing={false} className="ml-2" />
+        <RefreshButton onClick={onRefresh} isRefreshing={isRefreshing} className="ml-2" />
       </div>
       <div className="rounded-md border">
         <Table>
@@ -136,7 +140,19 @@ const GarTable = ({ data }: Props) => {
                           header.column.getCanSort() ? (
                             <Button
                               variant="ghost"
-                              onClick={() => header.column.toggleSorting(header.column.getIsSorted() === "asc")}
+                              onClick={() => {
+                                const firstDir = header.column.getFirstSortDir()
+                                const currentDir = header.column.getIsSorted()
+                                if (currentDir == false) {
+                                  header.column.toggleSorting(firstDir === "desc")
+                                } else {
+                                  if (currentDir === firstDir) {
+                                    header.column.toggleSorting(firstDir !== "desc")
+                                  } else {
+                                    header.column.clearSorting();
+                                  }
+                                }
+                              }}
                             >
                               {flexRender(
                                 header.column.columnDef.header,
@@ -169,6 +185,7 @@ const GarTable = ({ data }: Props) => {
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
+                  onClick={() => onItemSelect(row.original)}
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>

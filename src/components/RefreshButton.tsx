@@ -8,7 +8,7 @@ interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 
 const RefreshButton = ({ isRefreshing, onClick, ...props }: Props) => {
   return (
-    <Button onClick={isRefreshing ? undefined: onClick } disabled={isRefreshing} size={"icon"} {...props} >
+    <Button onClick={isRefreshing ? undefined : onClick } disabled={isRefreshing} size={"icon"} {...props} >
       <RefreshCcw className={`h-4 w-4 ${isRefreshing && 'animate-spin-ccw'}`} />
     </Button>
   );

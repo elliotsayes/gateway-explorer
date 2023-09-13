@@ -8,12 +8,16 @@ const meta = {
   component: GarTable,
   parameters: {
     // Optional parameter to center the component in the Canvas. More info: https://storybook.js.org/docs/react/configure/story-layout
-    layout: "centered",
+    layout: "fullscreen",
   },
   // This component will have an automatically generated Autodocs entry: https://storybook.js.org/docs/react/writing-docs/autodocs
   tags: ["autodocs"],
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   argTypes: {},
+  args: {
+    onItemSelect: (item: any) => console.log(item),
+    onRefresh: () => console.log("refresh"),
+  },
 } satisfies Meta<typeof GarTable>;
 
 export default meta;
@@ -23,6 +27,7 @@ type Story = StoryObj<typeof meta>;
 export const Empty: Story = {
   args: {
     data: [],
+    isRefreshing: false,
   },
 };
 
@@ -32,6 +37,7 @@ const item = zGatewayAddressRegistryItem.parse(GatewayAddressRegistryItem);
 export const OneItem: Story = {
   args: {
     data: [item],
+    isRefreshing: false,
   },
 };
 
@@ -42,6 +48,7 @@ export const MultipleItems: Story = {
     data: z
       .array(zGatewayAddressRegistryItem)
       .parse(GatewayAddressRegistryItems),
+    isRefreshing: false,
   },
 };
 
@@ -55,5 +62,6 @@ const items = extractGarItems(garCache);
 export const ManyItems: Story = {
   args: {
     data: items,
+    isRefreshing: false,
   },
 };
