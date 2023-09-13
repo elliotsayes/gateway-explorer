@@ -23,13 +23,11 @@ type Story = StoryObj<typeof meta>;
 export const Ready: Story = {
   args: {
     isRefreshing: false,
-    onClick: () => console.log("Clicked"),
   },
 };
 
 export const Refreshing: Story = {
   args: {
     isRefreshing: true,
-    onClick: () => console.log("Clicked"),
   },
 };

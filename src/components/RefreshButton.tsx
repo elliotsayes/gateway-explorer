@@ -8,7 +8,7 @@ interface Props {
 
 const RefreshButton = ({ isRefreshing, onClick }: Props) => {
   return (
-    <Button onClick={onClick} disabled={isRefreshing} size={"icon"}>
+    <Button onClick={isRefreshing ? undefined: onClick } disabled={isRefreshing} size={"icon"}>
       <RefreshCcw className={`h-4 w-4 ${isRefreshing && 'animate-spin-ccw'}`} />
     </Button>
   );
