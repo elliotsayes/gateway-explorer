@@ -32,6 +32,18 @@ const columns: ColumnDef<z.infer<typeof zGatewayAddressRegistryItem>>[] = [
   {
     accessorKey: "settings.fqdn",
     header: "Domain",
+    cell: (cell) => {
+      return (
+        <a
+          href={`${cell.row.original.link}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-blue-500 hover:underline"
+        >
+          {cell.row.original.settings.fqdn}
+        </a>
+      )
+    }
   },
   {
     accessorKey: "status",
