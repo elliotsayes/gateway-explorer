@@ -15,7 +15,7 @@ const meta = {
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   argTypes: {},
   args: {
-    onItemSelect: (item: any) => console.log(item),
+    onItemSelect: (item) => console.log(item),
     onRefresh: () => console.log("refresh"),
   },
 } satisfies Meta<typeof GarTable>;

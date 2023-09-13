@@ -69,6 +69,7 @@ const columns: ColumnDef<z.infer<typeof zGatewayAddressRegistryItem>>[] = [
     id: "Ping",
     accessorKey: "ping",
     header: "Ping",
+    size: 1,
     cell: (cell) => {
       const status = cell.row.original.ping.status;
       switch (status) {
@@ -121,10 +122,12 @@ const GarTable = ({ data, isRefreshing, onRefresh, onItemSelect }: Props) => {
   })
  
   return (
-    <div>
-      <div className="pb-2 w-full text-right">
-        <ColumnSelection table={table} />
-        <RefreshButton onClick={onRefresh} isRefreshing={isRefreshing} className="ml-2" />
+    <div className="relative">
+      <div className="absolute right-0 -top-14">
+        <div className="pb-2 flex flex-row items-end">
+          <ColumnSelection table={table} />
+          <RefreshButton onClick={onRefresh} isRefreshing={isRefreshing} className="ml-2" />
+        </div>
       </div>
       <div className="rounded-md border">
         <Table>
