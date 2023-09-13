@@ -15,11 +15,15 @@ const pingUpdater = async (
       onUpdate(newData);
 
       const url = item.link;
+      const controller = new AbortController();
+      const id = setTimeout(() => controller.abort(), 2000);
+
       const start = Date.now();
-      await fetch(url, { method: "HEAD" });
+      await fetch(url, { method: "HEAD", signal: controller.signal });
       const end = Date.now();
       const duration = end - start;
 
+      clearTimeout(id);
       newData[index].ping = { status: "success", value: duration };
       onUpdate(newData);
     } catch (e) {
