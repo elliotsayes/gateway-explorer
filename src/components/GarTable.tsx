@@ -119,6 +119,7 @@ const GarTable = ({ data, isRefreshing, onRefresh, onItemSelect }: Props) => {
     state: {
       sorting,
     },
+    
   })
  
   return (
@@ -200,7 +201,7 @@ const GarTable = ({ data, isRefreshing, onRefresh, onItemSelect }: Props) => {
             ) : (
               <TableRow>
                 <TableCell colSpan={columns.length} className="h-24 text-center">
-                  No results.
+                  Loading Gateway Address Registry...
                 </TableCell>
               </TableRow>
             )}
