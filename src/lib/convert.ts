@@ -10,7 +10,7 @@ const extractGarItems = (
   return Object.entries(garCache.gateways).map(([txId, item]) => ({
     id: txId,
     ping: { status: "unknown" },
-    link: `${item.settings.protocol}://${item.settings.fqdn}:${item.settings.port}/}`,
+    link: `${item.settings.protocol}://${item.settings.fqdn}:${item.settings.port}/`,
     ...item,
   }));
 };
