@@ -133,7 +133,7 @@ const GarTable = ({ data, isRefreshing, onRefresh, onItemSelect }: Props) => {
           <RefreshButton onClick={onRefresh} isRefreshing={isRefreshing} className="ml-2" />
         </div>
       </div>
-      <div className="rounded-md border">
+      <div className="rounded-md border mt-12 sm:mt-0">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
