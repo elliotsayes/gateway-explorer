@@ -8,7 +8,7 @@ export const zGatewayVault = z.object({
   end: z.number().int().nonnegative(),
 });
 
-export const zGatewayAddressRegistryItem = z.object({
+export const zGatewayAddressRegistryItemData = z.object({
   operatorStake: z.number().int().nonnegative(),
   vaults: z.array(zGatewayVault),
   settings: z.object({
@@ -26,6 +26,13 @@ export const zGatewayAddressRegistryItem = z.object({
 
 export const zGatewayAddressRegistryCache = z.object({
   contractTxId: z.string(),
-  gateways: z.record(zArweaveTxId, zGatewayAddressRegistryItem),
+  gateways: z.record(zArweaveTxId, zGatewayAddressRegistryItemData),
   evaluationOptions: z.object({}),
 });
+
+export const zGatewayAddressRegistryItem = z.intersection(
+  z.object({
+    id: zArweaveTxId,
+  }),
+  zGatewayAddressRegistryItemData
+);

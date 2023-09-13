@@ -1,0 +1,16 @@
+{
+  "id": "QGWqtJdLLgm2ehFWiiPzMaoFLD50CnGuzZIPEdoDRGQ",
+  "operatorStake": 250000,
+  "vaults": [{ "balance": 250000, "start": 1256694, "end": 0 }],
+  "settings": {
+    "label": "AR.IO Test",
+    "fqdn": "ar-io.dev",
+    "port": 443,
+    "protocol": "https",
+    "properties": "raJgvbFU-YAnku-WsupIdbTsqqGLQiYpGzoqk9SCVgY",
+    "note": "Test Gateway operated by PDS for the AR.IO ecosystem."
+  },
+  "status": "joined",
+  "start": 1256694,
+  "end": 0
+}
