@@ -15,6 +15,7 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { ColumnSelection } from "./ColumnSelection"
+import { RefreshButton } from "./RefreshButton"
 
 interface Props {
   data: Array<z.infer<typeof zGatewayAddressRegistryItem>>
@@ -63,6 +64,7 @@ const GarTable = ({ data }: Props) => {
     <div>
       <div className="py-2 w-full text-right">
         <ColumnSelection table={table} />
+        <RefreshButton onClick={() => {}} isRefreshing={false} className="ml-2" />
       </div>
       <div className="rounded-md border">
         <Table>
