@@ -1,0 +1,921 @@
+{
+  "contractTxId": "bLAgYxAdX2Ry-nt6aH2ixgvJXbpsEYm28NgJgyqfs-U",
+  "gateways": {
+    "QGWqtJdLLgm2ehFWiiPzMaoFLD50CnGuzZIPEdoDRGQ": {
+      "operatorStake": 250000,
+      "vaults": [{ "balance": 250000, "start": 1256694, "end": 0 }],
+      "settings": {
+        "label": "AR.IO Test",
+        "fqdn": "ar-io.dev",
+        "port": 443,
+        "protocol": "https",
+        "properties": "raJgvbFU-YAnku-WsupIdbTsqqGLQiYpGzoqk9SCVgY",
+        "note": "Test Gateway operated by PDS for the AR.IO ecosystem."
+      },
+      "status": "joined",
+      "start": 1256694,
+      "end": 0
+    },
+    "iKryOeZQMONi2965nKz528htMMN_sBcjlhc-VncoRjA": {
+      "operatorStake": 15000,
+      "vaults": [{ "balance": 15000, "start": 1256697, "end": 0 }],
+      "settings": {
+        "label": "Gatewaypie",
+        "fqdn": "gatewaypie.com",
+        "port": 443,
+        "protocol": "https",
+        "properties": "FH1aVetOoulPGqgYukj0VE0wIhDy90WiQoV3U2PeY44",
+        "note": "Test gateway part of the AR.IO Gateway Ops Video Series.  Check it on Youtube!"
+      },
+      "status": "joined",
+      "start": 1256697,
+      "end": 0
+    },
+    "wlcEhTQY_qjDKTvTDZsb53aX8wivbOJZKnhLswdueZw": {
+      "operatorStake": 25000,
+      "vaults": [{ "balance": 25000, "start": 1256698, "end": 0 }],
+      "settings": {
+        "label": "Vilenarios",
+        "fqdn": "vilenarios.com",
+        "port": 443,
+        "protocol": "https",
+        "properties": "FH1aVetOoulPGqgYukj0VE0wIhDy90WiQoV3U2PeY44",
+        "note": "A test gateway for ArDrive L2 data"
+      },
+      "status": "joined",
+      "start": 1256698,
+      "end": 0
+    },
+    "1H7WZIWhzwTH9FIcnuMqYkTsoyv1OTfGa_amvuYwrgo": {
+      "operatorStake": 100000,
+      "vaults": [{ "balance": 100000, "start": 1256738, "end": 0 }],
+      "settings": {
+        "label": "Permagate",
+        "fqdn": "permagate.io",
+        "port": 443,
+        "protocol": "https",
+        "properties": "FH1aVetOoulPGqgYukj0VE0wIhDy90WiQoV3U2PeY44",
+        "note": "Owned and operated by DTF."
+      },
+      "status": "joined",
+      "start": 1256738,
+      "end": 0
+    },
+    "88TfXbrWazBDxwzZkd2K0zEtmMR9TXMOfYQ-u1WfV2I": {
+      "operatorStake": 10000,
+      "vaults": [{ "balance": 10000, "start": 1257397, "end": 0 }],
+      "settings": {
+        "label": "g8way",
+        "fqdn": "g8way.io",
+        "port": 443,
+        "protocol": "https",
+        "properties": "",
+        "note": "Owned and operated by rakis."
+      },
+      "status": "joined",
+      "start": 1257397,
+      "end": 0
+    },
+    "36Ar8VmyC7YS7JGaep9ca2ANjLABETTpxSeA7WOV45Y": {
+      "operatorStake": 10000,
+      "vaults": [{ "balance": 10000, "start": 1257524, "end": 0 }],
+      "settings": {
+        "label": "IDeployedTooSoon",
+        "fqdn": "frostor.xyz",
+        "port": 443,
+        "protocol": "https",
+        "properties": "FH1aVetOoulPGqgYukj0VE0wIhDy90WiQoV3U2PeY44",
+        "note": "TFW you deploy too soon but now it's permanent"
+      },
+      "status": "joined",
+      "start": 1257524,
+      "end": 0
+    },
+    "xFK3NdQ1utoPQ2tXMgNKFn9oZGw0Tl4ihNo7JY5Ldnk": {
+      "operatorStake": 10000,
+      "vaults": [{ "balance": 10000, "start": 1258717, "end": 0 }],
+      "settings": {
+        "label": "megumii",
+        "fqdn": "megumii.click",
+        "port": 443,
+        "protocol": "https",
+        "properties": "FH1aVetOoulPGqgYukj0VE0wIhDy90WiQoV3U2PeY44",
+        "note": "Never gonna give you up. Never gonna let you down. Never gonna run around and desert you. Never gonna make you cry. Never gonna say goodbye. Never gonna tell a lie and hurt you"
+      },
+      "status": "joined",
+      "start": 1258717,
+      "end": 0
+    },
+    "cF0H0SKdnaDTqWKY9iJKBktTpdEWgb3GnlndE7ABv0Q": {
+      "operatorStake": 15000,
+      "vaults": [{ "balance": 15000, "start": 1258820, "end": 0 }],
+      "settings": {
+        "label": "BOB!!!!",
+        "fqdn": "bobinstein.com",
+        "port": 443,
+        "protocol": "https",
+        "properties": "FH1aVetOoulPGqgYukj0VE0wIhDy90WiQoV3U2PeY44",
+        "note": "I frequently lose internet connection, let's see how this works."
+      },
+      "status": "joined",
+      "start": 1258820,
+      "end": 0
+    },
+    "JVTzls8_vGow74rbTILPmFqIYIgvTR67MhwXqHdBBk0": {
+      "operatorStake": 10000,
+      "vaults": [{ "balance": 10000, "start": 1258849, "end": 0 }],
+      "settings": {
+        "label": "AlwaysBeDream",
+        "fqdn": "ar-dreamnode.xyz",
+        "port": 443,
+        "protocol": "https",
+        "properties": "FH1aVetOoulPGqgYukj0VE0wIhDy90WiQoV3U2PeY44",
+        "note": "Owned and operated by @0xAlwaysbedream"
+      },
+      "status": "joined",
+      "start": 1258849,
+      "end": 0
+    },
+    "pY1nE1lnn8L_OUKgQnv8H7EvWwCE6AUYtGuTng6l_TI": {
+      "operatorStake": 10000,
+      "vaults": [{ "balance": 10000, "start": 1258851, "end": 0 }],
+      "settings": {
+        "label": "dwentz",
+        "fqdn": "dwentz.xyz",
+        "port": 443,
+        "protocol": "https",
+        "properties": "FH1aVetOoulPGqgYukj0VE0wIhDy90WiQoV3U2PeY44",
+        "note": "we love root"
+      },
+      "status": "joined",
+      "start": 1258851,
+      "end": 0
+    },
+    "iap-k1HQNUtkDLDooVsjQVg0FAWtudGtVsTSFQ3nn1o": {
+      "operatorStake": 10000,
+      "vaults": [{ "balance": 10000, "start": 1258939, "end": 0 }],
+      "settings": {
+        "label": "NakedCat",
+        "fqdn": "sulapan.com",
+        "port": 443,
+        "protocol": "https",
+        "properties": "FH1aVetOoulPGqgYukj0VE0wIhDy90WiQoV3U2PeY44",
+        "note": "Owned and operated by NakedCat - founder CodeBlockLabs."
+      },
+      "status": "joined",
+      "start": 1258939,
+      "end": 0
+    },
+    "0UU6I4Ty-KNoObPEkgdhdeLycTA3NLZhX5h2W7hZH84": {
+      "operatorStake": 10000,
+      "vaults": [{ "balance": 10000, "start": 1258972, "end": 0 }],
+      "settings": {
+        "label": "MyGateway",
+        "fqdn": "ruesandora.xyz",
+        "port": 443,
+        "protocol": "https",
+        "properties": "FH1aVetOoulPGqgYukj0VE0wIhDy90WiQoV3U2PeY44",
+        "note": "This is my test gateway for the network."
+      },
+      "status": "joined",
+      "start": 1258972,
+      "end": 0
+    },
+    "WEbn8SoCyjiRBEoV2JMV_F9SjW2aICHbBxVnJfyshb4": {
+      "operatorStake": 10000,
+      "vaults": [{ "balance": 10000, "start": 1259026, "end": 0 }],
+      "settings": {
+        "label": "Roby",
+        "fqdn": "rnodescrns.online",
+        "port": 443,
+        "protocol": "https",
+        "properties": "FH1aVetOoulPGqgYukj0VE0wIhDy90WiQoV3U2PeY44",
+        "note": "The greatest liberation we can experience is from the slavery we impose on ourselves. We are slaves to ourselves and our sins.."
+      },
+      "status": "joined",
+      "start": 1259026,
+      "end": 0
+    },
+    "79ypdc-T-_s3wgfd0_OXkj9kkV5RPycKZsOoKXQ9YjI": {
+      "operatorStake": 10000,
+      "vaults": [{ "balance": 10000, "start": 1259130, "end": 0 }],
+      "settings": {
+        "label": "Kynraze",
+        "fqdn": "ar-kynraze.xyz",
+        "port": 443,
+        "protocol": "https",
+        "properties": "FH1aVetOoulPGqgYukj0VE0wIhDy90WiQoV3U2PeY44",
+        "note": "Empowering Networks"
+      },
+      "status": "joined",
+      "start": 1259130,
+      "end": 0
+    },
+    "HCE5_C0JQtOlPkaRQPO5G8BzoeKwJ1PzEiciVMKaFtI": {
+      "operatorStake": 10000,
+      "vaults": [{ "balance": 10000, "start": 1259343, "end": 0 }],
+      "settings": {
+        "label": "GateOfRivia",
+        "fqdn": "neuweltgeld.xyz",
+        "port": 443,
+        "protocol": "https",
+        "properties": "FH1aVetOoulPGqgYukj0VE0wIhDy90WiQoV3U2PeY44",
+        "note": "irlandali_turist#7300 // RuesCommunity"
+      },
+      "status": "joined",
+      "start": 1259343,
+      "end": 0
+    },
+    "5rnjtnau4XYCj0Y6otDDg3sWcm9WutWcj08IQnkuP3o": {
+      "operatorStake": 10000,
+      "vaults": [{ "balance": 10000, "start": 1259348, "end": 0 }],
+      "settings": {
+        "label": "daffatma",
+        "fqdn": "mpiicha.games",
+        "port": 443,
+        "protocol": "https",
+        "properties": "FH1aVetOoulPGqgYukj0VE0wIhDy90WiQoV3U2PeY44",
+        "note": "bismillah jp yallah"
+      },
+      "status": "joined",
+      "start": 1259348,
+      "end": 0
+    },
+    "8LljZT1Qz4_Oph3KsFm-jxoCyyp8XfPmrpqDJNP_6v0": {
+      "operatorStake": 10000,
+      "vaults": [{ "balance": 10000, "start": 1259348, "end": 0 }],
+      "settings": {
+        "label": "Semsfan",
+        "fqdn": "jajangmedia.games",
+        "port": 443,
+        "protocol": "https",
+        "properties": "FH1aVetOoulPGqgYukj0VE0wIhDy90WiQoV3U2PeY44",
+        "note": "Be Yourself and Never Surrender"
+      },
+      "status": "joined",
+      "start": 1259348,
+      "end": 0
+    },
+    "VJo6fys5bcBWqB-Lrgbe4jb-1PHq0mwFTNSA-q5OeSY": {
+      "operatorStake": 10000,
+      "vaults": [{ "balance": 10000, "start": 1259360, "end": 0 }],
+      "settings": {
+        "label": "Haruu",
+        "fqdn": "mojochoirul.works",
+        "port": 443,
+        "protocol": "https",
+        "properties": "FH1aVetOoulPGqgYukj0VE0wIhDy90WiQoV3U2PeY44",
+        "note": "Love makes a family I will always remember that."
+      },
+      "status": "joined",
+      "start": 1259360,
+      "end": 0
+    },
+    "VRJxKTG_elvmu6ph7bA2ZDvBTRXoS4NJjQCkFUuJVhM": {
+      "operatorStake": 10000,
+      "vaults": [{ "balance": 10000, "start": 1259369, "end": 0 }],
+      "settings": {
+        "label": "crbaa",
+        "fqdn": "crbaa.xyz",
+        "port": 443,
+        "protocol": "https",
+        "properties": "FH1aVetOoulPGqgYukj0VE0wIhDy90WiQoV3U2PeY44",
+        "note": "Owned and operated by DTF."
+      },
+      "status": "joined",
+      "start": 1259369,
+      "end": 0
+    },
+    "TE0zVR32RF5qFAO8K50-pEivZpM_s35HK-dex-5d-IU": {
+      "operatorStake": 10000,
+      "vaults": [{ "balance": 10000, "start": 1259407, "end": 0 }],
+      "settings": {
+        "label": "saktinaga",
+        "fqdn": "saktinaga.live",
+        "port": 443,
+        "protocol": "https",
+        "properties": "FH1aVetOoulPGqgYukj0VE0wIhDy90WiQoV3U2PeY44",
+        "note": "Long live king IVAR"
+      },
+      "status": "joined",
+      "start": 1259407,
+      "end": 0
+    },
+    "c1Cz1fTE4ak9jtTSszfv1GfIBKGYKmLDzKzuQJx3x6g": {
+      "operatorStake": 10000,
+      "vaults": [{ "balance": 10000, "start": 1259476, "end": 0 }],
+      "settings": {
+        "label": "Ahmkah",
+        "fqdn": "ahmkah.online",
+        "port": 443,
+        "protocol": "https",
+        "properties": "FH1aVetOoulPGqgYukj0VE0wIhDy90WiQoV3U2PeY44",
+        "note": "ahmkah#6535"
+      },
+      "status": "joined",
+      "start": 1259476,
+      "end": 0
+    },
+    "o1toE8Y0PgmKW0NA44uBul9XlK_2-7_345Rm3Hdj1iQ": {
+      "operatorStake": 10000,
+      "vaults": [{ "balance": 10000, "start": 1259499, "end": 0 }],
+      "settings": {
+        "label": "SPT-NODE",
+        "fqdn": "spt-node.dev",
+        "port": 443,
+        "protocol": "https",
+        "properties": "FH1aVetOoulPGqgYukj0VE0wIhDy90WiQoV3U2PeY44",
+        "note": "Join to my comunity https://t.me/ssipalingtestnet"
+      },
+      "status": "joined",
+      "start": 1259499,
+      "end": 0
+    },
+    "VEIZa_6U5a3-APyFoTmh9KE2PltALwEaaxRXAXnALUY": {
+      "operatorStake": 10000,
+      "vaults": [{ "balance": 10000, "start": 1259512, "end": 0 }],
+      "settings": {
+        "label": "cappucino.online",
+        "fqdn": "cappucino.online",
+        "port": 443,
+        "protocol": "https",
+        "properties": "FH1aVetOoulPGqgYukj0VE0wIhDy90WiQoV3U2PeY44",
+        "note": "Owned and operated by DTF."
+      },
+      "status": "joined",
+      "start": 1259512,
+      "end": 0
+    },
+    "4H1pwtd0GozlzIvmaIgWd-f8QOZ30mjdzyuYmxbLPzY": {
+      "operatorStake": 10000,
+      "vaults": [{ "balance": 10000, "start": 1259526, "end": 0 }],
+      "settings": {
+        "label": "nodeCoyote",
+        "fqdn": "nodecoyote.xyz",
+        "port": 443,
+        "protocol": "https",
+        "properties": "FH1aVetOoulPGqgYukj0VE0wIhDy90WiQoV3U2PeY44",
+        "note": "nodeCoyote"
+      },
+      "status": "joined",
+      "start": 1259526,
+      "end": 0
+    },
+    "1vi-2yNB3MaM9WDjjAtErsQrx44dzejUwFCZGcXIjhY": {
+      "operatorStake": 10000,
+      "vaults": [{ "balance": 10000, "start": 1259558, "end": 0 }],
+      "settings": {
+        "label": "Warband",
+        "fqdn": "warbandd.store",
+        "port": 443,
+        "protocol": "https",
+        "properties": "FH1aVetOoulPGqgYukj0VE0wIhDy90WiQoV3U2PeY44",
+        "note": "warband7181"
+      },
+      "status": "joined",
+      "start": 1259558,
+      "end": 0
+    },
+    "2nTw2OcM2bBeuVP3M1JqJS8aqo-sJxCc4RlqVlHO-iM": {
+      "operatorStake": 10000,
+      "vaults": [{ "balance": 10000, "start": 1259577, "end": 0 }],
+      "settings": {
+        "label": "sananne",
+        "fqdn": "sannane.online",
+        "port": 443,
+        "protocol": "https",
+        "properties": "FH1aVetOoulPGqgYukj0VE0wIhDy90WiQoV3U2PeY44",
+        "note": "Owned and operated by DTF."
+      },
+      "status": "joined",
+      "start": 1259577,
+      "end": 0
+    },
+    "mgY0EHr3h5bKtk5RsAn-vjoeVNqwhFRyPl5FHgbi5mA": {
+      "operatorStake": 10000,
+      "vaults": [{ "balance": 10000, "start": 1259729, "end": 0 }],
+      "settings": {
+        "label": "logosnodos",
+        "fqdn": "logosnodos.site",
+        "port": 443,
+        "protocol": "https",
+        "properties": "FH1aVetOoulPGqgYukj0VE0wIhDy90WiQoV3U2PeY44",
+        "note": "Trusted Validator"
+      },
+      "status": "joined",
+      "start": 1259729,
+      "end": 0
+    },
+    "osZP4D9cqeDvbVFBaEfjIxwc1QLIvRxUBRAxDIX9je8": {
+      "operatorStake": 10000,
+      "vaults": [{ "balance": 10000, "start": 1259855, "end": 0 }],
+      "settings": {
+        "label": "ruangnode",
+        "fqdn": "ruangnode.xyz",
+        "port": 443,
+        "protocol": "https",
+        "properties": "FH1aVetOoulPGqgYukj0VE0wIhDy90WiQoV3U2PeY44",
+        "note": "Empowering together, building a stronger community"
+      },
+      "status": "joined",
+      "start": 1259855,
+      "end": 0
+    },
+    "eWIndWPgafim4UZh4pKCQGrA820gbas7_flQUYfTxi4": {
+      "operatorStake": 10000,
+      "vaults": [{ "balance": 10000, "start": 1259980, "end": 0 }],
+      "settings": {
+        "label": "optimysthic",
+        "fqdn": "optimysthic.site",
+        "port": 443,
+        "protocol": "https",
+        "properties": "FH1aVetOoulPGqgYukj0VE0wIhDy90WiQoV3U2PeY44",
+        "note": "Blockchain for FUTURE - OptiMysthic"
+      },
+      "status": "joined",
+      "start": 1259980,
+      "end": 0
+    },
+    "V_SC3mtjzNHO55JuUtMGSXK_i4RL6PriSSyXcOOKhuY": {
+      "operatorStake": 10000,
+      "vaults": [{ "balance": 10000, "start": 1260005, "end": 0 }],
+      "settings": {
+        "label": "dnsarz",
+        "fqdn": "dnsarz.wtf",
+        "port": 443,
+        "protocol": "https",
+        "properties": "FH1aVetOoulPGqgYukj0VE0wIhDy90WiQoV3U2PeY44",
+        "note": "If I die before I wake I pray the LORD my soul to take."
+      },
+      "status": "joined",
+      "start": 1260005,
+      "end": 0
+    },
+    "dsLlufLlR-cuk1YzEC3e7i4T58cwL7V9xyLxfuERQbs": {
+      "operatorStake": 10000,
+      "vaults": [{ "balance": 10000, "start": 1260013, "end": 0 }],
+      "settings": {
+        "label": "wisedragon",
+        "fqdn": "anekagame.live",
+        "port": 443,
+        "protocol": "https",
+        "properties": "FH1aVetOoulPGqgYukj0VE0wIhDy90WiQoV3U2PeY44",
+        "note": "Im such wise dragon"
+      },
+      "status": "joined",
+      "start": 1260013,
+      "end": 0
+    },
+    "vJtPhDxC929FLDHXZ97gqlbjIqnFIs6ygAEbkewIFVw": {
+      "operatorStake": 10000,
+      "vaults": [{ "balance": 10000, "start": 1260019, "end": 0 }],
+      "settings": {
+        "label": "Mafisto",
+        "fqdn": "learnandhunt.me",
+        "port": 443,
+        "protocol": "https",
+        "properties": "FH1aVetOoulPGqgYukj0VE0wIhDy90WiQoV3U2PeY44",
+        "note": "Welcome to my Ario page ladies and gentleman"
+      },
+      "status": "joined",
+      "start": 1260019,
+      "end": 0
+    },
+    "EVi_DAfMpiQo6OKI8gXEXMFkKgO6UHty90SY4TBROXk": {
+      "operatorStake": 10000,
+      "vaults": [{ "balance": 10000, "start": 1260025, "end": 0 }],
+      "settings": {
+        "label": "GGWP",
+        "fqdn": "arweave.tech",
+        "port": 443,
+        "protocol": "https",
+        "properties": "FH1aVetOoulPGqgYukj0VE0wIhDy90WiQoV3U2PeY44",
+        "note": "ATM = Analyze, Try , Modify"
+      },
+      "status": "joined",
+      "start": 1260025,
+      "end": 0
+    },
+    "sURDg280uMFa8gdulQf77Rp4wQNIbBcRGN4mqaNBETs": {
+      "operatorStake": 10000,
+      "vaults": [{ "balance": 10000, "start": 1260032, "end": 0 }],
+      "settings": {
+        "label": "Saandy",
+        "fqdn": "kaelvnode.xyz",
+        "port": 443,
+        "protocol": "https",
+        "properties": "FH1aVetOoulPGqgYukj0VE0wIhDy90WiQoV3U2PeY44",
+        "note": "The way to get started is to quit talking and begin doing."
+      },
+      "status": "joined",
+      "start": 1260032,
+      "end": 0
+    },
+    "svALQ7WJ9stbp-cmL-l1BsQO7MyQ6FE04t4XepNpnJo": {
+      "operatorStake": 10000,
+      "vaults": [{ "balance": 10000, "start": 1260069, "end": 0 }],
+      "settings": {
+        "label": "Ruman",
+        "fqdn": "daffhaidar.me",
+        "port": 443,
+        "protocol": "https",
+        "properties": "FH1aVetOoulPGqgYukj0VE0wIhDy90WiQoV3U2PeY44",
+        "note": "Dont force yourself to be perfect"
+      },
+      "status": "joined",
+      "start": 1260069,
+      "end": 0
+    },
+    "1Lo75DNzCl9GOg6kKbv1gT0aIyywpHIegzUilDC9sN4": {
+      "operatorStake": 10000,
+      "vaults": [{ "balance": 10000, "start": 1260076, "end": 0 }],
+      "settings": {
+        "label": "Commissar",
+        "fqdn": "commissar.xyz",
+        "port": 443,
+        "protocol": "https",
+        "properties": "FH1aVetOoulPGqgYukj0VE0wIhDy90WiQoV3U2PeY44",
+        "note": "aykt00 -  Rues Community"
+      },
+      "status": "joined",
+      "start": 1260076,
+      "end": 0
+    },
+    "wcKWnmTSPiZcSmcXzY6vgKeWqIweANJGYMwpObYPzR4": {
+      "operatorStake": 10000,
+      "vaults": [{ "balance": 10000, "start": 1260094, "end": 0 }],
+      "settings": {
+        "label": "SODA",
+        "fqdn": "tuga5.tech",
+        "port": 443,
+        "protocol": "https",
+        "properties": "FH1aVetOoulPGqgYukj0VE0wIhDy90WiQoV3U2PeY44",
+        "note": "Owned and operated by SODA."
+      },
+      "status": "joined",
+      "start": 1260094,
+      "end": 0
+    },
+    "R3M-B9MxQroHoAzY7-Xeikxit2-s6f3WY927CgvJsh8": {
+      "operatorStake": 10000,
+      "vaults": [{ "balance": 10000, "start": 1260094, "end": 0 }],
+      "settings": {
+        "label": "joekarim",
+        "fqdn": "diafora.site",
+        "port": 443,
+        "protocol": "https",
+        "properties": "FH1aVetOoulPGqgYukj0VE0wIhDy90WiQoV3U2PeY44",
+        "note": "Owned and operated by JoeKarim."
+      },
+      "status": "joined",
+      "start": 1260094,
+      "end": 0
+    },
+    "Rn4OrGl3mOJO5tceOH8z84__7jmb8AAkEkxqfqGFm6w": {
+      "operatorStake": 10000,
+      "vaults": [{ "balance": 10000, "start": 1260095, "end": 0 }],
+      "settings": {
+        "label": "Azxx",
+        "fqdn": "azxx.xyz",
+        "port": 443,
+        "protocol": "https",
+        "properties": "FH1aVetOoulPGqgYukj0VE0wIhDy90WiQoV3U2PeY44",
+        "note": "Sat Set Error."
+      },
+      "status": "joined",
+      "start": 1260095,
+      "end": 0
+    },
+    "YcPEBPK-oS5IUxtVgICcl3DdfhfVJfui5LkBss805SQ": {
+      "operatorStake": 10000,
+      "vaults": [{ "balance": 10000, "start": 1260118, "end": 0 }],
+      "settings": {
+        "label": "ElessarGateway",
+        "fqdn": "elessardarken.xyz",
+        "port": 443,
+        "protocol": "https",
+        "properties": "FH1aVetOoulPGqgYukj0VE0wIhDy90WiQoV3U2PeY44",
+        "note": "Owned and operated by elessar referred and guided by Ruesandora."
+      },
+      "status": "joined",
+      "start": 1260118,
+      "end": 0
+    },
+    "cOSjdBGnj2MgSycM_h5E-OGxdKF7BDBmtgiUq2hQp4w": {
+      "operatorStake": 10000,
+      "vaults": [{ "balance": 10000, "start": 1260121, "end": 0 }],
+      "settings": {
+        "label": "ThekayzGateway",
+        "fqdn": "thekayz.click",
+        "port": 443,
+        "protocol": "https",
+        "properties": "FH1aVetOoulPGqgYukj0VE0wIhDy90WiQoV3U2PeY44",
+        "note": "Hello Thekayz from RuesCommunity"
+      },
+      "status": "joined",
+      "start": 1260121,
+      "end": 0
+    },
+    "PTFbpd9x3LivzC_JjSNp36mGwTDvZGAGwYE2fkR5Nvg": {
+      "operatorStake": 10000,
+      "vaults": [{ "balance": 10000, "start": 1260129, "end": 0 }],
+      "settings": {
+        "label": "shdx",
+        "fqdn": "002900.xyz",
+        "port": 443,
+        "protocol": "https",
+        "properties": "FH1aVetOoulPGqgYukj0VE0wIhDy90WiQoV3U2PeY44",
+        "note": "Owned and operated by me."
+      },
+      "status": "joined",
+      "start": 1260129,
+      "end": 0
+    },
+    "XX4ssz8MKbXvbVXhBRl84TWDDwkkme96lMkjpL7IpXs": {
+      "operatorStake": 10000,
+      "vaults": [{ "balance": 10000, "start": 1260177, "end": 0 }],
+      "settings": {
+        "label": "RuesGateway",
+        "fqdn": "kingsharald.xyz",
+        "port": 443,
+        "protocol": "https",
+        "properties": "FH1aVetOoulPGqgYukj0VE0wIhDy90WiQoV3U2PeY44",
+        "note": "RuesCommunity"
+      },
+      "status": "joined",
+      "start": 1260177,
+      "end": 0
+    },
+    "UGm_n-H39zJDxTNnwSfTMCsufjI0nhDAHFEX_JRng74": {
+      "operatorStake": 10000,
+      "vaults": [{ "balance": 10000, "start": 1260177, "end": 0 }],
+      "settings": {
+        "label": "0xyvzGateway",
+        "fqdn": "0xyvz.xyz",
+        "port": 443,
+        "protocol": "https",
+        "properties": "FH1aVetOoulPGqgYukj0VE0wIhDy90WiQoV3U2PeY44",
+        "note": "Owned and operated by 0xyvz. With the decks of teacher Rues"
+      },
+      "status": "joined",
+      "start": 1260177,
+      "end": 0
+    },
+    "1erDIhwoWtE_1kCV6Ouc4cXEWfpEY9JfMNJdI9Op0-0": {
+      "operatorStake": 10000,
+      "vaults": [{ "balance": 10000, "start": 1260178, "end": 0 }],
+      "settings": {
+        "label": "RuesGateway",
+        "fqdn": "yukovskibot.com",
+        "port": 443,
+        "protocol": "https",
+        "properties": "FH1aVetOoulPGqgYukj0VE0wIhDy90WiQoV3U2PeY44",
+        "note": "Rues bir gece ansizin"
+      },
+      "status": "joined",
+      "start": 1260178,
+      "end": 0
+    },
+    "ahGvm0adLZJEu0n5P10HlnvEz-kRtNC1kIOtcOQohj4": {
+      "operatorStake": 10000,
+      "vaults": [{ "balance": 10000, "start": 1260180, "end": 0 }],
+      "settings": {
+        "label": "MutuGateway",
+        "fqdn": "mutu.pro",
+        "port": 443,
+        "protocol": "https",
+        "properties": "FH1aVetOoulPGqgYukj0VE0wIhDy90WiQoV3U2PeY44",
+        "note": "RuesCommunity"
+      },
+      "status": "joined",
+      "start": 1260180,
+      "end": 0
+    },
+    "SqEQ2UZcI6s4yU8jQMnmxSBmu1XYBg_eHoivzxYljU0": {
+      "operatorStake": 10000,
+      "vaults": [{ "balance": 10000, "start": 1260183, "end": 0 }],
+      "settings": {
+        "label": "shapezeroGateway",
+        "fqdn": "shapezero.xyz",
+        "port": 443,
+        "protocol": "https",
+        "properties": "FH1aVetOoulPGqgYukj0VE0wIhDy90WiQoV3U2PeY44",
+        "note": "Rues Community"
+      },
+      "status": "joined",
+      "start": 1260183,
+      "end": 0
+    },
+    "GG8zi-bWN-S7ANPBfKIo48NVWyM_OEm3B-xJW_AuvCU": {
+      "operatorStake": 10000,
+      "vaults": [{ "balance": 10000, "start": 1260186, "end": 0 }],
+      "settings": {
+        "label": "KananGateway",
+        "fqdn": "kanan.store",
+        "port": 443,
+        "protocol": "https",
+        "properties": "FH1aVetOoulPGqgYukj0VE0wIhDy90WiQoV3U2PeY44",
+        "note": "This is my one and only Gateway."
+      },
+      "status": "joined",
+      "start": 1260186,
+      "end": 0
+    },
+    "llpFQs81WBNqU5q7PDUnkkyzgMXtCOcqyL1nTvjKngc": {
+      "operatorStake": 10000,
+      "vaults": [{ "balance": 10000, "start": 1260188, "end": 0 }],
+      "settings": {
+        "label": "Cinargate",
+        "fqdn": "airdropfirsat.com",
+        "port": 443,
+        "protocol": "https",
+        "properties": "FH1aVetOoulPGqgYukj0VE0wIhDy90WiQoV3U2PeY44",
+        "note": "Rues community."
+      },
+      "status": "joined",
+      "start": 1260188,
+      "end": 0
+    },
+    "T7179iMclGFeIztwWy02XOM-5Ebx10TINteE8K8N5Dk": {
+      "operatorStake": 10000,
+      "vaults": [{ "balance": 10000, "start": 1260192, "end": 0 }],
+      "settings": {
+        "label": "Test Gateway",
+        "fqdn": "permanence-testing.org",
+        "port": 443,
+        "protocol": "https",
+        "properties": "FH1aVetOoulPGqgYukj0VE0wIhDy90WiQoV3U2PeY44",
+        "note": "Fenerbahce. RuesCommunity"
+      },
+      "status": "joined",
+      "start": 1260192,
+      "end": 0
+    },
+    "PE0gBR0wwHlNA4k4He0K3iYc-EKPqjgm7dG65T9pNiw": {
+      "operatorStake": 10000,
+      "vaults": [{ "balance": 10000, "start": 1260194, "end": 0 }],
+      "settings": {
+        "label": "yanksgateway",
+        "fqdn": "erenynk.xyz",
+        "port": 443,
+        "protocol": "https",
+        "properties": "FH1aVetOoulPGqgYukj0VE0wIhDy90WiQoV3U2PeY44",
+        "note": "RuesCommunity"
+      },
+      "status": "joined",
+      "start": 1260194,
+      "end": 0
+    },
+    "TbEyj28xcqJBw_J5Rb6BGOzo4VhT-Qh15VMFul3FtTw": {
+      "operatorStake": 10000,
+      "vaults": [{ "balance": 10000, "start": 1260194, "end": 0 }],
+      "settings": {
+        "label": "HakannGateway",
+        "fqdn": "chaintech.site",
+        "port": 443,
+        "protocol": "https",
+        "properties": "FH1aVetOoulPGqgYukj0VE0wIhDy90WiQoV3U2PeY44",
+        "note": "Owned and operated by Hakan Rues Community."
+      },
+      "status": "joined",
+      "start": 1260194,
+      "end": 0
+    },
+    "5wseWFMo4M1BsCJ_lxIU1bbLH7vMTL-SImx_x7eeCYM": {
+      "operatorStake": 10000,
+      "vaults": [{ "balance": 10000, "start": 1260195, "end": 0 }],
+      "settings": {
+        "label": "Redwhite",
+        "fqdn": "redwhiteconnect.xyz",
+        "port": 443,
+        "protocol": "https",
+        "properties": "FH1aVetOoulPGqgYukj0VE0wIhDy90WiQoV3U2PeY44",
+        "note": "Hello world hello RuesCommunity"
+      },
+      "status": "joined",
+      "start": 1260195,
+      "end": 0
+    },
+    "B3EVs5fnE-AhZ9_Bj1FDmIo12Pwq7XusGKqAX7753vU": {
+      "operatorStake": 10000,
+      "vaults": [{ "balance": 10000, "start": 1260195, "end": 0 }],
+      "settings": {
+        "label": "arn",
+        "fqdn": "kriptosekici.online",
+        "port": 443,
+        "protocol": "https",
+        "properties": "FH1aVetOoulPGqgYukj0VE0wIhDy90WiQoV3U2PeY44",
+        "note": "Owned and operated by DTF RuesCommunity."
+      },
+      "status": "joined",
+      "start": 1260195,
+      "end": 0
+    },
+    "U8tv0J-4zD3wcned1pj_MFTDAYNdlstkHC2k_tq7bFA": {
+      "operatorStake": 10000,
+      "vaults": [{ "balance": 10000, "start": 1260197, "end": 0 }],
+      "settings": {
+        "label": "meteGateway",
+        "fqdn": "olpakmetehan.site",
+        "port": 443,
+        "protocol": "https",
+        "properties": "FH1aVetOoulPGqgYukj0VE0wIhDy90WiQoV3U2PeY44",
+        "note": "Owned by olpakmetehan :) Ruescommunity."
+      },
+      "status": "joined",
+      "start": 1260197,
+      "end": 0
+    },
+    "H4a8JFyhgPaaj1XAbnI-3g8WZMtNzyM2pODgbkloUFo": {
+      "operatorStake": 10000,
+      "vaults": [{ "balance": 10000, "start": 1260200, "end": 0 }],
+      "settings": {
+        "label": "KenyaliGateway",
+        "fqdn": "kenyaligeralt.xyz",
+        "port": 443,
+        "protocol": "https",
+        "properties": "FH1aVetOoulPGqgYukj0VE0wIhDy90WiQoV3U2PeY44",
+        "note": "Kenyadan_sevgilerle_RUES_COMMUNITY"
+      },
+      "status": "joined",
+      "start": 1260200,
+      "end": 0
+    },
+    "uAsYw8-vGL6zgyDfImyW2MkiqI8IV2FteK_Fzz-JGWk": {
+      "operatorStake": 10000,
+      "vaults": [{ "balance": 10000, "start": 1260200, "end": 0 }],
+      "settings": {
+        "label": "YusufAytnWay",
+        "fqdn": "yusufaytn.online",
+        "port": 443,
+        "protocol": "https",
+        "properties": "FH1aVetOoulPGqgYukj0VE0wIhDy90WiQoV3U2PeY44",
+        "note": "Owned and operated by DTF."
+      },
+      "status": "joined",
+      "start": 1260200,
+      "end": 0
+    },
+    "AIqGsGV1iA9iwn2egL4rnGqGxLeEitLf5C98Fo8k3RQ": {
+      "operatorStake": 10000,
+      "vaults": [{ "balance": 10000, "start": 1260204, "end": 0 }],
+      "settings": {
+        "label": "MYSBEGATEWAY",
+        "fqdn": "mysbe.xyz",
+        "port": 443,
+        "protocol": "https",
+        "properties": "FH1aVetOoulPGqgYukj0VE0wIhDy90WiQoV3U2PeY44",
+        "note": "Owned and operated by DTF.RuesCommunity"
+      },
+      "status": "joined",
+      "start": 1260204,
+      "end": 0
+    },
+    "YMMU4U8YGp7T8bBwB97OYK5AXs_2LzaLaI4O-i69Fbc": {
+      "operatorStake": 10000,
+      "vaults": [{ "balance": 10000, "start": 1260209, "end": 0 }],
+      "settings": {
+        "label": "Kazazelgateway",
+        "fqdn": "kazazel.xyz",
+        "port": 443,
+        "protocol": "https",
+        "properties": "FH1aVetOoulPGqgYukj0VE0wIhDy90WiQoV3U2PeY44",
+        "note": "Owned and operated by DTF RuesCommunity ."
+      },
+      "status": "joined",
+      "start": 1260209,
+      "end": 0
+    },
+    "-C5AiYcMmrOFHrnQwhJg1Xtzhz23T0zNB0ACge1otHs": {
+      "operatorStake": 10000,
+      "vaults": [{ "balance": 10000, "start": 1260210, "end": 0 }],
+      "settings": {
+        "label": "aralpergateway",
+        "fqdn": "aralper.xyz",
+        "port": 443,
+        "protocol": "https",
+        "properties": "FH1aVetOoulPGqgYukj0VE0wIhDy90WiQoV3U2PeY44",
+        "note": "Ruescommunity"
+      },
+      "status": "joined",
+      "start": 1260210,
+      "end": 0
+    },
+    "XxXwZXwPouTKkpDa-jJWg3QWtoIwAp4zeCTfBYlBpXc": {
+      "operatorStake": 10000,
+      "vaults": [{ "balance": 10000, "start": 1260212, "end": 0 }],
+      "settings": {
+        "label": "BerkanGateway",
+        "fqdn": "berkanky.site",
+        "port": 443,
+        "protocol": "https",
+        "properties": "FH1aVetOoulPGqgYukj0VE0wIhDy90WiQoV3U2PeY44",
+        "note": "RuesCommunity"
+      },
+      "status": "joined",
+      "start": 1260212,
+      "end": 0
+    }
+  },
+  "evaluationOptions": {}
+}
