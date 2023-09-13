@@ -15,17 +15,21 @@ import { useState } from 'react';
 import { pingUpdater } from '@/lib/pinger';
 
 const GarLoader = () => {
+  const [isPinging, setIsPinging] = useState(false)
+
   const { data, isLoading, error, refetch } = useQuery(['gar'], async () => {
     const fetchResult = await fetch(defaultGARCacheURL);
     const fetchJson = await fetchResult.json();
     const garItems = extractGarItems(fetchJson);
     return garItems;
   }, {
-    onSuccess: (data) => {
+    onSuccess: async (data) => {
+      setIsPinging(true)
       setProcData(data)
-      pingUpdater(data, (newData) => {
+      await pingUpdater(data, (newData) => {
         setProcData([...newData])
       })
+      setIsPinging(false)
     },
     refetchInterval: false,
     refetchOnMount: false,
@@ -48,7 +52,7 @@ const GarLoader = () => {
         <CardContent>
           <GarTable
             data={procData}
-            isRefreshing={isLoading}
+            isRefreshing={isLoading || isPinging}
             onRefresh={() => {refetch()}}
             onItemSelect={() => {}}
           />

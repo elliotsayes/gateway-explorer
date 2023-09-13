@@ -1,14 +1,15 @@
 import { zGatewayAddressRegistryItem } from "@/types";
 import { z } from "zod";
 
-const pingUpdater = (
+const pingUpdater = async (
   data: Array<z.infer<typeof zGatewayAddressRegistryItem>>,
   onUpdate: (
     newData: Array<z.infer<typeof zGatewayAddressRegistryItem>>
   ) => void
 ) => {
   const newData = structuredClone(data);
-  data.forEach(async (item, index) => {
+  for (let index = 0; index < data.length; index++) {
+    const item = data[index];
     try {
       newData[index].ping = { status: "pending" };
       onUpdate(newData);
@@ -29,7 +30,7 @@ const pingUpdater = (
       };
       onUpdate(newData);
     }
-  });
+  }
 };
 
 export { pingUpdater };
