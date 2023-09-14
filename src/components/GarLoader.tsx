@@ -44,7 +44,7 @@ const GarLoader = () => {
   if (error) return <div>Error: {JSON.stringify(error)}</div>
 
   return (
-    <div className=" h-screen px-2 sm:px-8 py-4">
+    <div className="max-h-screen overscroll-contain px-2 sm:px-8 py-4">
       <Card>
         <CardHeader>
           <CardTitle>ar.io Gateway Address Registry</CardTitle>

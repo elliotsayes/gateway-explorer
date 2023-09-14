@@ -25,6 +25,7 @@ import {
   ArrowUp
 } from "lucide-react"
 import { Button } from "./ui/button"
+import { ScrollArea } from "./ui/scroll-area"
 
 interface Props {
   data: Array<z.infer<typeof zGatewayAddressRegistryItem>>
@@ -139,9 +140,9 @@ const GarTable = ({ data, onRefresh, isRefreshing, onItemSelect, selectedItemId 
           <RefreshButton onClick={onRefresh} isRefreshing={isRefreshing} className="ml-2" />
         </div>
       </div>
-      <div className="rounded-md border mt-12 sm:mt-0">
-        <Table>
-          <TableHeader>
+        <Table className="table-fixed">
+        <ScrollArea className="rounded-md border mt-12 sm:mt-0 h-[400px]">
+          <TableHeader className="sticky top-0 bg-secondary">
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
@@ -216,8 +217,8 @@ const GarTable = ({ data, onRefresh, isRefreshing, onItemSelect, selectedItemId 
               </TableRow>
             )}
           </TableBody>
+        </ScrollArea>
         </Table>
-      </div>
     </div>
   )
 }
