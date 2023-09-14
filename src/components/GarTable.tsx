@@ -28,9 +28,10 @@ import { Button } from "./ui/button"
 
 interface Props {
   data: Array<z.infer<typeof zGatewayAddressRegistryItem>>
-  isRefreshing: boolean
   onRefresh: () => void
+  isRefreshing: boolean
   onItemSelect: (item: z.infer<typeof zGatewayAddressRegistryItem>) => void
+  selectedItemId?: string
 }
 
 const columns: ColumnDef<z.infer<typeof zGatewayAddressRegistryItem>>[] = [
@@ -114,7 +115,7 @@ const columns: ColumnDef<z.infer<typeof zGatewayAddressRegistryItem>>[] = [
 ]
 
 
-const GarTable = ({ data, isRefreshing, onRefresh, onItemSelect }: Props) => {
+const GarTable = ({ data, onRefresh, isRefreshing, onItemSelect, selectedItemId }: Props) => {
   const [sorting, setSorting] = React.useState<SortingState>([])
 
   const table = useReactTable({
@@ -197,6 +198,7 @@ const GarTable = ({ data, isRefreshing, onRefresh, onItemSelect }: Props) => {
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
                   onClick={() => onItemSelect(row.original)}
+                  className={selectedItemId === row.original.id ? "bg-muted hover:bg-muted" : ""}
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>

@@ -39,6 +39,7 @@ const GarLoader = () => {
   });
 
   const [procData, setProcData] = useState(data ?? [])
+  const [selectedItemId, setSelectedItemId] = useState<string | undefined>(undefined)
 
   if (error) return <div>Error: {JSON.stringify(error)}</div>
 
@@ -54,7 +55,8 @@ const GarLoader = () => {
             data={procData}
             isRefreshing={isLoading || isFetching || isPinging}
             onRefresh={() => {refetch()}}
-            onItemSelect={() => {}}
+            onItemSelect={(item) => {setSelectedItemId(item.id)}}
+            selectedItemId={selectedItemId}
           />
         </CardContent>
       </Card>
