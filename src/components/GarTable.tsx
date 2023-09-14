@@ -134,14 +134,14 @@ const GarTable = ({ data, onRefresh, isRefreshing, onItemSelect, selectedItemId 
  
   return (
     <div className="relative">
-      <div className="absolute right-0 -top-14">
+      <div className="right-0 sm:absolute sm:-top-14">
         <div className="pb-2 flex flex-row items-end">
           <ColumnSelection table={table} />
           <RefreshButton onClick={onRefresh} isRefreshing={isRefreshing} className="ml-2" />
         </div>
       </div>
         <Table className="table-fixed">
-        <ScrollArea className="rounded-md border mt-12 sm:mt-0 h-[400px]">
+        <ScrollArea className="rounded-md border h-[400px]">
           <TableHeader className="sticky top-0 bg-secondary">
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
