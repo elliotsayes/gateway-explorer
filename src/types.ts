@@ -30,6 +30,12 @@ export const zGatewayAddressRegistryCache = z.object({
   evaluationOptions: z.object({}),
 });
 
+export const zGatewayHealthCheck = z.object({
+  uptime: z.number().nonnegative(),
+  message: z.string().optional(),
+  date: z.string().datetime().optional(),
+});
+
 export const zGatewayAddressRegistryItem = z.intersection(
   z.object({
     id: zArweaveTxId,
@@ -41,6 +47,15 @@ export const zGatewayAddressRegistryItem = z.intersection(
       z.object({
         status: z.literal("success"),
         value: z.number().int().nonnegative(),
+      }),
+    ]),
+    health: z.discriminatedUnion("status", [
+      z.object({ status: z.literal("unknown") }),
+      z.object({ status: z.literal("pending") }),
+      z.object({ status: z.literal("error"), error: z.string().optional() }),
+      z.object({
+        status: z.literal("success"),
+        uptime: z.number().nonnegative(),
       }),
     ]),
   }),
