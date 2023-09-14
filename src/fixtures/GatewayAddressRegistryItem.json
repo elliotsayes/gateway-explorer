@@ -16,5 +16,8 @@
   "link": "https://ar-io.dev/",
   "ping": {
     "status": "unknown"
+  },
+  "health": {
+    "status": "unknown"
   }
 }

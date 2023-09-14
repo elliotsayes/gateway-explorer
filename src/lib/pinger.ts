@@ -60,6 +60,9 @@ const pingUpdater = async (
         status: "error",
         error: e?.toString() ?? JSON.stringify(e),
       };
+      newData[index].health = {
+        status: "error",
+      };
       onUpdate(newData);
     }
   });

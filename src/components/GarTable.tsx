@@ -26,6 +26,7 @@ import {
 } from "lucide-react"
 import { Button } from "./ui/button"
 import { ScrollArea } from "./ui/scroll-area"
+import { formatDuration } from "@/lib/utils"
 
 interface Props {
   data: Array<z.infer<typeof zGatewayAddressRegistryItem>>
@@ -36,19 +37,16 @@ interface Props {
 }
 
 const columns: ColumnDef<z.infer<typeof zGatewayAddressRegistryItem>>[] = [
-  // {
-  //   accessorKey: "id",
-  //   header: "ID",
-  // },
   {
-    id: "Name",
+    id: "Label",
     accessorKey: "settings.label",
-    header: "Name",
+    header: "Label",
+    enableHiding: false,
   },
   {
-    id: "Domain",
+    id: "Address",
     accessorKey: "settings.fqdn",
-    header: "Domain",
+    header: "Address",
     cell: (cell) => {
       return (
         <a
@@ -58,8 +56,32 @@ const columns: ColumnDef<z.infer<typeof zGatewayAddressRegistryItem>>[] = [
           className="text-blue-500 hover:underline"
           onClick={(e) => {e.stopPropagation()}}
         >
-          {cell.row.original.settings.fqdn}
+          {cell.row.original.link}
         </a>
+      )
+    }
+  },
+  {
+    id: "Owner ID",
+    accessorKey: "id",
+    header: "Owner ID",
+    cell: (cell) => {
+      return (
+        <code className="break-all text-xs">
+          {cell.row.original.id}
+        </code>
+      )
+    }
+  },
+  {
+    id: "Properties ID",
+    accessorKey: "settings.properties",
+    header: "Properties ID",
+    cell: (cell) => {
+      return (
+        <code className="break-all text-xs">
+          {cell.row.original.id}
+        </code>
       )
     }
   },
@@ -69,8 +91,20 @@ const columns: ColumnDef<z.infer<typeof zGatewayAddressRegistryItem>>[] = [
     header: "Stake",
   },
   {
+    id: "Status",
+    accessorKey: "status",
+    header: "Status",
+    cell: (cell) => <code>{cell.row.original.status}</code> 
+  },
+  {
+    id: "Note",
+    accessorKey: "settings.note",
+    header: "Note",
+    cell: (cell) => <div className="max-w-[16rem]"><span className="text-muted-foreground line-clamp-1">{cell.row.original.settings.note}</span></div>
+  },
+  {
     id: "Ping",
-    accessorKey: "ping",
+    accessorKey: "ping.value",
     header: "Ping",
     size: 1,
     cell: (cell) => {
@@ -80,7 +114,7 @@ const columns: ColumnDef<z.infer<typeof zGatewayAddressRegistryItem>>[] = [
           return (
             <div className="flex flex-row items-center">
               <div className="h-2 w-2 rounded-full bg-green-400" />
-              <span className="ml-1 text-xs font-bold text-gray-400/80">{cell.row.original.ping.value}ms</span>
+              <span className="ml-1 text-xs text-muted-foreground">{cell.row.original.ping.value}ms</span>
             </div>
           )
         case "pending":
@@ -98,22 +132,39 @@ const columns: ColumnDef<z.infer<typeof zGatewayAddressRegistryItem>>[] = [
       }
     },
     sortDescFirst: false,
-    sortingFn: (a, b) => {
-      if (a.original.ping.status === "success" && b.original.ping.status === "success") {
-        return a.original.ping.value - b.original.ping.value
-      } else if (a.original.ping.status === "success" && b.original.ping.status !== "success") {
-        return -99999
-      } else if (a.original.ping.status !== "success" && b.original.ping.status === "success") {
-        return 99999
-      } else if (a.original.ping.status === "pending" && b.original.ping.status !== "pending") {
-        return -99999
-      } else if (a.original.ping.status !== "pending" && b.original.ping.status === "pending") {
-        return 99999
-      }
-      return 0
-    },
     sortUndefined: 1,
-  }
+  },
+  {
+    id: "Uptime",
+    accessorKey: "health.uptime",
+    header: "Uptime",
+    size: 20,
+    cell: (cell) => {
+      const status = cell.row.original.health.status;
+      switch (status) {
+        case "success":
+          return (
+            <div className="flex flex-row items-center">
+              <div className="h-2 w-2 rounded-full bg-green-400" />
+              <span className="ml-1 text-xs text-muted-foreground break-keep">{formatDuration(cell.row.original.health.uptime * 1000, true)}</span>
+            </div>
+          )
+        case "pending":
+          return (
+            <div className="h-2 w-2 rounded-full bg-purple-400 animate-pulse" />
+          )
+        case "error":
+          return (
+            <div className="h-2 w-2 rounded-full bg-red-500" />
+          )
+        default:
+          return (
+            <div className="h-2 w-2 rounded-full bg-gray-400" />
+          )
+      }
+    },
+    sortUndefined: -1,
+  },
 ]
 
 
@@ -129,7 +180,14 @@ const GarTable = ({ data, onRefresh, isRefreshing, onItemSelect, selectedItemId 
     state: {
       sorting,
     },
-    
+    initialState: {
+      columnVisibility: {
+        "Owner ID": false,
+        "Properties ID": false,
+        "Status": false,
+        // "Uptime": false,
+      }
+    }
   })
  
   return (
