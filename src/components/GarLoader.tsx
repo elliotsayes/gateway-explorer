@@ -6,7 +6,6 @@ import {
 import {
   Card,
   CardContent,
-  CardDescription,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
@@ -15,6 +14,7 @@ import { useState } from 'react';
 import { pingUpdater } from '@/lib/pinger';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from './ui/sheet';
 import GatewayDetails from './GatewayDetails';
+import arioLogo from '../assets/ar.io-white.png'
 
 const GarLoader = () => {
   const [isPinging, setIsPinging] = useState(false)
@@ -52,8 +52,19 @@ const GarLoader = () => {
     <div className="max-h-[100vh] px-2 sm:px-8 py-4">
       <Card>
         <CardHeader>
-          <CardTitle>ar.io Gateway Address Registry</CardTitle>
-          <CardDescription>List of all Gateways</CardDescription>
+          <CardTitle className='flex flex-row gap-2 px-2 items-baseline'>
+            <a
+              href='https://ar.io/'
+              className='px-1'
+              target='_blank'
+            >
+              <img src={arioLogo} className='flex' width='100rem' />
+            </a>
+            <span className='font-ario text-3xl'>
+              Gateway Explorer
+            </span>
+          </CardTitle>
+          {/* <CardDescription>List of all Gateways</CardDescription> */}
         </CardHeader>
         <CardContent>
           <GarTable
@@ -84,16 +95,21 @@ const GarLoader = () => {
             // setSelectedItemId(undefined)
           }}
         >
-        <SheetHeader>
-          <SheetTitle className='pb-4'>
-            Gateway Details{selectedItem?.settings.label && <> - <code>{selectedItem?.settings.label}</code></>}
-          </SheetTitle>
-          <GatewayDetails
-            data={selectedItem!}
-          />
-        </SheetHeader>
-      </SheetContent>
+          <SheetHeader>
+            <SheetTitle className='pb-4'>
+              Gateway Details{selectedItem?.settings.label && <> - <code>{selectedItem?.settings.label}</code></>}
+            </SheetTitle>
+            <GatewayDetails
+              data={selectedItem!}
+            />
+          </SheetHeader>
+        </SheetContent>
       </Sheet>
+      <div className='flex flex-row flex-grow justify-center py-2 gap-4'>
+        <div className='flex'>
+          s
+        </div>
+      </div>
     </div>
   )
 }

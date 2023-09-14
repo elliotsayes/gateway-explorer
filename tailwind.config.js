@@ -75,6 +75,9 @@ module.exports = {
         "accordion-up": "accordion-up 0.2s ease-out",
         "spin-ccw": "spin-ccw 1s linear infinite",
       },
+      fontFamily: {
+        "ario": "Rubik",
+      }
     },
   },
   plugins: [require("tailwindcss-animate")],

@@ -26,8 +26,8 @@
       "@/*": ["./src/*"]
     },
     
-    /* Bun */
-    "types": ["bun-types"]
+    /* Bun, unplugin-fonts */
+    "types": ["bun-types", "unplugin-fonts/client"]
   },
   "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]
