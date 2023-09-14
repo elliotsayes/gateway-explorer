@@ -105,10 +105,33 @@ const GarLoader = () => {
           </SheetHeader>
         </SheetContent>
       </Sheet>
-      <div className='flex flex-row flex-grow justify-center py-2 gap-4'>
-        <div className='flex'>
-          s
+      <div className='flex flex-col text-center text-muted-foreground pt-2 pb-4 gap-1'>
+        <div className='flex flex-row flex-grow justify-center gap-2'>
+          <div className='flex'>
+            <a href='https://ar.io/docs/' target='_blank'>
+              Home
+            </a>
+          </div>
+          <span className='font-bold'>•</span>
+          <div className='flex'>
+            <a href='https://ar.io/docs/' target='_blank'>
+              Docs
+            </a>
+          </div>
+          <span className='font-bold'>•</span>
+          <div className='flex'>
+            <a href='https://github.com/ar-io' target='_blank'>
+              Github
+            </a>
+          </div>
+          <span className='font-bold'>•</span>
+          <div className='flex'>
+            <a href='https://discord.gg/7zUPfN4D6g' target='_blank'>
+              Discord
+            </a>
+          </div>
         </div>
+        ©2023 ar.io
       </div>
     </div>
   )
