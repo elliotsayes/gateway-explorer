@@ -141,7 +141,7 @@ const GarTable = ({ data, onRefresh, isRefreshing, onItemSelect, selectedItemId 
         </div>
       </div>
       <Table>
-        <ScrollArea className="rounded-md border h-[400px]">
+        <ScrollArea className="rounded-md border">
           <TableHeader className="sticky top-0 bg-secondary/95">
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
