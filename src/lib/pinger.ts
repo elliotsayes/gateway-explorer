@@ -1,6 +1,8 @@
 import { zGatewayAddressRegistryItem } from "@/types";
 import { z } from "zod";
 
+const pingStaggerDelayMs = 10;
+
 const pingUpdater = async (
   data: Array<z.infer<typeof zGatewayAddressRegistryItem>>,
   onUpdate: (
@@ -9,7 +11,7 @@ const pingUpdater = async (
 ) => {
   const newData = structuredClone(data);
   const pingPromises = data.map((item, index) => async () => {
-    const delayMs = 50 * index;
+    const delayMs = pingStaggerDelayMs * index;
     await new Promise((resolve) => setTimeout(resolve, delayMs));
     try {
       newData[index].ping = { status: "pending" };
