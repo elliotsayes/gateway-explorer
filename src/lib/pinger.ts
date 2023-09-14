@@ -8,8 +8,9 @@ const pingUpdater = async (
   ) => void
 ) => {
   const newData = structuredClone(data);
-  for (let index = 0; index < data.length; index++) {
-    const item = data[index];
+  const pingPromises = data.map((item, index) => async () => {
+    const delayMs = 50 * index;
+    await new Promise((resolve) => setTimeout(resolve, delayMs));
     try {
       newData[index].ping = { status: "pending" };
       onUpdate(newData);
@@ -34,7 +35,8 @@ const pingUpdater = async (
       };
       onUpdate(newData);
     }
-  }
+  });
+  await Promise.all(pingPromises.map((p) => p()));
 };
 
 export { pingUpdater };
