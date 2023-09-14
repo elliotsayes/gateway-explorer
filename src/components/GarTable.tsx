@@ -97,6 +97,11 @@ const columns: ColumnDef<z.infer<typeof zGatewayAddressRegistryItem>>[] = [
     cell: (cell) => <code>{cell.row.original.status}</code> 
   },
   {
+    id: "Start Block",
+    accessorKey: "start",
+    header: "Start Block",
+  },
+  {
     id: "Note",
     accessorKey: "settings.note",
     header: "Note",
@@ -185,6 +190,7 @@ const GarTable = ({ data, onRefresh, isRefreshing, onItemSelect, selectedItemId 
         "Owner ID": false,
         "Properties ID": false,
         "Status": false,
+        "Start Block": false,
         // "Uptime": false,
       }
     }

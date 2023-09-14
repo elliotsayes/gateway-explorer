@@ -39,6 +39,10 @@ const GatewayDetails = ({data}: Props) => {
       value: data.status,
     },
     {
+      label: "Start Block",
+      value: data.start,
+    },
+    {
       label: 'Note',
       value: data.settings.note,
     },
