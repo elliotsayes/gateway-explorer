@@ -11,7 +11,7 @@ const extractGarItems = (
     id: txId,
     ping: { status: "unknown" },
     health: { status: "unknown" },
-    link: `${item.settings.protocol}://${item.settings.fqdn}:${item.settings.port}/`,
+    link: `${item.settings.protocol}://${item.settings.fqdn}:${item.settings.port}`,
     ...item,
   }));
 };
