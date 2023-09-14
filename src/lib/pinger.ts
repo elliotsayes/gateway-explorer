@@ -25,6 +25,7 @@ const pingUpdater = async (
       const fetchResult = await fetch(url, {
         method: "GET",
         signal: controller.signal,
+        cache: "no-cache",
       });
       const end = Date.now();
       const duration = end - start;
