@@ -144,9 +144,9 @@ const columns: ColumnDef<z.infer<typeof zGatewayAddressRegistryItem>>[] = [
       switch (status) {
         case "success":
           return (
-            <div className="flex flex-row items-center">
+            <div className="flex flex-row items-center max-w-[6rem]">
               <div className="h-2 w-2 rounded-full bg-green-400" />
-              <span className="ml-1 text-xs text-muted-foreground break-keep">{formatDuration(cell.row.original.health.uptime * 1000, true)}</span>
+              <span className="ml-1 text-xs text-muted-foreground line-clamp-1 text-clip">{formatDuration(cell.row.original.health.uptime * 1000, true)}</span>
             </div>
           )
         case "pending":
