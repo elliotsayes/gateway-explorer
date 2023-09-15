@@ -7,6 +7,7 @@
     "dev": "bunx --bun vite",
     "test": "bun test",
     "build": "vite build",
+    "dragbuild": "vite build --base ./",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
