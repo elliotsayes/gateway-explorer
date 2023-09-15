@@ -137,7 +137,7 @@ const GarLoader = () => {
         <div>
           ©2023 ar.io
         </div>
-        <div className={`${isSheetOpen ? 'h-[calc(50vh+3em)]' : 'h-[3em]'} transition-all duration-200`} />
+        <div className={`${isSheetOpen ? 'h-[calc(50vh+3em)]' : 'h-[2em]'} transition-all duration-200`} />
       </div>
     </div>
   )
