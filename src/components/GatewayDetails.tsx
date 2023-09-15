@@ -14,10 +14,10 @@ interface Props {
 
 const GatewayDetails = ({data}: Props) => {
   const displayData: Array<GridDatum> = [
-    // {
-    //   label: 'Label',
-    //   value: data.settings.label,
-    // },
+    {
+      label: 'Label',
+      value: data.settings.label,
+    },
     {
       label: "Address",
       value: <code className="break-all">{data.link}</code>,

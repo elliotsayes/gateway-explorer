@@ -99,7 +99,8 @@ const GarLoader = () => {
         >
           <SheetHeader>
             <SheetTitle className='pb-4'>
-              Gateway Details{selectedItem?.settings.label && <> - <code>{selectedItem?.settings.label}</code></>}
+              Gateway Details
+              {/* {selectedItem?.settings.label && <> - <code>{selectedItem?.settings.label}</code></>} */}
             </SheetTitle>
             <GatewayDetails
               data={selectedItem!}
