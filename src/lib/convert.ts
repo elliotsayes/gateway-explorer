@@ -3,6 +3,7 @@ import {
   zGatewayAddressRegistryItem,
 } from "@/types";
 import { z } from "zod";
+import { linkFull, linkDisplay } from "./utils";
 
 const extractGarItems = (
   garCache: z.infer<typeof zGatewayAddressRegistryCache>
@@ -11,7 +12,16 @@ const extractGarItems = (
     id: txId,
     ping: { status: "unknown" },
     health: { status: "unknown" },
-    link: `${item.settings.protocol}://${item.settings.fqdn}:${item.settings.port}`,
+    linkFull: linkFull(
+      item.settings.protocol,
+      item.settings.fqdn,
+      item.settings.port
+    ),
+    linkDisplay: linkDisplay(
+      item.settings.protocol,
+      item.settings.fqdn,
+      item.settings.port
+    ),
     ...item,
   }));
 };

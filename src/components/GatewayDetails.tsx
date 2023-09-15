@@ -20,7 +20,7 @@ const GatewayDetails = ({data}: Props) => {
     },
     {
       label: "Address",
-      value: <code className="break-all">{data.link}</code>,
+      value: <code className="break-all">{data.linkFull}</code>,
     },
     {
       label: "Owner ID",

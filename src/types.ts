@@ -39,7 +39,8 @@ export const zGatewayHealthCheck = z.object({
 export const zGatewayAddressRegistryItem = z.intersection(
   z.object({
     id: zArweaveTxId,
-    link: z.string().url(),
+    linkFull: z.string().url(),
+    linkDisplay: z.string(),
     ping: z.discriminatedUnion("status", [
       z.object({ status: z.literal("unknown") }),
       z.object({ status: z.literal("pending") }),

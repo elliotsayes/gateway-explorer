@@ -17,7 +17,7 @@ const pingUpdater = async (
       newData[index].ping = { status: "pending" };
       onUpdate(newData);
 
-      const url = `${item.link}/ar-io/healthcheck`;
+      const url = `${item.linkFull}/ar-io/healthcheck`;
       const controller = new AbortController();
       const id = setTimeout(() => controller.abort(), 2000);
 

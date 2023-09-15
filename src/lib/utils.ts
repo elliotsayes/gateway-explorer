@@ -25,3 +25,12 @@ export const formatDuration = (ms: number, short = false) => {
     )
     .join(short ? " " : ", ");
 };
+
+export const linkFull = (protocol: string, fqdn: string, port: number) =>
+  `${protocol}://${fqdn}:${port}`;
+
+export const linkDisplay = (protocol: string, fqdn: string, port: number) => {
+  if (protocol === "https" && port === 443) return fqdn;
+  if (protocol === "http" && port === 80) return `http://${fqdn}`;
+  return linkFull(protocol, fqdn, port);
+};

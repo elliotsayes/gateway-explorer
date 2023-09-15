@@ -50,13 +50,13 @@ const columns: ColumnDef<z.infer<typeof zGatewayAddressRegistryItem>>[] = [
     cell: (cell) => {
       return (
         <a
-          href={`${cell.row.original.link}`}
+          href={`${cell.row.original.linkFull}`}
           target="_blank"
           rel="noopener noreferrer"
           className="text-blue-500 hover:underline"
           onClick={(e) => {e.stopPropagation()}}
         >
-          {cell.row.original.link}
+          {cell.row.original.linkDisplay}
         </a>
       )
     }
