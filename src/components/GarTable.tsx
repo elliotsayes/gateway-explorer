@@ -79,7 +79,7 @@ const columns: ColumnDef<z.infer<typeof zGatewayAddressRegistryItem>>[] = [
     cell: (cell) => {
       return (
         <code className="break-all text-xs">
-          {cell.row.original.id}
+          {cell.row.original.settings.properties}
         </code>
       )
     }
