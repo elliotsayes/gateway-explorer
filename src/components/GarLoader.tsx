@@ -111,7 +111,7 @@ const GarLoader = () => {
       <div className='flex flex-col text-center text-muted-foreground gap-1 pt-2'>
         <div className='flex flex-row flex-grow justify-center gap-2'>
           <div className='flex'>
-            <a href='https://ar.io/docs/' target='_blank'>
+            <a href='https://ar.io/' target='_blank'>
               Home
             </a>
           </div>
