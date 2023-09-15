@@ -1,7 +1,8 @@
 import { zGatewayAddressRegistryItem, zGatewayHealthCheck } from "@/types";
 import { z } from "zod";
 
-const pingStaggerDelayMs = 10;
+const pingStaggerDelayMs = 10; // 0.01s
+const pingTimeout = 5000; // 5s
 
 const pingUpdater = async (
   data: Array<z.infer<typeof zGatewayAddressRegistryItem>>,
@@ -19,7 +20,7 @@ const pingUpdater = async (
 
       const url = `${item.linkFull}/ar-io/healthcheck`;
       const controller = new AbortController();
-      const timeoutTrigger = setTimeout(() => controller.abort(), 2000);
+      const timeoutTrigger = setTimeout(() => controller.abort(), pingTimeout);
 
       const start = Date.now();
       const fetchResult = await fetch(url, {
