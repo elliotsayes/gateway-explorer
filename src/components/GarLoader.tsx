@@ -108,7 +108,7 @@ const GarLoader = () => {
           </SheetHeader>
         </SheetContent>
       </Sheet>
-      <div className='flex flex-col text-center text-muted-foreground pt-2 pb-4 gap-1'>
+      <div className={`flex flex-col text-center text-muted-foreground gap-1 pt-2 ${isSheetOpen ? 'pb-[calc(50vh+3em)]' : 'pb-[3em]'}`}>
         <div className='flex flex-row flex-grow justify-center gap-2'>
           <div className='flex'>
             <a href='https://ar.io/docs/' target='_blank'>
