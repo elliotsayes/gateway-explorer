@@ -49,7 +49,7 @@ const GarLoader = () => {
   if (error) return <div>Error: {JSON.stringify(error)}</div>
 
   return (
-    <div className="max-h-[100vh] px-2 sm:px-8 md:px-16 py-4">
+    <div className="max-h-[100vh] px-2 md:px-8 lg:px-16 py-4">
       <Card>
         <CardHeader>
           <CardTitle className='flex flex-col md:flex-row gap-2 px-2 items-center md:items-baseline'>
