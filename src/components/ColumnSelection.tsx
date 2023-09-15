@@ -23,7 +23,7 @@ export function ColumnSelection<TData>({
       <DropdownMenuTrigger asChild>
         <Button
           variant="outline"
-          className="ml-auto lg:flex"
+          className="lg:flex"
         >
           <Eye className="mr-2 h-4 w-4" />
           View
