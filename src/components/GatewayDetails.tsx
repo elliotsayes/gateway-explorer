@@ -2,6 +2,7 @@ import { zGatewayAddressRegistryItem } from "@/types"
 import { z } from "zod"
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card"
 import { formatDuration } from "@/lib/utils"
+import { ScrollArea } from "./ui/scroll-area"
 
 type GridDatum = {
   label: string
@@ -56,25 +57,27 @@ const GatewayDetails = ({data}: Props) => {
     },
   ]
   return (
-    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl::md-cols-6 gap-4 max-h-[40vh] overflow-y-scroll">
-      {displayData.map((datum) => (
-        <Card>
-          <CardHeader>
-            <CardTitle>{datum.label}</CardTitle>
-            {/* <CardDescription></CardDescription> */}
-          </CardHeader>
-          <CardContent>
-            {
-              typeof datum.value === 'string' ? (
-                <p>{datum.value}</p>
-              ) : (
-                datum.value
-              )
-            }
-          </CardContent>
-        </Card>
-      ))}
-    </div>
+    <ScrollArea className="h-[40vh] w-full pr-4">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl::md-cols-6 gap-4">
+        {displayData.map((datum) => (
+          <Card>
+            <CardHeader>
+              <CardTitle>{datum.label}</CardTitle>
+              {/* <CardDescription></CardDescription> */}
+            </CardHeader>
+            <CardContent>
+              {
+                typeof datum.value === 'string' ? (
+                  <p>{datum.value}</p>
+                ) : (
+                  datum.value
+                )
+              }
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+    </ScrollArea>
   )
 }
 
