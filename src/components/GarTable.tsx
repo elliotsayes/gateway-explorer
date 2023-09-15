@@ -100,6 +100,7 @@ const columns: ColumnDef<z.infer<typeof zGatewayAddressRegistryItem>>[] = [
     id: "Start Block",
     accessorKey: "start",
     header: "Start Block",
+    sortDescFirst: false,
   },
   {
     id: "Note",
