@@ -15,6 +15,7 @@ import { pingUpdater } from '@/lib/pinger';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from './ui/sheet';
 import GatewayDetails from './GatewayDetails';
 import arioLogo from '../assets/ar.io-white.png'
+import { ScrollArea } from './ui/scroll-area';
 
 const GarLoader = () => {
   const [isPinging, setIsPinging] = useState(false)
@@ -49,7 +50,7 @@ const GarLoader = () => {
   if (error) return <div>Error: {JSON.stringify(error)}</div>
 
   return (
-    <div className="max-h-[100vh] px-2 md:px-8 lg:px-16 py-4">
+    <ScrollArea className="h-[100vh] px-2 md:px-8 lg:px-16 py-4">
       <Card>
         <CardHeader>
           <CardTitle className='flex flex-col md:flex-row gap-2 px-2 items-center md:items-baseline'>
@@ -137,9 +138,9 @@ const GarLoader = () => {
         <div>
           ©2023 ar.io
         </div>
-        <div className={`${isSheetOpen ? 'h-[calc(50vh+3em)]' : 'h-[3em]'} transition-all duration-200`} />
+        <div className={`${isSheetOpen ? 'h-[calc(50vh+2em)]' : 'h-[1em]'} transition-all duration-200`} />
       </div>
-    </div>
+    </ScrollArea>
   )
 }
 
