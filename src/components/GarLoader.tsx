@@ -52,7 +52,7 @@ const GarLoader = () => {
     <div className="max-h-[100vh] px-2 sm:px-8 py-4">
       <Card>
         <CardHeader>
-          <CardTitle className='flex flex-row gap-2 px-2 items-baseline'>
+          <CardTitle className='flex flex-col sm:flex-row gap-2 px-2 items-center sm:items-baseline'>
             <a
               href='https://ar.io/'
               className='px-1'
@@ -60,9 +60,11 @@ const GarLoader = () => {
             >
               <img src={arioLogo} className='flex' width='100rem' />
             </a>
-            <span className='font-ario text-3xl'>
-              Gateway Explorer
-            </span>
+            <div className='flex'>
+              <span className='font-ario text-3xl'>
+                Gateway Explorer
+              </span>
+            </div>
           </CardTitle>
           {/* <CardDescription>List of all Gateways</CardDescription> */}
         </CardHeader>
