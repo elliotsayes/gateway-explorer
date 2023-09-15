@@ -202,7 +202,7 @@ const GarTable = ({ data, onRefresh, isRefreshing, onItemSelect, selectedItemId 
     <div className="relative">
       <div className="right-0 md:absolute md:-top-14">
         <div className="pb-2 flex flex-row items-end gap-2">
-          <div className="ml-auto text-muted-foreground">{healthy}/{data.length} online</div>
+          <div className="ml-2 mr-auto md:mr-0 md:ml-auto text-muted-foreground">{healthy}/{data.length} online</div>
           <ColumnSelection table={table} />
           <RefreshButton onClick={onRefresh} isRefreshing={isRefreshing}/>
         </div>
