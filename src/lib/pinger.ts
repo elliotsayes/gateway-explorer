@@ -19,7 +19,7 @@ const pingUpdater = async (
 
       const url = `${item.linkFull}/ar-io/healthcheck`;
       const controller = new AbortController();
-      const id = setTimeout(() => controller.abort(), 2000);
+      const timeoutTrigger = setTimeout(() => controller.abort(), 2000);
 
       const start = Date.now();
       const fetchResult = await fetch(url, {
@@ -30,7 +30,7 @@ const pingUpdater = async (
       const end = Date.now();
       const duration = end - start;
 
-      clearTimeout(id);
+      clearTimeout(timeoutTrigger);
       newData[index].ping = { status: "success", value: duration };
       onUpdate(newData);
 
