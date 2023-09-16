@@ -14,8 +14,12 @@
     "status": "joined",
     "start": 1256694,
     "end": 0,
-    "link": "https://ar-io.dev/",
+    "linkFull": "https://ar-io.dev:443",
+    "linkDisplay": "ar-io.dev",
     "ping": {
+      "status": "unknown"
+    },
+    "health": {
       "status": "unknown"
     }
   },
@@ -34,8 +38,12 @@
     "status": "joined",
     "start": 1256694,
     "end": 0,
-    "link": "https://ar-io.dev/",
+    "linkFull": "https://ar-io.dev/",
+    "linkDisplay": "ar-io.dev",
     "ping": {
+      "status": "pending"
+    },
+    "health": {
       "status": "pending"
     }
   },
@@ -54,8 +62,12 @@
     "status": "joined",
     "start": 1256694,
     "end": 0,
-    "link": "https://ar-io.dev/",
+    "linkFull": "https://ar-io.dev/",
+    "linkDisplay": "ar-io.dev",
     "ping": {
+      "status": "error"
+    },
+    "health": {
       "status": "error"
     }
   },
@@ -74,10 +86,15 @@
     "status": "joined",
     "start": 1256694,
     "end": 0,
-    "link": "https://ar-io.dev/",
+    "linkFull": "https://ar-io.dev/",
+    "linkDisplay": "ar-io.dev",
     "ping": {
       "status": "success",
       "value": 12
+    },
+    "health": {
+      "status": "success",
+      "uptime": 123456
     }
   },
   {
@@ -95,10 +112,15 @@
     "status": "joined",
     "start": 1256694,
     "end": 0,
-    "link": "https://ar-io.dev/",
+    "linkFull": "https://ar-io.dev/",
+    "linkDisplay": "ar-io.dev",
     "ping": {
       "status": "success",
       "value": 999
+    },
+    "health": {
+      "status": "success",
+      "uptime": 1234
     }
   }
 ]
