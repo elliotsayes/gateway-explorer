@@ -15,6 +15,7 @@ const getArnsResolution = async ({
   const startTimestamp = Date.now();
   const response = await ky.get(url, {
     timeout: 10_000, // 10 seconds
+    throwHttpErrors: false,
   });
   const responseTimestamp = Date.now();
 

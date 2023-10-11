@@ -2,7 +2,7 @@ import { expect, test } from "bun:test";
 import { getArnsResolution } from "./observer";
 
 test(
-  "getArnsResolution from ar.io.dev node",
+  "getArnsResolution from ar.io.dev node for existent ARNS name",
   async () => {
     const gatewayAddress = "ar-io.dev:443";
     const result = await getArnsResolution({
@@ -27,6 +27,28 @@ test(
     );
 
     expect(parseInt(result.ttlSeconds!)).toBeGreaterThanOrEqual(0);
+  },
+  { timeout: 11_000 }
+);
+
+test(
+  "getArnsResolution from ar.io.dev node for nonexistent ARNS name",
+  async () => {
+    const gatewayAddress = "ar-io.dev:443";
+    const result = await getArnsResolution({
+      host: gatewayAddress,
+      arnsName: "iyQaJzUFg0iwW8jjr1UNPVvHMI5Hr6qB",
+    });
+
+    expect(result).toEqual({
+      statusCode: 404,
+      contentLength: null,
+      contentType: null,
+      dataHashDigest: null,
+      resolvedId: null,
+      timings: null,
+      ttlSeconds: null,
+    });
   },
   { timeout: 11_000 }
 );
