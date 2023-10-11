@@ -42,12 +42,12 @@ test(
 
     expect(result).toEqual({
       statusCode: 404,
-      contentLength: null,
-      contentType: null,
-      dataHashDigest: null,
       resolvedId: null,
-      timings: null,
       ttlSeconds: null,
+      contentType: null,
+      contentLength: null,
+      dataHashDigest: null,
+      timings: null,
     });
   },
   { timeout: 11_000 }
