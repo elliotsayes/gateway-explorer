@@ -4,13 +4,17 @@ import ky from "ky";
 import { arrayBufferToBase64Url } from "./utils";
 
 const getArnsResolution = async ({
-  host,
+  protocol,
+  fqdn,
+  port,
   arnsName,
 }: {
-  host: string;
+  protocol?: string;
+  fqdn: string;
+  port?: number;
   arnsName: string;
 }): Promise<z.infer<typeof zArnsResolution>> => {
-  const url = `https://${arnsName}.${host}/`;
+  const url = `${protocol ?? "https"}://${arnsName}.${fqdn}:${port ?? 443}/`;
 
   const startTimestamp = Date.now();
   const response = await ky.get(url, {

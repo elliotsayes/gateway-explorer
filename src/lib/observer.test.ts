@@ -4,9 +4,9 @@ import { getArnsResolution } from "./observer";
 test(
   "getArnsResolution from ar.io.dev node for existent ARNS name",
   async () => {
-    const gatewayAddress = "ar-io.dev:443";
+    const gatewayAddress = "ar-io.dev";
     const result = await getArnsResolution({
-      host: gatewayAddress,
+      fqdn: gatewayAddress,
       arnsName: "bitcoin",
     });
 
@@ -34,9 +34,9 @@ test(
 test(
   "getArnsResolution from ar.io.dev node for nonexistent ARNS name",
   async () => {
-    const gatewayAddress = "ar-io.dev:443";
+    const gatewayAddress = "ar-io.dev";
     const result = await getArnsResolution({
-      host: gatewayAddress,
+      fqdn: gatewayAddress,
       arnsName: "iyQaJzUFg0iwW8jjr1UNPVvHMI5Hr6qB",
     });
 
