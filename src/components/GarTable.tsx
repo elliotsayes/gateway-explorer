@@ -26,155 +26,221 @@ import {
 } from "lucide-react"
 import { Button } from "./ui/button"
 import { formatDuration } from "@/lib/utils"
+import { getArnsResolution } from "@/lib/observer"
 
 interface Props {
   data: Array<z.infer<typeof zGatewayAddressRegistryItem>>
   onRefresh: () => void
   isRefreshing: boolean
+  onItemUpdate: (item: z.infer<typeof zGatewayAddressRegistryItem>) => void
   onItemSelect: (item: z.infer<typeof zGatewayAddressRegistryItem>) => void
   selectedItemId?: string
 }
 
-const columns: ColumnDef<z.infer<typeof zGatewayAddressRegistryItem>>[] = [
-  {
-    id: "Label",
-    accessorKey: "settings.label",
-    header: "Label",
-    enableHiding: false,
-  },
-  {
-    id: "Address",
-    accessorKey: "settings.fqdn",
-    header: "Address",
-    cell: (cell) => {
-      return (
-        <a
-          href={`${cell.row.original.linkFull}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-blue-500 hover:underline"
-          onClick={(e) => {e.stopPropagation()}}
-        >
-          {cell.row.original.linkDisplay}
-        </a>
-      )
-    }
-  },
-  {
-    id: "Owner ID",
-    accessorKey: "id",
-    header: "Owner ID",
-    cell: (cell) => {
-      return (
-        <code className="break-all text-xs">
-          {cell.row.original.id}
-        </code>
-      )
-    }
-  },
-  {
-    id: "Properties ID",
-    accessorKey: "settings.properties",
-    header: "Properties ID",
-    cell: (cell) => {
-      return (
-        <code className="break-all text-xs">
-          {cell.row.original.settings.properties}
-        </code>
-      )
-    }
-  },
-  {
-    id: "Stake",
-    accessorKey: "operatorStake",
-    header: "Stake",
-  },
-  {
-    id: "Status",
-    accessorKey: "status",
-    header: "Status",
-    cell: (cell) => <code>{cell.row.original.status}</code> 
-  },
-  {
-    id: "Start Block",
-    accessorKey: "start",
-    header: "Start Block",
-    sortDescFirst: false,
-  },
-  {
-    id: "Note",
-    accessorKey: "settings.note",
-    header: "Note",
-    cell: (cell) => <div className="max-w-[16rem]"><span className="text-muted-foreground line-clamp-1">{cell.row.original.settings.note}</span></div>
-  },
-  {
-    id: "Ping",
-    accessorKey: "ping.value",
-    header: "Ping",
-    size: 1,
-    cell: (cell) => {
-      const status = cell.row.original.ping.status;
-      switch (status) {
-        case "success":
-          return (
-            <div className="flex flex-row items-center">
-              <div className="h-2 w-2 rounded-full bg-green-400" />
-              <span className="ml-1 text-xs text-muted-foreground">{cell.row.original.ping.value}ms</span>
-            </div>
-          )
-        case "pending":
-          return (
-            <div className="h-2 w-2 rounded-full bg-purple-400 animate-pulse" />
-          )
-        case "error":
-          return (
-            <div className="h-2 w-2 rounded-full bg-red-500" />
-          )
-        default:
-          return (
-            <div className="h-2 w-2 rounded-full bg-gray-400" />
-          )
-      }
-    },
-    sortDescFirst: false,
-    sortUndefined: 1,
-  },
-  {
-    id: "Uptime",
-    accessorKey: "health.uptime",
-    header: "Uptime",
-    size: 20,
-    cell: (cell) => {
-      const status = cell.row.original.health.status;
-      switch (status) {
-        case "success":
-          return (
-            <div className="flex flex-row items-center max-w-[6rem]">
-              <div className="h-2 w-2 rounded-full bg-green-400" />
-              <span className="ml-1 text-xs text-muted-foreground line-clamp-1 text-clip">{formatDuration(cell.row.original.health.uptime * 1000, true)}</span>
-            </div>
-          )
-        case "pending":
-          return (
-            <div className="h-2 w-2 rounded-full bg-purple-400 animate-pulse" />
-          )
-        case "error":
-          return (
-            <div className="h-2 w-2 rounded-full bg-red-500" />
-          )
-        default:
-          return (
-            <div className="h-2 w-2 rounded-full bg-gray-400" />
-          )
-      }
-    },
-    sortUndefined: -1,
-  },
-]
-
-
-const GarTable = ({ data, onRefresh, isRefreshing, onItemSelect, selectedItemId }: Props) => {
+const GarTable = ({ data, onRefresh, isRefreshing, onItemUpdate, onItemSelect, selectedItemId }: Props) => {
   const [sorting, setSorting] = React.useState<SortingState>([])
+
+  const columns: ColumnDef<z.infer<typeof zGatewayAddressRegistryItem>>[] = [
+    {
+      id: "Label",
+      accessorKey: "settings.label",
+      header: "Label",
+      enableHiding: false,
+    },
+    {
+      id: "Address",
+      accessorKey: "settings.fqdn",
+      header: "Address",
+      cell: (cell) => {
+        return (
+          <a
+            href={`${cell.row.original.linkFull}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-500 hover:underline"
+            onClick={(e) => {e.stopPropagation()}}
+          >
+            {cell.row.original.linkDisplay}
+          </a>
+        )
+      }
+    },
+    {
+      id: "Owner ID",
+      accessorKey: "id",
+      header: "Owner ID",
+      cell: (cell) => {
+        return (
+          <code className="break-all text-xs">
+            {cell.row.original.id}
+          </code>
+        )
+      }
+    },
+    {
+      id: "Properties ID",
+      accessorKey: "settings.properties",
+      header: "Properties ID",
+      cell: (cell) => {
+        return (
+          <code className="break-all text-xs">
+            {cell.row.original.settings.properties}
+          </code>
+        )
+      }
+    },
+    {
+      id: "Stake",
+      accessorKey: "operatorStake",
+      header: "Stake",
+    },
+    {
+      id: "Status",
+      accessorKey: "status",
+      header: "Status",
+      cell: (cell) => <code>{cell.row.original.status}</code> 
+    },
+    {
+      id: "Start Block",
+      accessorKey: "start",
+      header: "Start Block",
+      sortDescFirst: false,
+    },
+    {
+      id: "Note",
+      accessorKey: "settings.note",
+      header: "Note",
+      cell: (cell) => <div className="max-w-[16rem]"><span className="text-muted-foreground line-clamp-1">{cell.row.original.settings.note}</span></div>
+    },
+    {
+      id: "Ping",
+      accessorKey: "ping.value",
+      header: "Ping",
+      size: 1,
+      cell: (cell) => {
+        const status = cell.row.original.ping.status;
+        switch (status) {
+          case "success":
+            return (
+              <div className="flex flex-row items-center">
+                <div className="h-2 w-2 rounded-full bg-green-400" />
+                <span className="ml-1 text-xs text-muted-foreground">{cell.row.original.ping.value}ms</span>
+              </div>
+            )
+          case "pending":
+            return (
+              <div className="h-2 w-2 rounded-full bg-purple-400 animate-pulse" />
+            )
+          case "error":
+            return (
+              <div className="h-2 w-2 rounded-full bg-red-500" />
+            )
+          default:
+            return (
+              <div className="h-2 w-2 rounded-full bg-gray-400" />
+            )
+        }
+      },
+      sortDescFirst: false,
+      sortUndefined: 1,
+    },
+    {
+      id: "Uptime",
+      accessorKey: "health.uptime",
+      header: "Uptime",
+      size: 20,
+      cell: (cell) => {
+        const status = cell.row.original.health.status;
+        switch (status) {
+          case "success":
+            return (
+              <div className="flex flex-row items-center max-w-[6rem]">
+                <div className="h-2 w-2 rounded-full bg-green-400" />
+                <span className="ml-1 text-xs text-muted-foreground line-clamp-1 text-clip">{formatDuration(cell.row.original.health.uptime * 1000, true)}</span>
+              </div>
+            )
+          case "pending":
+            return (
+              <div className="h-2 w-2 rounded-full bg-purple-400 animate-pulse" />
+            )
+          case "error":
+            return (
+              <div className="h-2 w-2 rounded-full bg-red-500" />
+            )
+          default:
+            return (
+              <div className="h-2 w-2 rounded-full bg-gray-400" />
+            )
+        }
+      },
+      sortUndefined: -1,
+    },
+    {
+      id: "Observation",
+      accessorKey: "observation.pass",
+      header: "Observation",
+      size: 20,
+      cell: (cell) => {
+        const status = cell.row.original.observation.status;
+        switch (status) {
+          case "success":
+            return (cell.row.original.observation.result.pass) ? 
+              (
+                <div className="flex flex-row items-center max-w-[6rem]">
+                  <div className="h-2 w-2 rounded-full bg-green-400" />
+                  <span className="ml-1 text-xs text-muted-foreground line-clamp-1 text-clip">Pass</span>
+                </div>
+              ) : (
+                <div className="flex flex-row items-center max-w-[6rem]">
+                  <div className="h-2 w-2 rounded-full bg-red-400" />
+                  <span className="ml-1 text-xs text-muted-foreground line-clamp-1 text-clip">Fail</span>
+                </div>
+              )
+          case "pending":
+            return (
+              <div className="h-2 w-2 rounded-full bg-purple-400 animate-pulse" />
+            )
+          case "error":
+            return (
+              <div className="h-2 w-2 rounded-full bg-red-500" />
+            )
+          default:
+            return (
+              <Button
+                className="p-0 py-0 pt-0"
+                size={"sm"}
+                variant={"secondary"}
+                disabled={isRefreshing}
+                onClick={isRefreshing ? undefined : async (e) => {
+                  e.stopPropagation();
+                  const updatedItem = structuredClone(cell.row.original);
+                  updatedItem.observation = { status: "pending" };
+                  onItemUpdate(updatedItem)
+                  try {
+                    const resolution = await getArnsResolution({
+                      fqdn: cell.row.original.settings.fqdn,
+                      arnsName: 'bitcoin',
+                    });
+                    const updatedItem = structuredClone(cell.row.original);
+                    updatedItem.observation = { status: "success", result: { pass: true, resolution, } };
+                    console.log(updatedItem)
+                    onItemUpdate(updatedItem)
+                  } catch (e) {
+                    console.log(e)
+                    const updatedItem = structuredClone(cell.row.original);
+                    updatedItem.observation = { status: "error", error: e?.toString() };
+                    onItemUpdate(updatedItem)
+                  }
+                }}
+              >
+                Run test
+              </Button>
+            )
+        }
+      },
+      sortUndefined: -1,
+    },
+  ]
 
   const table = useReactTable({
     data,
