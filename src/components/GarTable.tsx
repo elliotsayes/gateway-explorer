@@ -207,7 +207,7 @@ const GarTable = ({ data, onRefresh, isRefreshing, onItemUpdate, onItemSelect, s
           default:
             return (
               <Button
-                className="p-0 py-0 pt-0"
+                className="h-auto px-2 py-0 text-sm"
                 size={"sm"}
                 variant={"secondary"}
                 disabled={isRefreshing}
@@ -221,13 +221,9 @@ const GarTable = ({ data, onRefresh, isRefreshing, onItemUpdate, onItemSelect, s
                       fqdn: cell.row.original.settings.fqdn,
                       arnsName: 'bitcoin',
                     });
-                    const updatedItem = structuredClone(cell.row.original);
                     updatedItem.observation = { status: "success", result: { pass: true, resolution, } };
-                    console.log(updatedItem)
                     onItemUpdate(updatedItem)
                   } catch (e) {
-                    console.log(e)
-                    const updatedItem = structuredClone(cell.row.original);
                     updatedItem.observation = { status: "error", error: e?.toString() };
                     onItemUpdate(updatedItem)
                   }
