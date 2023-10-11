@@ -20,5 +20,8 @@
   },
   "health": {
     "status": "unknown"
+  },
+  "observation": {
+    "status": "unknown"
   }
 }

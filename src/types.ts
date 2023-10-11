@@ -36,33 +36,6 @@ export const zGatewayHealthCheck = z.object({
   date: z.string().datetime().optional(),
 });
 
-export const zGatewayAddressRegistryItem = z.intersection(
-  z.object({
-    id: zArweaveTxId,
-    linkFull: z.string().url(),
-    linkDisplay: z.string(),
-    ping: z.discriminatedUnion("status", [
-      z.object({ status: z.literal("unknown") }),
-      z.object({ status: z.literal("pending") }),
-      z.object({ status: z.literal("error"), error: z.string().optional() }),
-      z.object({
-        status: z.literal("success"),
-        value: z.number().int().nonnegative(),
-      }),
-    ]),
-    health: z.discriminatedUnion("status", [
-      z.object({ status: z.literal("unknown") }),
-      z.object({ status: z.literal("pending") }),
-      z.object({ status: z.literal("error"), error: z.string().optional() }),
-      z.object({
-        status: z.literal("success"),
-        uptime: z.number().nonnegative(),
-      }),
-    ]),
-  }),
-  zGatewayAddressRegistryItemData
-);
-
 export const zArnsResolutionSuccess = z.object({
   statusCode: z.literal(200),
   resolvedId: z.string(),
@@ -94,3 +67,45 @@ export const zArnsResolution = z.discriminatedUnion("statusCode", [
     timings: z.null(),
   }),
 ]);
+
+// TODO: Copy from observation protocol standard
+export const zArioObservation = z.object({
+  pass: z.boolean(),
+  resolution: zArnsResolution.optional(),
+});
+
+export const zGatewayAddressRegistryItem = z.intersection(
+  z.object({
+    id: zArweaveTxId,
+    linkFull: z.string().url(),
+    linkDisplay: z.string(),
+    ping: z.discriminatedUnion("status", [
+      z.object({ status: z.literal("unknown") }),
+      z.object({ status: z.literal("pending") }),
+      z.object({ status: z.literal("error"), error: z.string().optional() }),
+      z.object({
+        status: z.literal("success"),
+        value: z.number().int().nonnegative(),
+      }),
+    ]),
+    health: z.discriminatedUnion("status", [
+      z.object({ status: z.literal("unknown") }),
+      z.object({ status: z.literal("pending") }),
+      z.object({ status: z.literal("error"), error: z.string().optional() }),
+      z.object({
+        status: z.literal("success"),
+        uptime: z.number().nonnegative(),
+      }),
+    ]),
+    observation: z.discriminatedUnion("status", [
+      z.object({ status: z.literal("unknown") }),
+      z.object({ status: z.literal("pending") }),
+      z.object({ status: z.literal("error"), error: z.string().optional() }),
+      z.object({
+        status: z.literal("success"),
+        result: zArioObservation,
+      }),
+    ]),
+  }),
+  zGatewayAddressRegistryItemData
+);

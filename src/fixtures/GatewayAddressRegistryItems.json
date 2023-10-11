@@ -21,6 +21,9 @@
     },
     "health": {
       "status": "unknown"
+    },
+    "observation": {
+      "status": "unknown"
     }
   },
   {
@@ -45,6 +48,9 @@
     },
     "health": {
       "status": "pending"
+    },
+    "observation": {
+      "status": "pending"
     }
   },
   {
@@ -68,6 +74,9 @@
       "status": "error"
     },
     "health": {
+      "status": "error"
+    },
+    "observation": {
       "status": "error"
     }
   },
@@ -95,6 +104,12 @@
     "health": {
       "status": "success",
       "uptime": 123456
+    },
+    "observation": {
+      "status": "success",
+      "result": {
+        "pass": false
+      }
     }
   },
   {
@@ -121,6 +136,12 @@
     "health": {
       "status": "success",
       "uptime": 1234
+    },
+    "observation": {
+      "status": "success",
+      "result": {
+        "pass": true
+      }
     }
   }
 ]
