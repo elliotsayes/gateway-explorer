@@ -63,23 +63,34 @@ export const zGatewayAddressRegistryItem = z.intersection(
   zGatewayAddressRegistryItemData
 );
 
-export const zArnsResolution = z.object({
-  statusCode: z.number().int().nonnegative(),
-  resolvedId: z.string().nullable(),
-  ttlSeconds: z.string().nullable(),
-  contentType: z.string().nullable(),
+export const zArnsResolutionSuccess = z.object({
+  statusCode: z.literal(200),
+  resolvedId: z.string(),
+  ttlSeconds: z.string(),
+  contentType: z.string(),
   contentLength: z.string().nullable(),
-  dataHashDigest: z.string().nullable(),
-  timings: z
-    .object({
-      wait: z.number().int().nonnegative().optional(),
-      dns: z.number().int().nonnegative().optional(),
-      tcp: z.number().int().nonnegative().optional(),
-      tls: z.number().int().nonnegative().optional(),
-      request: z.number().int().nonnegative().optional(),
-      firstByte: z.number().int().nonnegative().optional(),
-      download: z.number().int().nonnegative().optional(),
-      total: z.number().int().nonnegative(),
-    })
-    .nullable(),
+  dataHashDigest: z.string(),
+  timings: z.object({
+    wait: z.number().int().nonnegative().optional(),
+    dns: z.number().int().nonnegative().optional(),
+    tcp: z.number().int().nonnegative().optional(),
+    tls: z.number().int().nonnegative().optional(),
+    request: z.number().int().nonnegative().optional(),
+    firstByte: z.number().int().nonnegative().optional(),
+    download: z.number().int().nonnegative().optional(),
+    total: z.number().int().nonnegative(),
+  }),
 });
+
+export const zArnsResolution = z.discriminatedUnion("statusCode", [
+  zArnsResolutionSuccess,
+  z.object({
+    statusCode: z.literal(404),
+    resolvedId: z.null(),
+    ttlSeconds: z.null(),
+    contentType: z.null(),
+    contentLength: z.null(),
+    dataHashDigest: z.null(),
+    timings: z.null(),
+  }),
+]);
