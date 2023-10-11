@@ -177,7 +177,7 @@ const GarTable = ({ data, onRefresh, isRefreshing, onItemUpdate, onItemSelect, s
     },
     {
       id: "Observation",
-      accessorKey: "observation.pass",
+      accessorKey: "observation.status",
       header: "Observation",
       size: 20,
       cell: (cell) => {
