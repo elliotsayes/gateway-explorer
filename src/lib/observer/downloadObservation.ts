@@ -18,12 +18,11 @@ export type GetObserverReportTxIdsArgs = Parameters<
 
 export type Transaction = TransactionEdge["node"];
 
-export const queryObserverReportTransactions = async (
+export async function* queryObserverReportTransactions(
   args: GetObserverReportTxIdsArgs,
   all = true
-) => {
+) {
   let queryRes: GetTransactionsQuery | undefined = undefined;
-  let results: TransactionEdge[] = [];
   do {
     const pageArgs = {
       tags: [
@@ -38,21 +37,11 @@ export const queryObserverReportTransactions = async (
       after: queryRes?.transactions.edges[0].cursor ?? args?.after,
     };
     queryRes = await gql.getTransactions(pageArgs);
-    // console.log({
-    //   pageArgs: pageArgs,
-    //   queryRes: queryRes,
-    // });
-    results = results.concat(queryRes.transactions.edges);
+    const transactionEdges: TransactionEdge[] = queryRes.transactions.edges;
+    yield* transactionEdges;
   } while (all && queryRes.transactions.pageInfo.hasNextPage);
-
-  const cursor = results[results.length - 1]?.cursor as string | undefined;
-  const transactions: Transaction[] = results.map((r) => r.node);
-
-  return {
-    cursor,
-    transactions,
-  };
-};
+  return queryRes;
+}
 
 export const downloadReportInfoForTransaction = async (
   transaction: Transaction

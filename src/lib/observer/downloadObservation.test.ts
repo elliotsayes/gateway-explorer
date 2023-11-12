@@ -15,14 +15,12 @@ describe("getObserverReportsTxIdsArweave", () => {
       sort: SortOrder.HeightDesc,
     };
 
-    const { cursor, transactions } = await queryObserverReportTransactions(
-      args,
-      false
+    const transactions = await Array.fromAsync(
+      queryObserverReportTransactions(args, false)
     );
 
     // console.log(transactions);
 
-    expect(cursor).toBeDefined();
     expect(transactions).toBeDefined();
     expect(transactions.length).toBeGreaterThan(0);
   });
