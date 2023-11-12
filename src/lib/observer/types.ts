@@ -22,7 +22,7 @@
 //
 
 export interface BlockSource {
-  getBlockByHeight(height: number): Promise<any>; // TODO fix any
+  getBlockByHeight(height: number): Promise<unknown>; // TODO fix unknown
 }
 
 export interface HeightSource {
@@ -34,7 +34,7 @@ export interface HeightSource {
 //
 
 export interface EntropySource {
-  getEntropy(opts?: { [key: string]: any }): Promise<Buffer>;
+  getEntropy(opts?: { [key: string]: unknown }): Promise<Buffer>;
 }
 
 export interface ArnsNameList {
@@ -44,7 +44,7 @@ export interface ArnsNameList {
 }
 
 export interface ArnsNamesSource {
-  getNames(opts?: { [key: string]: any }): Promise<string[]>;
+  getNames(opts?: { [key: string]: unknown }): Promise<string[]>;
 }
 
 //
@@ -69,7 +69,7 @@ export interface GatewayHostList {
 //
 
 export interface ObserversSource {
-  getObservers(opts?: { [key: string]: any }): Promise<string[]>;
+  getObservers(opts?: { [key: string]: unknown }): Promise<string[]>;
 }
 
 //
