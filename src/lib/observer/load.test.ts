@@ -1,11 +1,12 @@
 import { describe, it, expect } from "bun:test";
 import {
   GetObserverReportTxIdsArgs,
-  Transaction,
   getObserverReportsTxIdsArweave,
   getReportInfo,
 } from "./load";
 import { SortOrder } from "arweave-graphql";
+import transaction from "../../fixtures/ReportTransaction.json";
+import transactionData from "../../fixtures/ReportTransactionData.json";
 
 describe("getObserverReportsTxIdsArweave", () => {
   it("should fetch transactions from Arweave GraphQL endpoint", async () => {
@@ -29,19 +30,11 @@ describe("getObserverReportsTxIdsArweave", () => {
 
 describe("getReportInfo", () => {
   it("should fetch report info from Arweave gateway", async () => {
-    const transaction: Transaction = {
-      id: "oziZcRu1sUiRbOyowZouREPbRkb8P3Q9Qv2DjYuryEI",
-      tags: [
-        {
-          name: "Content-Encoding",
-          value: "gzip",
-        },
-      ],
-    } as Transaction;
     const reportInfo = await getReportInfo(transaction);
 
-    console.log(reportInfo);
+    // console.log(reportInfo);
 
     expect(reportInfo).toBeDefined();
+    expect(reportInfo).toEqual(transactionData);
   });
 });
