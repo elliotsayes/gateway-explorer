@@ -36,6 +36,44 @@ export const zGatewayHealthCheck = z.object({
   date: z.string().datetime().optional(),
 });
 
+export const zArnsResolutionSuccess = z.object({
+  statusCode: z.literal(200),
+  resolvedId: z.string(),
+  ttlSeconds: z.string(),
+  contentType: z.string(),
+  contentLength: z.string().nullable(),
+  dataHashDigest: z.string(),
+  timings: z.object({
+    wait: z.number().int().nonnegative().optional(),
+    dns: z.number().int().nonnegative().optional(),
+    tcp: z.number().int().nonnegative().optional(),
+    tls: z.number().int().nonnegative().optional(),
+    request: z.number().int().nonnegative().optional(),
+    firstByte: z.number().int().nonnegative().optional(),
+    download: z.number().int().nonnegative().optional(),
+    total: z.number().int().nonnegative(),
+  }),
+});
+
+export const zArnsResolution = z.discriminatedUnion("statusCode", [
+  zArnsResolutionSuccess,
+  z.object({
+    statusCode: z.literal(404),
+    resolvedId: z.null(),
+    ttlSeconds: z.null(),
+    contentType: z.null(),
+    contentLength: z.null(),
+    dataHashDigest: z.null(),
+    timings: z.null(),
+  }),
+]);
+
+// TODO: Copy from observation protocol standard
+export const zArioObservation = z.object({
+  pass: z.boolean(),
+  resolution: zArnsResolution.optional(),
+});
+
 export const zGatewayAddressRegistryItem = z.intersection(
   z.object({
     id: zArweaveTxId,
@@ -57,6 +95,15 @@ export const zGatewayAddressRegistryItem = z.intersection(
       z.object({
         status: z.literal("success"),
         uptime: z.number().nonnegative(),
+      }),
+    ]),
+    observation: z.discriminatedUnion("status", [
+      z.object({ status: z.literal("unknown") }),
+      z.object({ status: z.literal("pending") }),
+      z.object({ status: z.literal("error"), error: z.string().optional() }),
+      z.object({
+        status: z.literal("success"),
+        result: zArioObservation,
       }),
     ]),
   }),

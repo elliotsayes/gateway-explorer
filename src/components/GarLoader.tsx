@@ -73,6 +73,15 @@ const GarLoader = () => {
             data={procData}
             isRefreshing={isLoading || isFetching || isPinging}
             onRefresh={() => {refetch()}}
+            onItemUpdate={(updatedItem) => {
+              setProcData((prevData) => {
+                const prevItemIndex = prevData.findIndex((item) => item.id === updatedItem.id)
+                if (prevItemIndex === -1) return prevData;
+                const newData = [...prevData]
+                newData[prevItemIndex] = updatedItem
+                return newData
+              })
+            }}
             onItemSelect={(item) => {
               setSelectedItemId(item.id)
               if (!isSheetOpen) {
