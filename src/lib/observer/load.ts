@@ -2,18 +2,24 @@ import arweaveGraphql, {
   GetTransactionsQuery,
   SortOrder,
 } from "arweave-graphql";
+import { z } from "zod";
+import { observerReportSchema } from "./schema";
+import { inflate } from "pako";
 
+const gatewayUrl = "arweave.net";
 const graphqlUrl = "arweave.net/graphql";
 const gql = arweaveGraphql(graphqlUrl);
 
-type GetAllReportArgs = Parameters<typeof gql.getTransactions>["0"];
-
 type TransactionEdge = GetTransactionsQuery["transactions"]["edges"][0];
+
+export type GetObserverReportTxIdsArgs = Parameters<
+  typeof gql.getTransactions
+>["0"];
 
 export type Transaction = TransactionEdge["node"];
 
-export const getObserverReportsArweave = async (
-  args: GetAllReportArgs,
+export const getObserverReportsTxIdsArweave = async (
+  args: GetObserverReportTxIdsArgs,
   all = true
 ) => {
   let queryRes: GetTransactionsQuery | undefined = undefined;
@@ -32,10 +38,10 @@ export const getObserverReportsArweave = async (
       after: queryRes?.transactions.edges[0].cursor ?? args?.after,
     };
     queryRes = await gql.getTransactions(pageArgs);
-    console.log({
-      pageArgs: pageArgs,
-      queryRes: queryRes,
-    });
+    // console.log({
+    //   pageArgs: pageArgs,
+    //   queryRes: queryRes,
+    // });
     results = results.concat(queryRes.transactions.edges);
   } while (all && queryRes.transactions.pageInfo.hasNextPage);
 
@@ -46,4 +52,25 @@ export const getObserverReportsArweave = async (
     cursor,
     transactions,
   };
+};
+
+export const getReportInfo = async (transaction: Transaction) => {
+  const txDataRes = await fetch(`https://${gatewayUrl}/${transaction.id}`);
+  let observerReport: z.infer<typeof observerReportSchema> | undefined =
+    undefined;
+  if (
+    transaction.tags.find(
+      (t) =>
+        t.name.toLowerCase() === "content-encoding" &&
+        t.value.toLowerCase() === "gzip"
+    ) !== undefined
+  ) {
+    const txDataInflated = inflate(await txDataRes.arrayBuffer());
+    const txDataText = new TextDecoder().decode(txDataInflated);
+    const txDataJson = JSON.parse(txDataText);
+    observerReport = observerReportSchema.parse(txDataJson);
+  } else {
+    observerReport = observerReportSchema.parse(await txDataRes.json());
+  }
+  return observerReport;
 };

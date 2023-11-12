@@ -1,8 +1,8 @@
-import { getObserverReportsArweave } from "./load";
+import { getObserverReportsTxIdsArweave } from "./load";
 
 export function LoadTest() {
   const handleTestClick = async () => {
-    const reports = await getObserverReportsArweave({
+    const reports = await getObserverReportsTxIdsArweave({
       first: 10,
     }, false);
     console.log(reports);
