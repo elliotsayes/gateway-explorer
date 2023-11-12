@@ -3,38 +3,47 @@ import arweaveGraphql, {
   SortOrder,
 } from "arweave-graphql";
 
-const graphqlUrl = "https://arweave.net/graphql";
-
+const graphqlUrl = "arweave.net/graphql";
 const gql = arweaveGraphql(graphqlUrl);
 
 type GetAllReportArgs = Parameters<typeof gql.getTransactions>["0"];
 
-type Transaction = GetTransactionsQuery["transactions"]["edges"][0];
+type TransactionEdge = GetTransactionsQuery["transactions"]["edges"][0];
 
-export const getAllObserverReportsArweave = async (args: GetAllReportArgs) => {
+export type Transaction = TransactionEdge["node"];
+
+export const getObserverReportsArweave = async (
+  args: GetAllReportArgs,
+  all = true
+) => {
   let queryRes: GetTransactionsQuery | undefined = undefined;
-  const results: Transaction[] = [];
+  let results: TransactionEdge[] = [];
   do {
-    queryRes = await gql.getTransactions({
+    const pageArgs = {
       tags: [
         { name: "App-Name", values: ["AR-IO Observer"] },
-        { name: "App-Version", values: ["0.0.1"] },
-        { name: "Content-Type", values: ["application/json"] },
-        { name: "Content-Encoding", values: ["gzip"] },
+        // { name: "App-Version", values: ["0.0.1"] },
+        // { name: "Content-Type", values: ["application/json"] },
+        // { name: "Content-Encoding", values: ["gzip"] },
       ],
       first: 100,
       sort: SortOrder.HeightAsc,
       ...args,
-      after: queryRes!.transactions.edges[0].cursor,
+      after: queryRes?.transactions.edges[0].cursor ?? args?.after,
+    };
+    queryRes = await gql.getTransactions(pageArgs);
+    console.log({
+      pageArgs: pageArgs,
+      queryRes: queryRes,
     });
-    results.concat(queryRes.transactions.edges);
-  } while (queryRes.transactions.pageInfo.hasNextPage);
+    results = results.concat(queryRes.transactions.edges);
+  } while (all && queryRes.transactions.pageInfo.hasNextPage);
 
-  const transactions = results.map((r) => r.node);
-  const cursor = results[results.length - 1].cursor;
+  const cursor = results[results.length - 1]?.cursor as string | undefined;
+  const transactions: Transaction[] = results.map((r) => r.node);
 
   return {
-    transactions,
     cursor,
+    transactions,
   };
 };
