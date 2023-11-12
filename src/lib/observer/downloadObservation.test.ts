@@ -1,9 +1,9 @@
 import { describe, it, expect } from "bun:test";
 import {
   GetObserverReportTxIdsArgs,
-  getObserverReportsTxIdsArweave,
-  getReportInfo,
-} from "./load";
+  queryObserverReportTransactions,
+  downloadReportInfoForTransaction,
+} from "./downloadObservation";
 import { SortOrder } from "arweave-graphql";
 import transaction from "../../fixtures/ReportTransaction.json";
 import transactionData from "../../fixtures/ReportTransactionData.json";
@@ -15,7 +15,7 @@ describe("getObserverReportsTxIdsArweave", () => {
       sort: SortOrder.HeightDesc,
     };
 
-    const { cursor, transactions } = await getObserverReportsTxIdsArweave(
+    const { cursor, transactions } = await queryObserverReportTransactions(
       args,
       false
     );
@@ -30,7 +30,7 @@ describe("getObserverReportsTxIdsArweave", () => {
 
 describe("getReportInfo", () => {
   it("should fetch report info from Arweave gateway", async () => {
-    const reportInfo = await getReportInfo(transaction);
+    const reportInfo = await downloadReportInfoForTransaction(transaction);
 
     // console.log(reportInfo);
 

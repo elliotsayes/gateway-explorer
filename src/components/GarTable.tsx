@@ -26,7 +26,7 @@ import {
 } from "lucide-react"
 import { Button } from "./ui/button"
 import { formatDuration } from "@/lib/utils"
-import { getArnsResolution } from "@/lib/observer/run"
+import { getArnsResolution } from "@/lib/observer/quickObservation"
 
 interface Props {
   data: Array<z.infer<typeof zGatewayAddressRegistryItem>>

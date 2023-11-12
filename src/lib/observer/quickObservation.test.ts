@@ -1,5 +1,5 @@
 import { expect, test } from "bun:test";
-import { getArnsResolution } from "./run";
+import { getArnsResolution } from "./quickObservation";
 
 test(
   "getArnsResolution from ar.io.dev node for existent ARNS name",

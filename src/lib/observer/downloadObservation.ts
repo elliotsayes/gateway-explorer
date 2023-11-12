@@ -18,7 +18,7 @@ export type GetObserverReportTxIdsArgs = Parameters<
 
 export type Transaction = TransactionEdge["node"];
 
-export const getObserverReportsTxIdsArweave = async (
+export const queryObserverReportTransactions = async (
   args: GetObserverReportTxIdsArgs,
   all = true
 ) => {
@@ -54,7 +54,9 @@ export const getObserverReportsTxIdsArweave = async (
   };
 };
 
-export const getReportInfo = async (transaction: Transaction) => {
+export const downloadReportInfoForTransaction = async (
+  transaction: Transaction
+) => {
   const txDataRes = await fetch(`https://${gatewayUrl}/${transaction.id}`);
   let observerReport: z.infer<typeof observerReportSchema> | undefined =
     undefined;
