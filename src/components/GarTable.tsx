@@ -182,55 +182,68 @@ const GarTable = ({ data, onRefresh, isRefreshing, onItemUpdate, onItemSelect, s
       size: 20,
       cell: (cell) => {
         const status = cell.row.original.observation.status;
+        const button = (retry = false) => (
+          <Button
+            className="h-auto px-2 py-0 text-xs text-muted-foreground"
+            size={"sm"}
+            variant={"outline"}
+            disabled={isRefreshing}
+            onClick={isRefreshing ? undefined : async (e) => {
+              e.stopPropagation();
+              const updatedItem = structuredClone(cell.row.original);
+              updatedItem.observation = { status: "pending" };
+              onItemUpdate(updatedItem)
+              try {
+                const resolution = await getArnsResolution({
+                  fqdn: cell.row.original.settings.fqdn,
+                  arnsName: 'bitcoin',
+                });
+                updatedItem.observation = { status: "success", result: { pass: true, resolution } };
+                onItemUpdate(updatedItem)
+              } catch (e) {
+                updatedItem.observation = { status: "error", error: e?.toString() };
+                onItemUpdate(updatedItem)
+              }
+            }}
+          >
+            {retry ? "Retry" : "Run test"}
+          </Button>
+        )
         switch (status) {
           case "success":
             return (cell.row.original.observation.result.pass) ? 
               (
-                <div className="flex flex-row items-center max-w-[6rem]">
+                <div className="flex flex-row items-center gap-2 max-w-[8rem]">
                   <div className="h-2 w-2 rounded-full bg-green-400" />
-                  <span className="ml-1 text-xs text-muted-foreground line-clamp-1 text-clip">Pass</span>
+                  <span className="text-xs text-muted-foreground line-clamp-1 text-clip">Pass</span>
+                  {button(true)}
                 </div>
               ) : (
-                <div className="flex flex-row items-center max-w-[6rem]">
+                <div className="flex flex-row items-center gap-2 max-w-[8rem]">
                   <div className="h-2 w-2 rounded-full bg-red-400" />
-                  <span className="ml-1 text-xs text-muted-foreground line-clamp-1 text-clip">Fail</span>
+                  <span className="text-xs text-muted-foreground line-clamp-1 text-clip">Fail</span>
+                  {button(true)}
                 </div>
               )
           case "pending":
             return (
-              <div className="h-2 w-2 rounded-full bg-purple-400 animate-pulse" />
+              <div className="flex flex-row items-center gap-2 max-w-[8rem]">
+                <div className="h-2 w-2 rounded-full bg-purple-400 animate-pulse" />
+              </div>
             )
           case "error":
             return (
-              <div className="h-2 w-2 rounded-full bg-red-500" />
+              <div className="flex flex-row items-center gap-2 max-w-[8rem]">
+                <div className="h-2 w-2 rounded-full bg-red-500" />
+              <span className="text-xs text-muted-foreground line-clamp-1 text-clip">Error</span>
+                {button(true)}
+              </div>
             )
           default:
             return (
-              <Button
-                className="h-auto px-2 py-0 text-sm"
-                size={"sm"}
-                variant={"secondary"}
-                disabled={isRefreshing}
-                onClick={isRefreshing ? undefined : async (e) => {
-                  e.stopPropagation();
-                  const updatedItem = structuredClone(cell.row.original);
-                  updatedItem.observation = { status: "pending" };
-                  onItemUpdate(updatedItem)
-                  try {
-                    const resolution = await getArnsResolution({
-                      fqdn: cell.row.original.settings.fqdn,
-                      arnsName: 'bitcoin',
-                    });
-                    updatedItem.observation = { status: "success", result: { pass: true, resolution, } };
-                    onItemUpdate(updatedItem)
-                  } catch (e) {
-                    updatedItem.observation = { status: "error", error: e?.toString() };
-                    onItemUpdate(updatedItem)
-                  }
-                }}
-              >
-                Run test
-              </Button>
+              <div className="flex flex-row items-center gap-2 max-w-[8rem]">
+                {button()}
+              </div>
             )
         }
       },
@@ -253,7 +266,8 @@ const GarTable = ({ data, onRefresh, isRefreshing, onItemUpdate, onItemSelect, s
         "Properties ID": false,
         "Status": false,
         "Start Block": false,
-        // "Uptime": false,
+        "Note": false,
+        "Uptime": false,
       }
     }
   })
