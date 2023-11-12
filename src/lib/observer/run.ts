@@ -1,7 +1,7 @@
 import { z } from "zod";
-import { zArnsResolution } from "@/types";
 import ky from "ky";
-import { arrayBufferToBase64Url } from "./utils";
+import { arrayBufferToBase64Url } from "../utils";
+import { arnsResolutionSchema } from "./schema";
 
 const getArnsResolution = async ({
   protocol,
@@ -13,7 +13,7 @@ const getArnsResolution = async ({
   fqdn: string;
   port?: number;
   arnsName: string;
-}): Promise<z.infer<typeof zArnsResolution>> => {
+}): Promise<z.infer<typeof arnsResolutionSchema>> => {
   const url = `${protocol ?? "https"}://${arnsName}.${fqdn}:${port ?? 443}/`;
 
   const startTimestamp = Date.now();
@@ -47,7 +47,7 @@ const getArnsResolution = async ({
   const dataHash = await crypto.subtle.digest("SHA-256", data);
   const dataHashBase64url = arrayBufferToBase64Url(dataHash);
 
-  return zArnsResolution.parse({
+  return arnsResolutionSchema.parse({
     statusCode: response.status,
     resolvedId: response.headers.get("x-arns-resolved-id"),
     ttlSeconds: response.headers.get("x-arns-ttl-seconds"),
@@ -55,8 +55,11 @@ const getArnsResolution = async ({
     contentLength: response.headers.get("content-length"),
     dataHashDigest: dataHashBase64url,
     timings: {
-      request: responseTimestamp - startTimestamp,
-      total: endTimestamp - startTimestamp,
+      start: startTimestamp,
+      phases: {
+        request: responseTimestamp - startTimestamp,
+        total: endTimestamp - startTimestamp,
+      },
     },
   });
 };
