@@ -41,7 +41,7 @@
     "status": "joined",
     "start": 1256694,
     "end": 0,
-    "linkFull": "https://ar-io.dev/",
+    "linkFull": "https://ar-io.dev",
     "linkDisplay": "ar-io.dev",
     "ping": {
       "status": "pending"
@@ -68,7 +68,7 @@
     "status": "joined",
     "start": 1256694,
     "end": 0,
-    "linkFull": "https://ar-io.dev/",
+    "linkFull": "https://ar-io.dev",
     "linkDisplay": "ar-io.dev",
     "ping": {
       "status": "error"
@@ -95,7 +95,7 @@
     "status": "joined",
     "start": 1256694,
     "end": 0,
-    "linkFull": "https://ar-io.dev/",
+    "linkFull": "https://ar-io.dev",
     "linkDisplay": "ar-io.dev",
     "ping": {
       "status": "success",
@@ -127,7 +127,7 @@
     "status": "joined",
     "start": 1256694,
     "end": 0,
-    "linkFull": "https://ar-io.dev/",
+    "linkFull": "https://ar-io.dev",
     "linkDisplay": "ar-io.dev",
     "ping": {
       "status": "success",

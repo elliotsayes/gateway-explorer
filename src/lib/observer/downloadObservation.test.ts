@@ -40,8 +40,8 @@ describe("getReportInfo", () => {
 
 describe("downloadCurrentReportInfoFromGateway", () => {
   it("should fetch report info from Arweave gateway", async () => {
-    const fqdn = "https://ar-io.dev";
-    const reportInfo = await downloadCurrentReportInfoFromGateway(fqdn);
+    const linkFull = "https://ar-io.dev";
+    const reportInfo = await downloadCurrentReportInfoFromGateway(linkFull);
 
     // console.log(reportInfo);
 
