@@ -3,6 +3,7 @@ import {
   GetObserverReportTxIdsArgs,
   queryObserverReportTransactions,
   downloadReportInfoForTransaction,
+  downloadCurrentReportInfoFromGateway,
 } from "./downloadObservation";
 import { SortOrder } from "arweave-graphql";
 import transaction from "../../fixtures/ReportTransaction.json";
@@ -34,5 +35,16 @@ describe("getReportInfo", () => {
 
     expect(reportInfo).toBeDefined();
     expect(reportInfo).toEqual(transactionData);
+  });
+});
+
+describe("downloadCurrentReportInfoFromGateway", () => {
+  it("should fetch report info from Arweave gateway", async () => {
+    const fqdn = "https://ar-io.dev";
+    const reportInfo = await downloadCurrentReportInfoFromGateway(fqdn);
+
+    // console.log(reportInfo);
+
+    expect(reportInfo).toBeDefined();
   });
 });

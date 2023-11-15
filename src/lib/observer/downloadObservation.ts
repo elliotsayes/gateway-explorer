@@ -65,3 +65,10 @@ export const downloadReportInfoForTransaction = async (
   }
   return observerReport;
 };
+
+export const downloadCurrentReportInfoFromGateway = async (fqdn: string) => {
+  const currentReportUrl = `${fqdn}/ar-io/observer/reports/current`;
+  return await fetch(currentReportUrl)
+    .then((res) => res.json())
+    .then((json) => observerReportSchema.parse(json));
+};
