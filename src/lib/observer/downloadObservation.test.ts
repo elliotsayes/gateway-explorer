@@ -39,8 +39,8 @@ describe("getReportInfo", () => {
 });
 
 describe("downloadCurrentReportInfoFromGateway", () => {
-  it("should fetch report info from Arweave gateway", async () => {
-    const linkFull = "https://ar-io.dev";
+  it("should fetch report info from an gateway node", async () => {
+    const linkFull = "https://permagate.io";
     const reportInfo = await downloadCurrentReportInfoFromGateway(linkFull);
 
     // console.log(reportInfo);
