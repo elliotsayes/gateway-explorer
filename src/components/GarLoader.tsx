@@ -15,6 +15,7 @@ import { pingUpdater } from '@/lib/pinger';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from './ui/sheet';
 import GatewayDetails from './GatewayDetails';
 import arioLogo from '../assets/ar.io-white.png'
+import { ReportTable } from './ReportTable';
 
 const GarLoader = () => {
   const [isPinging, setIsPinging] = useState(false)
@@ -44,7 +45,8 @@ const GarLoader = () => {
   const [selectedItemId, setSelectedItemId] = useState<string | undefined>(undefined)
   const selectedItem = procData.find((item) => item.id === selectedItemId)
 
-  const [isSheetOpen, setIsSheetOpen] = useState(false)
+  const [isDetailsSheetOpen, setIsDetailsSheetOpen] = useState(false)
+  const [isReportSheetOpen, setIsReportSheetOpen] = useState(false)
   
   if (error) return <div>Error: {JSON.stringify(error)}</div>
 
@@ -84,19 +86,22 @@ const GarLoader = () => {
             }}
             onItemSelect={(item) => {
               setSelectedItemId(item.id)
-              if (!isSheetOpen) {
-                setIsSheetOpen(true)
+              if (!isDetailsSheetOpen) {
+                setIsDetailsSheetOpen(true)
               }
             }}
             onOpenReport={(item) => {
-              console.log('open report', item)
+              setSelectedItemId(item.id)
+              if (!isReportSheetOpen) {
+                setIsReportSheetOpen(true)
+              }
             }}
             selectedItemId={selectedItemId}
           />
         </CardContent>
       </Card>
       <Sheet
-        open={isSheetOpen}
+        open={isDetailsSheetOpen}
         // onOpenChange={(isOpen) => {
         //   setIsSheetOpen(isOpen)
         // }}
@@ -105,7 +110,7 @@ const GarLoader = () => {
         <SheetContent
           side="bottom"
           onCloseButtonClick={() => {
-            setIsSheetOpen(false)
+            setIsDetailsSheetOpen(false)
             // setSelectedItemId(undefined)
           }}
         >
@@ -117,6 +122,37 @@ const GarLoader = () => {
             <GatewayDetails
               data={selectedItem!}
             />
+          </SheetHeader>
+        </SheetContent>
+      </Sheet>
+      <Sheet
+        open={isReportSheetOpen}
+        // onOpenChange={(isOpen) => {
+        //   setIsSheetOpen(isOpen)
+        // }}
+        modal={false}
+      >
+        <SheetContent
+          side="bottom"
+          onCloseButtonClick={() => {
+            setIsReportSheetOpen(false)
+            // setSelectedItemId(undefined)
+          }}
+        >
+          <SheetHeader>
+            <SheetTitle className='pb-4'>
+              Report Details
+              {/* {selectedItem?.settings.label && <> - <code>{selectedItem?.settings.label}</code></>} */}
+            </SheetTitle>
+            <div className='min-h-[20vh] max-h-[80vh] overflow-y-scroll'>
+              {
+                selectedItem && (
+                  <ReportTable observer={selectedItem} onUpdateObserver={function (): void {
+                    throw new Error('Function not implemented.');
+                  }} />
+                )
+              }
+            </div>
           </SheetHeader>
         </SheetContent>
       </Sheet>
@@ -149,7 +185,7 @@ const GarLoader = () => {
         <div>
           ©2023 ar.io
         </div>
-        <div className={`${isSheetOpen ? 'h-[calc(50vh+3em)]' : 'h-[2em]'} transition-all duration-200`} />
+        <div className={`${isDetailsSheetOpen ? 'h-[calc(50vh+3em)]' : 'h-[2em]'} transition-all duration-200`} />
       </div>
     </div>
   )

@@ -86,6 +86,7 @@ const ReportTable = ({ observer }: Props) => {
 
   const {
     data,
+    isError,
   } = useQuery(['observationReportCurrent', observer.id], async () => {
     return await downloadCurrentReportInfoFromGateway(observer.linkFull)
   });
@@ -199,7 +200,7 @@ const ReportTable = ({ observer }: Props) => {
             ) : (
               <TableRow>
                 <TableCell colSpan={columns.length} className="h-24 text-center">
-                  Loading Report...
+                  {isError ? "Failed to load report." : "Loading report..."}
                 </TableCell>
               </TableRow>
             )}
