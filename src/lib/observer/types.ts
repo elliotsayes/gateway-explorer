@@ -114,12 +114,14 @@ export interface GatewayArnsAssessments {
   pass: boolean;
 }
 
+export interface GatewayAssessment {
+  ownershipAssessment: OwnershipAssessment;
+  arnsAssessments: GatewayArnsAssessments;
+  pass: boolean;
+}
+
 export interface GatewayAssessments {
-  [gatewayHost: string]: {
-    ownershipAssessment: OwnershipAssessment;
-    arnsAssessments: GatewayArnsAssessments;
-    pass: boolean;
-  };
+  [gatewayHost: string]: GatewayAssessment;
 }
 
 export interface ObserverReport {
