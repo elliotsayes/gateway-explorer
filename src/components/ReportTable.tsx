@@ -34,6 +34,25 @@ const columns: ColumnDef<ReportTableDatum>[] = [
     id: "Observed Host",
     accessorKey: "gatewayHost",
     header: "Observed Host",
+    enableHiding: false,
+  },
+  {
+    id: "Expected Owner",
+    accessorKey: "gatewayAssessment.ownershipAssessment.expectedWallet",
+    header: "Expected Owner",
+    cell: (cell) => <code className="break-all text-xs">{cell.row.original.gatewayAssessment.ownershipAssessment.expectedWallet ?? '<none>'}</code>
+  },
+  {
+    id: "Observed Owner",
+    accessorKey: "gatewayAssessment.ownershipAssessment.observedWallet",
+    header: "Observed Owner",
+    cell: (cell) => <code className="break-all text-xs">{cell.row.original.gatewayAssessment.ownershipAssessment.observedWallet ?? '<none>'}</code>
+  },
+  {
+    id: "Ownership Result",
+    accessorKey: "gatewayAssessment.ownershipAssessment.pass",
+    header: "Ownership Result",
+    cell: (cell) => <PassFailCell pass={cell.row.original.gatewayAssessment.ownershipAssessment.pass} />,
   },
   {
     id: "ArNS Result",
@@ -48,12 +67,6 @@ const columns: ColumnDef<ReportTableDatum>[] = [
         </span>
       </PassFailCell>
     ),
-  },
-  {
-    id: "Ownership Result",
-    accessorKey: "gatewayAssessment.ownershipAssessment.pass",
-    header: "Ownership Result",
-    cell: (cell) => <PassFailCell pass={cell.row.original.gatewayAssessment.ownershipAssessment.pass} />,
   },
   {
     id: "Overall Result",
@@ -97,6 +110,8 @@ const ReportTable = ({ observer }: Props) => {
     },
     initialState: {
       columnVisibility: {
+        "Expected Owner": false,
+        "Observed Owner": false,
       }
     }
   })
