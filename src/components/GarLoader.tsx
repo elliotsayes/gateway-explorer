@@ -42,9 +42,12 @@ const GarLoader = () => {
   });
 
   const [procData, setProcData] = useState(data ?? [])
-  const [selectedItemId, setSelectedItemId] = useState<string | undefined>(undefined)
-  const selectedItem = procData.find((item) => item.id === selectedItemId)
+  const [selectedDetailsItemId, setSelectedDetailsItemId] = useState<string | undefined>(undefined)
+  const selectedDetailsItem = procData.find((item) => item.id === selectedDetailsItemId)
 
+  const [reportItemId, setReportItemId] = useState<string | undefined>(undefined)
+  const reportItem = procData.find((item) => item.id === reportItemId)
+  
   const [isDetailsSheetOpen, setIsDetailsSheetOpen] = useState(false)
   const [isReportSheetOpen, setIsReportSheetOpen] = useState(false)
   
@@ -85,18 +88,19 @@ const GarLoader = () => {
               })
             }}
             onItemSelect={(item) => {
-              setSelectedItemId(item.id)
+              setSelectedDetailsItemId(item.id)
               if (!isDetailsSheetOpen) {
                 setIsDetailsSheetOpen(true)
               }
             }}
             onOpenReport={(item) => {
-              setSelectedItemId(item.id)
+              setReportItemId(item.id)
               if (!isReportSheetOpen) {
+                setIsDetailsSheetOpen(false)
                 setIsReportSheetOpen(true)
               }
             }}
-            selectedItemId={selectedItemId}
+            selectedItemId={selectedDetailsItemId}
           />
         </CardContent>
       </Card>
@@ -120,24 +124,21 @@ const GarLoader = () => {
               {/* {selectedItem?.settings.label && <> - <code>{selectedItem?.settings.label}</code></>} */}
             </SheetTitle>
             <GatewayDetails
-              data={selectedItem!}
+              data={selectedDetailsItem!}
             />
           </SheetHeader>
         </SheetContent>
       </Sheet>
       <Sheet
         open={isReportSheetOpen}
-        // onOpenChange={(isOpen) => {
-        //   setIsSheetOpen(isOpen)
-        // }}
-        modal={false}
+        onOpenChange={(isOpen) => {
+          setIsReportSheetOpen(isOpen)
+        }}
+        modal={true}
       >
         <SheetContent
-          side="bottom"
-          onCloseButtonClick={() => {
-            setIsReportSheetOpen(false)
-            // setSelectedItemId(undefined)
-          }}
+          side="top"
+          onCloseButtonClick={() => {}}
         >
           <SheetHeader>
             <SheetTitle className='pb-4'>
@@ -146,8 +147,8 @@ const GarLoader = () => {
             </SheetTitle>
             <div className='min-h-[20vh] max-h-[80vh] overflow-y-scroll'>
               {
-                selectedItem && (
-                  <ReportTable observer={selectedItem} onUpdateObserver={function (): void {
+                reportItem && (
+                  <ReportTable observer={reportItem} onUpdateObserver={function (): void {
                     throw new Error('Function not implemented.');
                   }} />
                 )

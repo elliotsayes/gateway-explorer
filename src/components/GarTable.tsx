@@ -194,7 +194,7 @@ const GarTable = ({ data, onRefresh, isRefreshing, onItemUpdate, onItemSelect, o
             }}
           >
             <span className="line-clamp-1">
-              View Reports
+              Open Report
             </span>
           </Button>
         )
