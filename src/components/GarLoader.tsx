@@ -88,6 +88,9 @@ const GarLoader = () => {
                 setIsSheetOpen(true)
               }
             }}
+            onOpenReport={(item) => {
+              console.log('open report', item)
+            }}
             selectedItemId={selectedItemId}
           />
         </CardContent>

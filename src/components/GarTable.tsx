@@ -34,10 +34,11 @@ interface Props {
   isRefreshing: boolean
   onItemUpdate: (item: z.infer<typeof zGatewayAddressRegistryItem>) => void
   onItemSelect: (item: z.infer<typeof zGatewayAddressRegistryItem>) => void
+  onOpenReport: (item: z.infer<typeof zGatewayAddressRegistryItem>) => void
   selectedItemId?: string
 }
 
-const GarTable = ({ data, onRefresh, isRefreshing, onItemUpdate, onItemSelect, selectedItemId }: Props) => {
+const GarTable = ({ data, onRefresh, isRefreshing, onItemUpdate, onItemSelect, onOpenReport, selectedItemId }: Props) => {
   const [sorting, setSorting] = React.useState<SortingState>([])
 
   const columns: ColumnDef<z.infer<typeof zGatewayAddressRegistryItem>>[] = [
@@ -176,6 +177,31 @@ const GarTable = ({ data, onRefresh, isRefreshing, onItemUpdate, onItemSelect, s
       sortUndefined: -1,
     },
     {
+      id: "Reports",
+      accessorKey: "settings.fqdn",
+      header: "Observer Report",
+      cell: (cell) => {
+        const item = cell.row.original;
+        return (
+          <Button
+            className="h-auto px-1 py-0 text-xs text-muted-foreground"
+            size={"sm"}
+            variant={"outline"}
+            disabled={isRefreshing}
+            onClick={isRefreshing ? undefined : async (e) => {
+              e.stopPropagation();
+              onOpenReport(item);
+            }}
+          >
+            <span className="line-clamp-1">
+              View Reports
+            </span>
+          </Button>
+        )
+      },
+      enableSorting: false,
+    },
+    {
       id: "Observation",
       accessorKey: "observation.status",
       header: "Quick Observation",
@@ -184,7 +210,7 @@ const GarTable = ({ data, onRefresh, isRefreshing, onItemUpdate, onItemSelect, s
         const status = cell.row.original.observation.status;
         const button = (retry = false) => (
           <Button
-            className="h-auto px-2 py-0 text-xs text-muted-foreground"
+            className="h-auto px-1 py-0 text-xs text-muted-foreground"
             size={"sm"}
             variant={"outline"}
             disabled={isRefreshing}
@@ -247,7 +273,7 @@ const GarTable = ({ data, onRefresh, isRefreshing, onItemUpdate, onItemSelect, s
             )
         }
       },
-      sortUndefined: -1,
+      enableSorting: false,
     },
   ]
 
