@@ -25,14 +25,9 @@ import {
 import { Button } from "./ui/button"
 import { useQuery } from "@tanstack/react-query"
 import { downloadCurrentReportInfoFromGateway } from "@/lib/observer/downloadObservation"
-import { GatewayAssessment } from "@/lib/observer/types"
 import { useMemo, useState } from "react"
 import { PassFailCell } from "./PassFailCell"
-
-interface ReportTableDatum {
-  gatewayHost: string,
-  gatewayAssessment: GatewayAssessment
-}
+import { ReportTableDatum, generateReportTableData } from "@/lib/observer/report"
 
 const columns: ColumnDef<ReportTableDatum>[] = [
   {
@@ -44,7 +39,15 @@ const columns: ColumnDef<ReportTableDatum>[] = [
     id: "ArNS Result",
     accessorKey: "gatewayAssessment.arnsAssessments.pass",
     header: "ArNS Result",
-    cell: (cell) => <PassFailCell pass={cell.row.original.gatewayAssessment.arnsAssessments.pass} />,
+    cell: (cell) => (
+      <PassFailCell pass={cell.row.original.gatewayAssessment.arnsAssessments.pass}>
+        <span className="text-xs text-muted-foreground line-clamp-1">
+         ({cell.row.original.statistics.passFail.allNames.pass}
+         /
+         {cell.row.original.statistics.passFail.allNames.total})
+        </span>
+      </PassFailCell>
+    ),
   },
   {
     id: "Ownership Result",
@@ -75,10 +78,11 @@ const ReportTable = ({ observer }: Props) => {
   });
 
   const gatewayAssessmentData: ReportTableDatum[] = useMemo(() => 
-    Object.entries(data?.gatewayAssessments ?? {}).map(([gatewayHost, gatewayAssessment]) => ({
-      gatewayHost,
-      gatewayAssessment,
-    })),
+    Object.entries(data?.gatewayAssessments ?? {})
+    .map(
+      ([gatewayHost, gatewayAssessment]) => 
+        generateReportTableData(gatewayHost, gatewayAssessment)
+    ),
     [data?.gatewayAssessments],
   );
 
