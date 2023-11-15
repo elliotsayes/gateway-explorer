@@ -36,9 +36,9 @@ interface ReportTableDatum {
 
 const columns: ColumnDef<ReportTableDatum>[] = [
   {
-    id: "Host",
+    id: "Observed Host",
     accessorKey: "gatewayHost",
-    header: "Gateway Host",
+    header: "Observed Host",
   },
   {
     id: "ArNS Result",
@@ -78,7 +78,7 @@ const ReportTable = ({ observer }: Props) => {
     Object.entries(data?.gatewayAssessments ?? {}).map(([gatewayHost, gatewayAssessment]) => ({
       gatewayHost,
       gatewayAssessment,
-    })), 
+    })),
     [data?.gatewayAssessments],
   );
 
