@@ -15,7 +15,6 @@ import { pingUpdater } from '@/lib/pinger';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from './ui/sheet';
 import GatewayDetails from './GatewayDetails';
 import arioLogo from '../assets/ar.io-white.png'
-import { ReportTable } from './ReportTable';
 
 const GarLoader = () => {
   const [isPinging, setIsPinging] = useState(false)
@@ -44,12 +43,8 @@ const GarLoader = () => {
   const [procData, setProcData] = useState(data ?? [])
   const [selectedDetailsItemId, setSelectedDetailsItemId] = useState<string | undefined>(undefined)
   const selectedDetailsItem = procData.find((item) => item.id === selectedDetailsItemId)
-
-  const [reportItemId, setReportItemId] = useState<string | undefined>(undefined)
-  const reportItem = procData.find((item) => item.id === reportItemId)
   
   const [isDetailsSheetOpen, setIsDetailsSheetOpen] = useState(false)
-  const [isReportSheetOpen, setIsReportSheetOpen] = useState(false)
   
   if (error) return <div>Error: {JSON.stringify(error)}</div>
 
@@ -93,13 +88,6 @@ const GarLoader = () => {
                 setIsDetailsSheetOpen(true)
               }
             }}
-            onOpenReport={(item) => {
-              setReportItemId(item.id)
-              if (!isReportSheetOpen) {
-                setIsDetailsSheetOpen(false)
-                setIsReportSheetOpen(true)
-              }
-            }}
             selectedItemId={selectedDetailsItemId}
           />
         </CardContent>
@@ -126,34 +114,6 @@ const GarLoader = () => {
             <GatewayDetails
               data={selectedDetailsItem!}
             />
-          </SheetHeader>
-        </SheetContent>
-      </Sheet>
-      <Sheet
-        open={isReportSheetOpen}
-        onOpenChange={(isOpen) => {
-          setIsReportSheetOpen(isOpen)
-        }}
-        modal={true}
-      >
-        <SheetContent
-          side="top"
-          onCloseButtonClick={() => {}}
-        >
-          <SheetHeader>
-            <SheetTitle className='pb-4'>
-              Report Details
-              {/* {selectedItem?.settings.label && <> - <code>{selectedItem?.settings.label}</code></>} */}
-            </SheetTitle>
-            <div className='min-h-[20vh] max-h-[80vh] overflow-y-scroll'>
-              {
-                reportItem && (
-                  <ReportTable observer={reportItem} onUpdateObserver={function (): void {
-                    throw new Error('Function not implemented.');
-                  }} />
-                )
-              }
-            </div>
           </SheetHeader>
         </SheetContent>
       </Sheet>

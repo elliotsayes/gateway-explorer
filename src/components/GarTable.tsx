@@ -34,11 +34,10 @@ interface Props {
   isRefreshing: boolean
   onItemUpdate: (item: z.infer<typeof zGatewayAddressRegistryItem>) => void
   onItemSelect: (item: z.infer<typeof zGatewayAddressRegistryItem>) => void
-  onOpenReport: (item: z.infer<typeof zGatewayAddressRegistryItem>) => void
   selectedItemId?: string
 }
 
-const GarTable = ({ data, onRefresh, isRefreshing, onItemUpdate, onItemSelect, onOpenReport, selectedItemId }: Props) => {
+const GarTable = ({ data, onRefresh, isRefreshing, onItemUpdate, onItemSelect, selectedItemId }: Props) => {
   const [sorting, setSorting] = React.useState<SortingState>([])
 
   const columns: ColumnDef<z.infer<typeof zGatewayAddressRegistryItem>>[] = [
@@ -180,8 +179,8 @@ const GarTable = ({ data, onRefresh, isRefreshing, onItemUpdate, onItemSelect, o
       id: "Reports",
       accessorKey: "settings.fqdn",
       header: "Observer Report",
-      cell: (cell) => {
-        const item = cell.row.original;
+      cell: (/* cell */) => {
+        // const item = cell.row.original;
         return (
           <Button
             className="h-auto px-1 py-0 text-xs text-muted-foreground"
@@ -190,7 +189,6 @@ const GarTable = ({ data, onRefresh, isRefreshing, onItemUpdate, onItemSelect, o
             disabled={isRefreshing}
             onClick={isRefreshing ? undefined : async (e) => {
               e.stopPropagation();
-              onOpenReport(item);
             }}
           >
             <span className="line-clamp-1">
