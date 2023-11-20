@@ -31,6 +31,6 @@ import { zGatewayAddressRegistryItem } from "@/types";
 const item = zGatewayAddressRegistryItem.parse(GatewayAddressRegistryItem);
 export const ExampleReport: Story = {
   args: {
-    observer: item,
+    id: item.id,
   },
 };
