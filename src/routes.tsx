@@ -1,7 +1,7 @@
 import { RootRoute, Route, Router, useParams } from "@tanstack/react-router";
 import { Root } from "./Root";
 import GarLoader from "./components/GarLoader";
-import { ReportTable } from "./components/ReportTable";
+import { CurrentReport } from "./components/CurrentReport";
 
 // Create a root route
 const rootRoute = new RootRoute({
@@ -20,7 +20,7 @@ const observerRoute = new Route({
   component: () => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const params = useParams({ from: observerRoute.id })
-    return <ReportTable id={params.id} />
+    return <CurrentReport id={params.id} />
   },
 });
 

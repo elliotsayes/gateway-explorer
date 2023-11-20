@@ -22,15 +22,14 @@ import {
   ArrowLeft
 } from "lucide-react"
 import { Button } from "./ui/button"
-import { useQuery } from "@tanstack/react-query"
-import { downloadCurrentReportInfoFromGateway } from "@/lib/observer/downloadObservation"
 import { useMemo, useState } from "react"
 import { PassFailCell } from "./PassFailCell"
 import { ReportTableDatum, generateReportTableData } from "@/lib/observer/report"
-import { defaultGARCacheURL } from "@/lib/consts"
-import { extractGarItems } from "@/lib/convert"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Link, useNavigate } from "@tanstack/react-router"
+import { ObserverReport } from "@/lib/observer/types"
+import { zGatewayAddressRegistryItem } from "@/types"
+import { z } from "zod"
 
 const columns: ColumnDef<ReportTableDatum>[] = [
   {
@@ -81,38 +80,22 @@ const columns: ColumnDef<ReportTableDatum>[] = [
 
 interface Props {
   id: string;
+  garData?: Array<z.infer<typeof zGatewayAddressRegistryItem>>;
+  isGarError: boolean;
+  reportData?: ObserverReport;
+  isReportError: boolean;
 }
 
-const ReportTable = ({ id }: Props) => {
-  const { data: garData } = useQuery(['gar'], async () => {
-    const fetchResult = await fetch(defaultGARCacheURL);
-    const fetchJson = await fetchResult.json();
-    const garItems = extractGarItems(fetchJson);
-    return garItems;
-  });
-
-  const observer = garData?.find((item) => item.id === id)
-
-  const {
-    data,
-    isError,
-  } = useQuery(['observationReportCurrent', observer?.id], async () => {
-    if (observer) {
-      return await downloadCurrentReportInfoFromGateway(observer.linkFull)
-    }
-  }, {
-    enabled: observer !== undefined,
-  });
-
+const ReportTable = ({ id, garData, isGarError, reportData, isReportError }: Props) => {
   const [sorting, setSorting] = useState<SortingState>([])
 
   const gatewayAssessmentData: ReportTableDatum[] = useMemo(() => 
-    Object.entries(data?.gatewayAssessments ?? {})
+    Object.entries(reportData?.gatewayAssessments ?? {})
     .map(
       ([gatewayHost, gatewayAssessment]) => 
         generateReportTableData(gatewayHost, gatewayAssessment)
     ),
-    [data?.gatewayAssessments],
+    [reportData?.gatewayAssessments],
   );
 
   const table = useReactTable({
@@ -252,7 +235,7 @@ const ReportTable = ({ id }: Props) => {
             ) : (
               <TableRow>
                 <TableCell colSpan={columns.length} className="h-24 text-center">
-                  {isError ? "Failed to load report." : "Loading report..."}
+                  {(isGarError || isReportError) ? "Failed to load report." : "Loading report..."}
                 </TableCell>
               </TableRow>
             )}
