@@ -44,3 +44,13 @@ export const arrayBufferToBase64Url = (arrayBuffer: ArrayBuffer) => {
   const base64 = encode(arrayBuffer);
   return base64ToBase64url(base64);
 };
+
+export const fromAsyncGenerator = async <T>(
+  source: Iterable<T> | AsyncIterable<T>
+): Promise<T[]> => {
+  const items: T[] = [];
+  for await (const item of source) {
+    items.push(item);
+  }
+  return items;
+};

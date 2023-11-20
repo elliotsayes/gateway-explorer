@@ -33,7 +33,7 @@ const passFail = (asssessments: ArnsNameAssessments): PassFailStats => {
   };
 };
 
-export const generateReportTableData = (
+export const generateReportSummaryTableData = (
   gatewayHost: string,
   gatewayAssessment: GatewayAssessment
 ): ReportTableDatum => {

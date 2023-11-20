@@ -14,7 +14,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { ColumnSelection } from "./ColumnSelection"
 import { 
   ArrowUpDown,
@@ -24,84 +23,127 @@ import {
 } from "lucide-react"
 import { Button } from "./ui/button"
 import { useMemo, useState } from "react"
-import { PassFailCell } from "./PassFailCell"
-import { ReportTableDatum, generateReportSummaryTableData } from "@/lib/observer/report"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Link, useNavigate } from "@tanstack/react-router"
-import { ObserverReport } from "@/lib/observer/types"
 import { zGatewayAddressRegistryItem } from "@/types"
 import { z } from "zod"
-import { AssessmentDetails } from "./AssessmentDetails";
+import { useInfiniteQuery } from "@tanstack/react-query";
+import { queryObserverReportTransactions } from "@/lib/observer/downloadObservation";
+import { SortOrder, Transaction } from "arweave-graphql";
+import { fromAsyncGenerator } from "@/lib/utils";
+import { ReportHistoryTableData, generateReportHistoryTableData } from "@/lib/observer/history";
 
-const columns: ColumnDef<ReportTableDatum>[] = [
+// const columns: ColumnDef<ReportTableDatum>[] = [
+//   {
+//     id: "Observed Host",
+//     accessorKey: "gatewayHost",
+//     header: "Observed Host",
+//     enableHiding: false,
+//   },
+//   {
+//     id: "Expected Owner",
+//     accessorKey: "gatewayAssessment.ownershipAssessment.expectedWallet",
+//     header: "Expected Owner",
+//     cell: (cell) => <code className="break-all text-xs">{cell.row.original.gatewayAssessment.ownershipAssessment.expectedWallet ?? '<none>'}</code>
+//   },
+//   {
+//     id: "Observed Owner",
+//     accessorKey: "gatewayAssessment.ownershipAssessment.observedWallet",
+//     header: "Observed Owner",
+//     cell: (cell) => <code className="break-all text-xs">{cell.row.original.gatewayAssessment.ownershipAssessment.observedWallet ?? '<none>'}</code>
+//   },
+//   {
+//     id: "Ownership Result",
+//     accessorKey: "gatewayAssessment.ownershipAssessment.pass",
+//     header: "Ownership Result",
+//     cell: (cell) => <PassFailCell pass={cell.row.original.gatewayAssessment.ownershipAssessment.pass} />,
+//   },
+//   {
+//     id: "ArNS Result",
+//     accessorKey: "gatewayAssessment.arnsAssessments.pass",
+//     header: "ArNS Result",
+//     cell: (cell) => (
+//       <PassFailCell pass={cell.row.original.gatewayAssessment.arnsAssessments.pass}>
+//         <span className="text-xs text-muted-foreground line-clamp-1">
+//          ({cell.row.original.statistics.passFail.allNames.pass}
+//          /
+//          {cell.row.original.statistics.passFail.allNames.total})
+//         </span>
+//       </PassFailCell>
+//     ),
+//   },
+//   {
+//     id: "Overall Result",
+//     accessorKey: "gatewayAssessment.pass",
+//     header: "Overall Result",
+//     cell: (cell) => <PassFailCell pass={cell.row.original.gatewayAssessment.pass} />,
+//   },
+// ];
+
+const columns: ColumnDef<ReportHistoryTableData>[] = [
   {
-    id: "Observed Host",
-    accessorKey: "gatewayHost",
-    header: "Observed Host",
+    id: "Observer",
+    accessorKey: "observer",
+    header: "Observer",
     enableHiding: false,
   },
   {
-    id: "Expected Owner",
-    accessorKey: "gatewayAssessment.ownershipAssessment.expectedWallet",
-    header: "Expected Owner",
-    cell: (cell) => <code className="break-all text-xs">{cell.row.original.gatewayAssessment.ownershipAssessment.expectedWallet ?? '<none>'}</code>
-  },
-  {
-    id: "Observed Owner",
-    accessorKey: "gatewayAssessment.ownershipAssessment.observedWallet",
-    header: "Observed Owner",
-    cell: (cell) => <code className="break-all text-xs">{cell.row.original.gatewayAssessment.ownershipAssessment.observedWallet ?? '<none>'}</code>
-  },
-  {
-    id: "Ownership Result",
-    accessorKey: "gatewayAssessment.ownershipAssessment.pass",
-    header: "Ownership Result",
-    cell: (cell) => <PassFailCell pass={cell.row.original.gatewayAssessment.ownershipAssessment.pass} />,
-  },
-  {
-    id: "ArNS Result",
-    accessorKey: "gatewayAssessment.arnsAssessments.pass",
-    header: "ArNS Result",
-    cell: (cell) => (
-      <PassFailCell pass={cell.row.original.gatewayAssessment.arnsAssessments.pass}>
-        <span className="text-xs text-muted-foreground line-clamp-1">
-         ({cell.row.original.statistics.passFail.allNames.pass}
-         /
-         {cell.row.original.statistics.passFail.allNames.total})
-        </span>
-      </PassFailCell>
-    ),
-  },
-  {
-    id: "Overall Result",
-    accessorKey: "gatewayAssessment.pass",
-    header: "Overall Result",
-    cell: (cell) => <PassFailCell pass={cell.row.original.gatewayAssessment.pass} />,
+    id: "Timestamp",
+    accessorKey: "timestamp",
+    header: "Timestamp",
+    cell: (cell) => {
+      const ts = cell.row.original.timestamp;
+      return (
+        <span>{ts === undefined ? "Unknown" : ts}</span>
+      )
+    }
   },
 ];
 
 interface Props {
   host: string;
+  observer?: z.infer<typeof zGatewayAddressRegistryItem>;
   garData?: Array<z.infer<typeof zGatewayAddressRegistryItem>>;
   isGarError: boolean;
-  reportData?: ObserverReport;
-  isReportError: boolean;
 }
 
-const ReportSummaryTable = ({ host, garData, isGarError, reportData, isReportError }: Props) => {
+export const ReportListTable = ({ host, observer, garData, isGarError }: Props) => {
+  const {
+    data: gqlData,
+    isError: isGqlError,
+  } = useInfiniteQuery({
+    queryKey: ['observerReportListArweave', host], 
+    queryFn: async ({ pageParam }) => {
+      return await fromAsyncGenerator(
+        queryObserverReportTransactions({
+            owners: observer!.id,
+            sort: SortOrder.HeightDesc,
+            after: pageParam,
+          },
+          false,
+        ));
+    },
+    initialPageParam: undefined as string | undefined,
+    getNextPageParam: (lastPage) => lastPage[lastPage.length-1].cursor,
+    getPreviousPageParam: undefined,
+    enabled: observer !== undefined,
+  });
+
+  const tableData = useMemo(() => {
+    if (gqlData === undefined) {
+      return []
+    }
+    return gqlData.pages.map((page) => {
+      return page.map((item) => {
+        return generateReportHistoryTableData(item.node as Transaction)
+      })
+    }).flat()
+  }, [gqlData])
+  
   const [sorting, setSorting] = useState<SortingState>([])
 
-  const gatewayAssessmentData: ReportTableDatum[] = useMemo(() => 
-    Object.entries(reportData?.gatewayAssessments ?? {})
-    .map(
-      ([gatewayHost, gatewayAssessment]) => 
-        generateReportSummaryTableData(gatewayHost, gatewayAssessment)
-    ),
-    [reportData?.gatewayAssessments],
-  );
-
   const table = useReactTable({
-    data: gatewayAssessmentData,
+    data: tableData,
     columns,
     getCoreRowModel: getCoreRowModel(),
     onSortingChange: setSorting,
@@ -111,21 +153,13 @@ const ReportSummaryTable = ({ host, garData, isGarError, reportData, isReportErr
     },
     initialState: {
       columnVisibility: {
-        "Expected Owner": false,
-        "Observed Owner": false,
+        // "Expected Owner": false,
+        // "Observed Owner": false,
       }
     }
   })
 
-  const assessmentCount = gatewayAssessmentData.length ?? 0
-  const assessmentPassedCount = gatewayAssessmentData.filter(item => item.gatewayAssessment.pass).length
-  
   const navigate = useNavigate()
-
-  const [isDetailsSheetOpen, setIsDetailsSheetOpen] = useState(false)
-  const [selectedDetailsItemHost, setSelectedDetailsItemHost] = useState<string | undefined>(undefined)
-
-  const selectedDetailsItem = gatewayAssessmentData.find((item) => item.gatewayHost === selectedDetailsItemHost)
 
   return (
     <>
@@ -144,10 +178,8 @@ const ReportSummaryTable = ({ host, garData, isGarError, reportData, isReportErr
             defaultValue={host}
             onValueChange={(value) => {
               if(value !== host) {
-                setIsDetailsSheetOpen(false)
-                setSelectedDetailsItemHost(undefined)
                 navigate({
-                  to: "/observer/$host/current",
+                  to: "/observer/$host/history",
                   params: { host: value },
                 })
               }
@@ -171,7 +203,7 @@ const ReportSummaryTable = ({ host, garData, isGarError, reportData, isReportErr
           <div className="right-0 md:absolute md:-top-12">
             <div className="pb-2 flex flex-row items-end gap-2">
               <div className="ml-2 mr-auto md:mr-0 md:ml-auto text-muted-foreground">
-                {assessmentPassedCount}/{assessmentCount} passed
+                {tableData.length} loaded
               </div>
               <ColumnSelection table={table} />
             </div>
@@ -237,10 +269,10 @@ const ReportSummaryTable = ({ host, garData, isGarError, reportData, isReportErr
                     key={row.id}
                     data-state={row.getIsSelected() && "selected"}
                     onClick={() => {
-                      setSelectedDetailsItemHost(row.original.gatewayHost)
-                      setIsDetailsSheetOpen(true)
+                      // setSelectedDetailsItemHost(row.original.gatewayHost)
+                      // setIsDetailsSheetOpen(true)
                     }}
-                    className={selectedDetailsItemHost === row.original.gatewayHost ? "bg-muted hover:bg-muted" : ""}
+                    // className={selectedDetailsItemHost === row.original.gatewayHost ? "bg-muted hover:bg-muted" : ""}
                   >
                     {row.getVisibleCells().map((cell) => (
                       <TableCell key={cell.id}>
@@ -252,7 +284,7 @@ const ReportSummaryTable = ({ host, garData, isGarError, reportData, isReportErr
               ) : (
                 <TableRow>
                   <TableCell colSpan={columns.length} className="h-24 text-center">
-                    {(isGarError || isReportError) ? "Failed to load report." : "Loading report..."}
+                    {(isGarError || isGqlError) ? "Failed to load history." : "Loading history..."}
                   </TableCell>
                 </TableRow>
               )}
@@ -260,36 +292,6 @@ const ReportSummaryTable = ({ host, garData, isGarError, reportData, isReportErr
           </Table>
         </div>
       </div>
-      <Sheet
-        open={isDetailsSheetOpen}
-        // onOpenChange={(isOpen) => {
-        //   setIsSheetOpen(isOpen)
-        // }}
-        modal={false}
-      >
-        <SheetContent
-          side="bottom"
-          onCloseButtonClick={() => {
-            setIsDetailsSheetOpen(false)
-            // setSelectedItemId(undefined)
-          }}
-        >
-          <SheetHeader>
-            <SheetTitle className='pb-4'>
-              Assessment Details
-              {/* {selectedItem?.settings.label && <> - <code>{selectedItem?.settings.label}</code></>} */}
-            </SheetTitle>
-          </SheetHeader>
-          {
-            selectedDetailsItem &&
-              <AssessmentDetails
-                reportDatum={selectedDetailsItem}
-              />
-          }
-        </SheetContent>
-      </Sheet>
     </>
   )
 }
-
-export { ReportSummaryTable }

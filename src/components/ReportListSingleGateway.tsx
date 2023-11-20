@@ -1,20 +1,19 @@
 
 import { useQuery } from "@tanstack/react-query"
-import { downloadCurrentReportInfoFromGateway } from "@/lib/observer/downloadObservation"
 import { defaultGARCacheURL } from "@/lib/consts"
 import { extractGarItems } from "@/lib/convert"
-import { ReportSummaryTable } from "./ReportSummaryTable";
+import { ReportListTable } from "./ReportListTable";
 
 interface Props {
   host: string;
 }
 
-export const CurrentReport = ({ host }: Props) => {
+export const ReportListSingleGateway = ({ host }: Props) => {
   const {
     data: garData,
     isError: isGarError,
   } = useQuery({
-    queryKey: ['gar'],
+    queryKey: ['gar'], 
     queryFn: async () => {
       const fetchResult = await fetch(defaultGARCacheURL);
       const fetchJson = await fetchResult.json();
@@ -26,17 +25,6 @@ export const CurrentReport = ({ host }: Props) => {
   const observer = garData?.find((item) => item.settings.fqdn === host)
   const observerNotFound = (garData !== undefined) && (observer === undefined);
 
-  const {
-    data: reportData,
-    isError: isReportError,
-  } = useQuery({
-    queryKey: ['observationReportCurrent', observer?.id],
-    queryFn: async () => {
-      return await downloadCurrentReportInfoFromGateway(observer!.linkFull)
-    },
-    enabled: observer !== undefined,
-  });
-
   if (observerNotFound) {
     return (
       <div>
@@ -46,12 +34,11 @@ export const CurrentReport = ({ host }: Props) => {
   }
 
   return (
-    <ReportSummaryTable
+    <ReportListTable
       host={host}
       garData={garData}
       isGarError={isGarError}
-      reportData={reportData}
-      isReportError={isReportError}
+      observer={observer}
     />
   )
 }

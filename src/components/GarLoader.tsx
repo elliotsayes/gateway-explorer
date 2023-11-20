@@ -4,7 +4,7 @@ import {
   useQuery,
 } from '@tanstack/react-query'
 import { GarTable } from './GarTable';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { pingUpdater } from '@/lib/pinger';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from './ui/sheet';
 import GatewayDetails from './GatewayDetails';
@@ -12,26 +12,34 @@ import GatewayDetails from './GatewayDetails';
 const GarLoader = () => {
   const [isPinging, setIsPinging] = useState(false)
 
-  const { data, isLoading, isFetching, error, refetch } = useQuery(['gar'], async () => {
-    const fetchResult = await fetch(defaultGARCacheURL);
-    const fetchJson = await fetchResult.json();
-    const garItems = extractGarItems(fetchJson);
-    return garItems;
-  }, {
-    onSuccess: async (data) => {
-      setIsPinging(true)
-      setProcData(data)
-      await pingUpdater(data, (newData) => {
-        setProcData([...newData])
-      })
-      setIsPinging(false)
-    },
+  const { data, isLoading, isFetching, error, refetch, isRefetching } = useQuery({
+    queryKey: ['gar'], 
+    queryFn: async () => {
+      const fetchResult = await fetch(defaultGARCacheURL);
+      const fetchJson = await fetchResult.json();
+      const garItems = extractGarItems(fetchJson);
+      return garItems;
+    }, 
     refetchInterval: false,
     refetchOnMount: false,
     refetchOnReconnect: false,
     refetchIntervalInBackground: false,
     refetchOnWindowFocus: false,
   });
+
+  useEffect(() => {
+    if (data && !isRefetching) {
+      (async () => {
+        setIsPinging(true)
+        setProcData(data)
+        await pingUpdater(data, (newData) => {
+          setProcData([...newData])
+        })
+        setIsPinging(false)
+      })()
+    }
+  }, [data, isRefetching])
+
 
   const [procData, setProcData] = useState(data ?? [])
   const [selectedDetailsItemId, setSelectedDetailsItemId] = useState<string | undefined>(undefined)
