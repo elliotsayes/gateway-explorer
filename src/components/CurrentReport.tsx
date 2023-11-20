@@ -48,6 +48,7 @@ export const CurrentReport = ({ host }: Props) => {
   return (
     <ReportSummaryTable
       host={host}
+      label="Current"
       garData={garData}
       isGarError={isGarError}
       reportData={reportData}

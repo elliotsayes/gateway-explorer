@@ -40,7 +40,7 @@ export const AssessmentDetailsArNS = ({ arnsName, arnsAssessment, assessmentType
             <span className="text-xl">{arnsName}</span>
             <PassFailDetails
               pass={pass}
-              passText={`Passed${ totalMs && ` in ${totalMs}ms`}`}
+              passText={`Passed${totalMs !== undefined ? ` in ${totalMs}ms`: ''}`}
               failureText="Failed"
               failureDetails={failureReason}
             />

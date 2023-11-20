@@ -19,12 +19,11 @@ import {
   ArrowUpDown,
   ArrowDown,
   ArrowUp,
-  ArrowLeft
 } from "lucide-react"
 import { Button } from "./ui/button"
 import { useMemo, useState } from "react"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Link, useNavigate } from "@tanstack/react-router"
+import { useNavigate } from "@tanstack/react-router"
 import { zGatewayAddressRegistryItem } from "@/types"
 import { z } from "zod"
 import { useInfiniteQuery } from "@tanstack/react-query";
@@ -33,59 +32,17 @@ import { SortOrder, Transaction } from "arweave-graphql";
 import { fromAsyncGenerator } from "@/lib/utils";
 import { ReportHistoryTableData, generateReportHistoryTableData } from "@/lib/observer/history";
 
-// const columns: ColumnDef<ReportTableDatum>[] = [
-//   {
-//     id: "Observed Host",
-//     accessorKey: "gatewayHost",
-//     header: "Observed Host",
-//     enableHiding: false,
-//   },
-//   {
-//     id: "Expected Owner",
-//     accessorKey: "gatewayAssessment.ownershipAssessment.expectedWallet",
-//     header: "Expected Owner",
-//     cell: (cell) => <code className="break-all text-xs">{cell.row.original.gatewayAssessment.ownershipAssessment.expectedWallet ?? '<none>'}</code>
-//   },
-//   {
-//     id: "Observed Owner",
-//     accessorKey: "gatewayAssessment.ownershipAssessment.observedWallet",
-//     header: "Observed Owner",
-//     cell: (cell) => <code className="break-all text-xs">{cell.row.original.gatewayAssessment.ownershipAssessment.observedWallet ?? '<none>'}</code>
-//   },
-//   {
-//     id: "Ownership Result",
-//     accessorKey: "gatewayAssessment.ownershipAssessment.pass",
-//     header: "Ownership Result",
-//     cell: (cell) => <PassFailCell pass={cell.row.original.gatewayAssessment.ownershipAssessment.pass} />,
-//   },
-//   {
-//     id: "ArNS Result",
-//     accessorKey: "gatewayAssessment.arnsAssessments.pass",
-//     header: "ArNS Result",
-//     cell: (cell) => (
-//       <PassFailCell pass={cell.row.original.gatewayAssessment.arnsAssessments.pass}>
-//         <span className="text-xs text-muted-foreground line-clamp-1">
-//          ({cell.row.original.statistics.passFail.allNames.pass}
-//          /
-//          {cell.row.original.statistics.passFail.allNames.total})
-//         </span>
-//       </PassFailCell>
-//     ),
-//   },
-//   {
-//     id: "Overall Result",
-//     accessorKey: "gatewayAssessment.pass",
-//     header: "Overall Result",
-//     cell: (cell) => <PassFailCell pass={cell.row.original.gatewayAssessment.pass} />,
-//   },
-// ];
-
 const columns: ColumnDef<ReportHistoryTableData>[] = [
   {
-    id: "Observer",
-    accessorKey: "observer",
-    header: "Observer",
+    id: "Transaction Id",
+    accessorKey: "txId",
+    header: "Transaction Id",
     enableHiding: false,
+  },
+  {
+    id: "Observer Id",
+    accessorKey: "observer",
+    header: "Observer Id",
   },
   {
     id: "Timestamp",
@@ -124,7 +81,7 @@ export const ReportListTable = ({ host, observer, garData, isGarError }: Props) 
         ));
     },
     initialPageParam: undefined as string | undefined,
-    getNextPageParam: (lastPage) => lastPage[lastPage.length-1].cursor,
+    getNextPageParam: (lastPage) => lastPage?.[lastPage.length-1]?.cursor,
     getPreviousPageParam: undefined,
     enabled: observer !== undefined,
   });
@@ -153,8 +110,7 @@ export const ReportListTable = ({ host, observer, garData, isGarError }: Props) 
     },
     initialState: {
       columnVisibility: {
-        // "Expected Owner": false,
-        // "Observed Owner": false,
+        "Observer Id": false,
       }
     }
   })
@@ -165,7 +121,7 @@ export const ReportListTable = ({ host, observer, garData, isGarError }: Props) 
     <>
       <div>
         <div className="pb-2 flex items-center gap-1">
-          <Button
+          {/* <Button
             variant={"ghost"}
             size={"iconSm"}
             asChild
@@ -173,7 +129,7 @@ export const ReportListTable = ({ host, observer, garData, isGarError }: Props) 
             <Link to={"/"} >
               <ArrowLeft />
             </Link>
-          </Button>
+          </Button> */}
           <Select
             defaultValue={host}
             onValueChange={(value) => {

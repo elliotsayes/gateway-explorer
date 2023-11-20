@@ -20,7 +20,7 @@ import {
   ArrowUpDown,
   ArrowDown,
   ArrowUp,
-  ArrowLeft
+  XIcon
 } from "lucide-react"
 import { Button } from "./ui/button"
 import { useMemo, useState } from "react"
@@ -82,13 +82,14 @@ const columns: ColumnDef<ReportTableDatum>[] = [
 
 interface Props {
   host: string;
+  label: string;
   garData?: Array<z.infer<typeof zGatewayAddressRegistryItem>>;
   isGarError: boolean;
   reportData?: ObserverReport;
   isReportError: boolean;
 }
 
-const ReportSummaryTable = ({ host, garData, isGarError, reportData, isReportError }: Props) => {
+const ReportSummaryTable = ({ host, label, garData, isGarError, reportData, isReportError }: Props) => {
   const [sorting, setSorting] = useState<SortingState>([])
 
   const gatewayAssessmentData: ReportTableDatum[] = useMemo(() => 
@@ -130,8 +131,8 @@ const ReportSummaryTable = ({ host, garData, isGarError, reportData, isReportErr
   return (
     <>
       <div>
-        <div className="pb-2 flex items-center gap-1">
-          <Button
+        <div className="pb-2 flex items-center gap-2">
+          {/* <Button
             variant={"ghost"}
             size={"iconSm"}
             asChild
@@ -139,7 +140,7 @@ const ReportSummaryTable = ({ host, garData, isGarError, reportData, isReportErr
             <Link to={"/"} >
               <ArrowLeft />
             </Link>
-          </Button>
+          </Button> */}
           <Select
             defaultValue={host}
             onValueChange={(value) => {
@@ -166,6 +167,21 @@ const ReportSummaryTable = ({ host, garData, isGarError, reportData, isReportErr
               }
             </SelectContent>
           </Select>
+          <Button
+            variant={"destructive"}
+            asChild
+          >
+            <Link
+              to={"/observer/$host/history"}
+              params={{ host }}
+            >
+              {label}
+              <XIcon
+                size={12}
+                className="ml-2"
+              />
+            </Link>
+          </Button>
         </div>
         <div className="relative">
           <div className="right-0 md:absolute md:-top-12">

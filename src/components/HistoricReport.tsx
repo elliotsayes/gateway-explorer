@@ -28,13 +28,17 @@ export const HistoricReport = ({ host, txId }: Props) => {
   const observerNotFound = (garData !== undefined) && (observer === undefined);
 
   const {
-    data: reportData,
-    isError: isReportError,
+    data: reportTxData,
+    isError: isReportTxError,
   } = useQuery({
     queryKey: ['observationReportTx', txId],
     queryFn: async () => {
       const tx = await querySingleTransaction(txId);
-      return await downloadReportInfoForTransaction(tx)
+      const reportData = await downloadReportInfoForTransaction(tx)
+      return {
+        tx,
+        reportData,
+      }
     },
     enabled: observer !== undefined,
   });
@@ -50,10 +54,11 @@ export const HistoricReport = ({ host, txId }: Props) => {
   return (
     <ReportSummaryTable
       host={host}
+      label={`txId: ${txId.slice(0, 8)}...`}
       garData={garData}
       isGarError={isGarError}
-      reportData={reportData}
-      isReportError={isReportError}
+      reportData={reportTxData?.reportData}
+      isReportError={isReportTxError}
     />
   )
 }
