@@ -27,6 +27,7 @@ import {
 import { Button } from "./ui/button"
 import { formatDuration } from "@/lib/utils"
 import { getArnsResolution } from "@/lib/observer/quickObservation"
+import { Link } from "@tanstack/react-router"
 
 interface Props {
   data: Array<z.infer<typeof zGatewayAddressRegistryItem>>
@@ -179,21 +180,24 @@ const GarTable = ({ data, onRefresh, isRefreshing, onItemUpdate, onItemSelect, s
       id: "Reports",
       accessorKey: "settings.fqdn",
       header: "Observer Report",
-      cell: (/* cell */) => {
-        // const item = cell.row.original;
+      cell: (cell) => {
+        const item = cell.row.original;
         return (
           <Button
             className="h-auto px-1 py-0 text-xs text-muted-foreground"
             size={"sm"}
             variant={"outline"}
-            disabled={isRefreshing}
-            onClick={isRefreshing ? undefined : async (e) => {
-              e.stopPropagation();
-            }}
+            asChild
           >
-            <span className="line-clamp-1">
-              Open Report
-            </span>
+            <Link
+              to="observer/$id/current"
+              params={{ id: item.id }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <span className="line-clamp-1">
+                Open Report
+              </span>
+            </Link>
           </Button>
         )
       },

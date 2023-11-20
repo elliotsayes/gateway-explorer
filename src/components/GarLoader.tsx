@@ -3,18 +3,11 @@ import { extractGarItems } from '@/lib/convert';
 import { 
   useQuery,
 } from '@tanstack/react-query'
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
 import { GarTable } from './GarTable';
 import { useState } from 'react';
 import { pingUpdater } from '@/lib/pinger';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from './ui/sheet';
 import GatewayDetails from './GatewayDetails';
-import arioLogo from '../assets/ar.io-white.png'
 
 const GarLoader = () => {
   const [isPinging, setIsPinging] = useState(false)
@@ -49,49 +42,28 @@ const GarLoader = () => {
   if (error) return <div>Error: {JSON.stringify(error)}</div>
 
   return (
-    <div className="max-h-[100vh] px-2 md:px-8 lg:px-16 py-4">
-      <Card>
-        <CardHeader>
-          <CardTitle className='flex flex-col md:flex-row gap-2 px-2 items-center md:items-baseline'>
-            <a
-              href='https://ar.io/'
-              className='px-1'
-              target='_blank'
-            >
-              <img src={arioLogo} className='flex' width='100rem' />
-            </a>
-            <div className='flex'>
-              <span className='font-ario text-3xl'>
-                Gateway Explorer
-              </span>
-            </div>
-          </CardTitle>
-          {/* <CardDescription>List of all Gateways</CardDescription> */}
-        </CardHeader>
-        <CardContent>
-          <GarTable
-            data={procData}
-            isRefreshing={isLoading || isFetching || isPinging}
-            onRefresh={() => {refetch()}}
-            onItemUpdate={(updatedItem) => {
-              setProcData((prevData) => {
-                const prevItemIndex = prevData.findIndex((item) => item.id === updatedItem.id)
-                if (prevItemIndex === -1) return prevData;
-                const newData = [...prevData]
-                newData[prevItemIndex] = updatedItem
-                return newData
-              })
-            }}
-            onItemSelect={(item) => {
-              setSelectedDetailsItemId(item.id)
-              if (!isDetailsSheetOpen) {
-                setIsDetailsSheetOpen(true)
-              }
-            }}
-            selectedItemId={selectedDetailsItemId}
-          />
-        </CardContent>
-      </Card>
+    <>
+      <GarTable
+        data={procData}
+        isRefreshing={isLoading || isFetching || isPinging}
+        onRefresh={() => {refetch()}}
+        onItemUpdate={(updatedItem) => {
+          setProcData((prevData) => {
+            const prevItemIndex = prevData.findIndex((item) => item.id === updatedItem.id)
+            if (prevItemIndex === -1) return prevData;
+            const newData = [...prevData]
+            newData[prevItemIndex] = updatedItem
+            return newData
+          })
+        }}
+        onItemSelect={(item) => {
+          setSelectedDetailsItemId(item.id)
+          if (!isDetailsSheetOpen) {
+            setIsDetailsSheetOpen(true)
+          }
+        }}
+        selectedItemId={selectedDetailsItemId}
+      />
       <Sheet
         open={isDetailsSheetOpen}
         // onOpenChange={(isOpen) => {
@@ -117,38 +89,7 @@ const GarLoader = () => {
           </SheetHeader>
         </SheetContent>
       </Sheet>
-      <div className='flex flex-col text-center text-muted-foreground gap-1 pt-2'>
-        <div className='flex flex-row flex-grow justify-center gap-2'>
-          <div className='flex'>
-            <a href='https://ar.io/' target='_blank'>
-              Home
-            </a>
-          </div>
-          <span className='font-bold'>•</span>
-          <div className='flex'>
-            <a href='https://ar.io/docs/' target='_blank'>
-              Docs
-            </a>
-          </div>
-          <span className='font-bold'>•</span>
-          <div className='flex'>
-            <a href='https://github.com/ar-io' target='_blank'>
-              Github
-            </a>
-          </div>
-          <span className='font-bold'>•</span>
-          <div className='flex'>
-            <a href='https://discord.gg/7zUPfN4D6g' target='_blank'>
-              Discord
-            </a>
-          </div>
-        </div>
-        <div>
-          ©2023 ar.io
-        </div>
-        <div className={`${isDetailsSheetOpen ? 'h-[calc(50vh+3em)]' : 'h-[2em]'} transition-all duration-200`} />
-      </div>
-    </div>
+    </>
   )
 }
 

@@ -1,5 +1,3 @@
-import { zGatewayAddressRegistryItem } from "@/types"
-import { z } from "zod"
 import {
   ColumnDef,
   SortingState,
@@ -28,6 +26,8 @@ import { downloadCurrentReportInfoFromGateway } from "@/lib/observer/downloadObs
 import { useMemo, useState } from "react"
 import { PassFailCell } from "./PassFailCell"
 import { ReportTableDatum, generateReportTableData } from "@/lib/observer/report"
+import { defaultGARCacheURL } from "@/lib/consts"
+import { extractGarItems } from "@/lib/convert"
 
 const columns: ColumnDef<ReportTableDatum>[] = [
   {
@@ -77,19 +77,31 @@ const columns: ColumnDef<ReportTableDatum>[] = [
 ];
 
 interface Props {
-  observer: z.infer<typeof zGatewayAddressRegistryItem>
-  onUpdateObserver: (observer: z.infer<typeof zGatewayAddressRegistryItem>) => void
+  id: string;
 }
 
-const ReportTable = ({ observer }: Props) => {
-  const [sorting, setSorting] = useState<SortingState>([])
+const ReportTable = ({ id }: Props) => {
+  const { data: garData } = useQuery(['gar'], async () => {
+    const fetchResult = await fetch(defaultGARCacheURL);
+    const fetchJson = await fetchResult.json();
+    const garItems = extractGarItems(fetchJson);
+    return garItems;
+  });
+
+  const observer = garData?.find((item) => item.id === id)
 
   const {
     data,
     isError,
-  } = useQuery(['observationReportCurrent', observer.id], async () => {
-    return await downloadCurrentReportInfoFromGateway(observer.linkFull)
+  } = useQuery(['observationReportCurrent', observer?.id], async () => {
+    if (observer) {
+      return await downloadCurrentReportInfoFromGateway(observer.linkFull)
+    }
+  }, {
+    enabled: observer !== undefined,
   });
+
+  const [sorting, setSorting] = useState<SortingState>([])
 
   const gatewayAssessmentData: ReportTableDatum[] = useMemo(() => 
     Object.entries(data?.gatewayAssessments ?? {})
