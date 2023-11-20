@@ -275,13 +275,13 @@ const ReportTable = ({ host, garData, isGarError, reportData, isReportError }: P
               Assessment Details
               {/* {selectedItem?.settings.label && <> - <code>{selectedItem?.settings.label}</code></>} */}
             </SheetTitle>
-            {
-              selectedDetailsItem &&
-                <AssessmentDetails
-                  reportDatum={selectedDetailsItem}
-                />
-            }
           </SheetHeader>
+          {
+            selectedDetailsItem &&
+              <AssessmentDetails
+                reportDatum={selectedDetailsItem}
+              />
+          }
         </SheetContent>
       </Sheet>
     </>
