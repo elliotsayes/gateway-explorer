@@ -143,10 +143,14 @@ const ReportTable = ({ host, garData, isGarError, reportData, isReportError }: P
           <Select
             defaultValue={host}
             onValueChange={(value) => {
-              if(value !== host) navigate({
-                to: "/observer/$host/current",
-                params: { host: value },
-              })
+              if(value !== host) {
+                setIsDetailsSheetOpen(false)
+                setSelectedDetailsItemHost(undefined)
+                navigate({
+                  to: "/observer/$host/current",
+                  params: { host: value },
+                })
+              }
             }}
           >
             <SelectTrigger className="md:max-w-xs">
