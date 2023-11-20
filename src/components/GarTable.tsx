@@ -304,7 +304,7 @@ const GarTable = ({ data, onRefresh, isRefreshing, onItemUpdate, onItemSelect, s
  
   return (
     <div className="relative">
-      <div className="right-0 md:absolute md:-top-14">
+      <div className="right-0 md:absolute md:-top-12">
         <div className="pb-2 flex flex-row items-end gap-2">
           <div className="ml-2 mr-auto md:mr-0 md:ml-auto text-muted-foreground">{healthy}/{data.length} online</div>
           <ColumnSelection table={table} />
