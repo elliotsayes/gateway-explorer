@@ -1,4 +1,4 @@
-import { RootRoute, Route, Router, lazyRouteComponent } from "@tanstack/react-router";
+import { RootRoute, Route, Router, createHashHistory, lazyRouteComponent } from "@tanstack/react-router";
 import { Root } from "./Root";
 import GarLoader from "./components/GarLoader";
 
@@ -36,8 +36,11 @@ export const observerTxRoute = new Route({
 // Create the route tree using your routes
 const routeTree = rootRoute.addChildren([explorerRoute, observerCurrentRoute, observerHistoryRoute, observerTxRoute]);
 
+// Use Hash History to support arweave gateway
+const hashHistory = createHashHistory()
+
 // Create the router using your route tree
-export const router = new Router({ routeTree });
+export const router = new Router({ routeTree, history: hashHistory });
 
 // Register your router for maximum type safety
 declare module "@tanstack/react-router" {
