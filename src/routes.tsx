@@ -3,6 +3,7 @@ import { Root } from "./Root";
 import GarLoader from "./components/GarLoader";
 import { CurrentReport } from "./components/CurrentReport";
 import { ReportListSingleGateway } from "./components/ReportListSingleGateway";
+import { HistoricReport } from "./components/HistoricReport";
 
 // Create a root route
 const rootRoute = new RootRoute({
@@ -35,8 +36,18 @@ const observerHistoryRoute = new Route({
   },
 });
 
+const observerTxRoute = new Route({
+  getParentRoute: () => rootRoute,
+  path: "/observer/$host/$txId",
+  component: () => {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const params = useParams({ from: observerTxRoute.id })
+    return <HistoricReport host={params.host} txId={params.txId} />
+  },
+});
+
 // Create the route tree using your routes
-const routeTree = rootRoute.addChildren([explorerRoute, observerCurrentRoute, observerHistoryRoute]);
+const routeTree = rootRoute.addChildren([explorerRoute, observerCurrentRoute, observerHistoryRoute, observerTxRoute]);
 
 // Create the router using your route tree
 export const router = new Router({ routeTree });

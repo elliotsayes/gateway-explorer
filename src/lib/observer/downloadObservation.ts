@@ -43,6 +43,16 @@ export async function* queryObserverReportTransactions(
   return queryRes;
 }
 
+export async function querySingleTransaction(id: string) {
+  const results = await gql.getTransactions({
+    ids: [id],
+  });
+  if (results.transactions.edges.length === 0) {
+    throw new Error(`Transaction not found: ${id}`);
+  }
+  return results.transactions.edges[0].node;
+}
+
 export const downloadReportInfoForTransaction = async (
   transaction: Transaction
 ) => {

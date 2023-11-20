@@ -269,10 +269,11 @@ export const ReportListTable = ({ host, observer, garData, isGarError }: Props) 
                     key={row.id}
                     data-state={row.getIsSelected() && "selected"}
                     onClick={() => {
-                      // setSelectedDetailsItemHost(row.original.gatewayHost)
-                      // setIsDetailsSheetOpen(true)
+                      navigate({
+                        to: "/observer/$host/$txId",
+                        params: { host: host, txId: row.original.txId },
+                      })
                     }}
-                    // className={selectedDetailsItemHost === row.original.gatewayHost ? "bg-muted hover:bg-muted" : ""}
                   >
                     {row.getVisibleCells().map((cell) => (
                       <TableCell key={cell.id}>
