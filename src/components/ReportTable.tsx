@@ -28,6 +28,8 @@ import { PassFailCell } from "./PassFailCell"
 import { ReportTableDatum, generateReportTableData } from "@/lib/observer/report"
 import { defaultGARCacheURL } from "@/lib/consts"
 import { extractGarItems } from "@/lib/convert"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { useNavigate } from "@tanstack/react-router"
 
 const columns: ColumnDef<ReportTableDatum>[] = [
   {
@@ -131,15 +133,42 @@ const ReportTable = ({ id }: Props) => {
 
   const assessmentCount = gatewayAssessmentData.length ?? 0
   const assessmentPassedCount = gatewayAssessmentData.filter(item => item.gatewayAssessment.pass).length
- 
+  
+  const navigate = useNavigate()
+
   return (
-    <div className="relative">
-      <div className="right-0 md:absolute md:-top-14">
-        <div className="pb-2 flex flex-row items-end gap-2">
-          <div className="ml-2 mr-auto md:mr-0 md:ml-auto text-muted-foreground">
-            {assessmentPassedCount}/{assessmentCount} passed
+    <div>
+      <div className="pb-2 flex items-end gap-2">
+        <Select
+          onValueChange={(value) => {
+            if(value !== id) navigate({
+              to: "/observer/$id/current",
+              params: { id: value },
+            })
+          }}
+        >
+          <SelectTrigger className="md:max-w-xs">
+            <SelectValue placeholder={"Select observer"} />
+          </SelectTrigger>
+          <SelectContent>
+            {
+              garData?.map((item) => (
+                <SelectItem value={`${item.id}`}>
+                  {item.settings.label} ({item.linkDisplay})
+                </SelectItem>
+              ))
+            }
+          </SelectContent>
+        </Select>
+      </div>
+      <div className="relative">
+        <div className="right-0 md:absolute md:-top-12">
+          <div className="pb-2 flex flex-row items-end gap-2">
+            <div className="ml-2 mr-auto md:mr-0 md:ml-auto text-muted-foreground">
+              {assessmentPassedCount}/{assessmentCount} passed
+            </div>
+            <ColumnSelection table={table} />
           </div>
-          <ColumnSelection table={table} />
         </div>
       </div>
       <div className="rounded-md border">
