@@ -37,7 +37,7 @@ export const AssessmentDetails = ({ reportDatum }: Props) => {
   const arnsAllPass = `${statistics.passFail.allNames.pass}/${statistics.passFail.allNames.total}`
 
   return (
-    <ScrollArea className="h-[60vh] sm:h-[50vh] md:h-[40vh] w-full pr-4">
+    <ScrollArea className="h-[65vh] sm:h-[55vh] w-full pr-4">
       <div className="flex flex-col gap-4">
         <div className="flex flex-row gap-2 items-center">
           <span className="text-xl">{gatewayHost}</span>
@@ -50,6 +50,8 @@ export const AssessmentDetails = ({ reportDatum }: Props) => {
             <span className="text-lg">Ownership</span>
             <PassFailDetails
               pass={ownershipPass}
+              passText={`Passed (1/1)`}
+              failureText={'Failed (0/1)'}
               failureDetails={ownershipFailureReason}
             />
           </div>
