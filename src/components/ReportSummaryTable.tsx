@@ -88,7 +88,7 @@ interface Props {
   isReportError: boolean;
 }
 
-const ReportTable = ({ host, garData, isGarError, reportData, isReportError }: Props) => {
+const ReportSummaryTable = ({ host, garData, isGarError, reportData, isReportError }: Props) => {
   const [sorting, setSorting] = useState<SortingState>([])
 
   const gatewayAssessmentData: ReportTableDatum[] = useMemo(() => 
@@ -292,4 +292,4 @@ const ReportTable = ({ host, garData, isGarError, reportData, isReportError }: P
   )
 }
 
-export { ReportTable }
+export { ReportSummaryTable }

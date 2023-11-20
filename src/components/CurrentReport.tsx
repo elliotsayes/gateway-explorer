@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query"
 import { downloadCurrentReportInfoFromGateway } from "@/lib/observer/downloadObservation"
 import { defaultGARCacheURL } from "@/lib/consts"
 import { extractGarItems } from "@/lib/convert"
-import { ReportTable } from "./ReportTable";
+import { ReportSummaryTable } from "./ReportSummaryTable";
 
 interface Props {
   host: string;
@@ -43,7 +43,7 @@ export const CurrentReport = ({ host }: Props) => {
   }
 
   return (
-    <ReportTable
+    <ReportSummaryTable
       host={host}
       garData={garData}
       isGarError={isGarError}
