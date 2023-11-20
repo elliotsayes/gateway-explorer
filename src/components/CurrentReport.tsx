@@ -6,10 +6,10 @@ import { extractGarItems } from "@/lib/convert"
 import { ReportTable } from "./ReportTable";
 
 interface Props {
-  id: string;
+  host: string;
 }
 
-export const CurrentReport = ({ id }: Props) => {
+export const CurrentReport = ({ host }: Props) => {
   const {
     data: garData,
     isError: isGarError,
@@ -20,7 +20,8 @@ export const CurrentReport = ({ id }: Props) => {
     return garItems;
   });
 
-  const observer = garData?.find((item) => item.id === id)
+  const observer = garData?.find((item) => item.settings.fqdn === host)
+  const observerNotFound = (garData !== undefined) && (observer === undefined);
 
   const {
     data: reportData,
@@ -33,9 +34,17 @@ export const CurrentReport = ({ id }: Props) => {
     enabled: observer !== undefined,
   });
 
+  if (observerNotFound) {
+    return (
+      <div>
+        Observer not found
+      </div>
+    )
+  }
+
   return (
     <ReportTable
-      id={id}
+      host={host}
       garData={garData}
       isGarError={isGarError}
       reportData={reportData}

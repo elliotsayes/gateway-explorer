@@ -16,11 +16,11 @@ const explorerRoute = new Route({
 
 const observerRoute = new Route({
   getParentRoute: () => rootRoute,
-  path: "/observer/$id/current",
+  path: "/observer/$host/current",
   component: () => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const params = useParams({ from: observerRoute.id })
-    return <CurrentReport id={params.id} />
+    return <CurrentReport host={params.host} />
   },
 });
 

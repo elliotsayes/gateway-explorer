@@ -190,8 +190,8 @@ const GarTable = ({ data, onRefresh, isRefreshing, onItemUpdate, onItemSelect, s
             asChild
           >
             <Link
-              to="observer/$id/current"
-              params={{ id: item.id }}
+              to="observer/$host/current"
+              params={{ host: item.settings.fqdn }}
               onClick={(e) => e.stopPropagation()}
             >
               <span className="line-clamp-1">

@@ -14,6 +14,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { ColumnSelection } from "./ColumnSelection"
 import { 
   ArrowUpDown,
@@ -30,6 +31,7 @@ import { Link, useNavigate } from "@tanstack/react-router"
 import { ObserverReport } from "@/lib/observer/types"
 import { zGatewayAddressRegistryItem } from "@/types"
 import { z } from "zod"
+import { AssessmentDetails } from "./AssessmentDetails";
 
 const columns: ColumnDef<ReportTableDatum>[] = [
   {
@@ -79,14 +81,14 @@ const columns: ColumnDef<ReportTableDatum>[] = [
 ];
 
 interface Props {
-  id: string;
+  host: string;
   garData?: Array<z.infer<typeof zGatewayAddressRegistryItem>>;
   isGarError: boolean;
   reportData?: ObserverReport;
   isReportError: boolean;
 }
 
-const ReportTable = ({ id, garData, isGarError, reportData, isReportError }: Props) => {
+const ReportTable = ({ host, garData, isGarError, reportData, isReportError }: Props) => {
   const [sorting, setSorting] = useState<SortingState>([])
 
   const gatewayAssessmentData: ReportTableDatum[] = useMemo(() => 
@@ -120,129 +122,169 @@ const ReportTable = ({ id, garData, isGarError, reportData, isReportError }: Pro
   
   const navigate = useNavigate()
 
+  const [isDetailsSheetOpen, setIsDetailsSheetOpen] = useState(false)
+  const [selectedDetailsItemHost, setSelectedDetailsItemHost] = useState<string | undefined>(undefined)
+
+  const selectedDetailsItem = gatewayAssessmentData.find((item) => item.gatewayHost === selectedDetailsItemHost)
+
   return (
-    <div>
-      <div className="pb-2 flex items-center gap-1">
-        <Button
-          variant={"ghost"}
-          size={"iconSm"}
-          asChild
-        >
-          <Link to={"/"} >
-            <ArrowLeft />
-          </Link>
-        </Button>
-        <Select
-          defaultValue={id}
-          onValueChange={(value) => {
-            if(value !== id) navigate({
-              to: "/observer/$id/current",
-              params: { id: value },
-            })
-          }}
-        >
-          <SelectTrigger className="md:max-w-xs">
-            <SelectValue placeholder={"Select observer"} />
-          </SelectTrigger>
-          <SelectContent>
-            {
-              garData?.map((item) => (
-                <SelectItem value={`${item.id}`}>
-                  {item.settings.label} ({item.linkDisplay})
-                </SelectItem>
-              ))
-            }
-          </SelectContent>
-        </Select>
-      </div>
-      <div className="relative">
-        <div className="right-0 md:absolute md:-top-12">
-          <div className="pb-2 flex flex-row items-end gap-2">
-            <div className="ml-2 mr-auto md:mr-0 md:ml-auto text-muted-foreground">
-              {assessmentPassedCount}/{assessmentCount} passed
+    <>
+      <div>
+        <div className="pb-2 flex items-center gap-1">
+          <Button
+            variant={"ghost"}
+            size={"iconSm"}
+            asChild
+          >
+            <Link to={"/"} >
+              <ArrowLeft />
+            </Link>
+          </Button>
+          <Select
+            defaultValue={host}
+            onValueChange={(value) => {
+              if(value !== host) navigate({
+                to: "/observer/$host/current",
+                params: { host: value },
+              })
+            }}
+          >
+            <SelectTrigger className="md:max-w-xs">
+              <SelectValue placeholder={"Select observer"} />
+            </SelectTrigger>
+            <SelectContent>
+              {
+                garData?.map((item) => (
+                  <SelectItem key={item.id} value={item.settings.fqdn}>
+                    {item.settings.label} ({item.linkDisplay})
+                  </SelectItem>
+                ))
+              }
+            </SelectContent>
+          </Select>
+        </div>
+        <div className="relative">
+          <div className="right-0 md:absolute md:-top-12">
+            <div className="pb-2 flex flex-row items-end gap-2">
+              <div className="ml-2 mr-auto md:mr-0 md:ml-auto text-muted-foreground">
+                {assessmentPassedCount}/{assessmentCount} passed
+              </div>
+              <ColumnSelection table={table} />
             </div>
-            <ColumnSelection table={table} />
           </div>
         </div>
-      </div>
-      <div className="rounded-md border">
-        <Table>
-          <TableHeader className="sticky top-0 bg-secondary/95">
-            {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map((header) => {
-                  return (
-                    <TableHead key={header.id}>
-                      {header.isPlaceholder
-                        ? null
-                        : (
-                          header.column.getCanSort() ? (
-                            <Button
-                              variant="ghost"
-                              onClick={() => {
-                                const firstDir = header.column.getFirstSortDir()
-                                const currentDir = header.column.getIsSorted()
-                                if (currentDir == false) {
-                                  header.column.toggleSorting(firstDir === "desc")
-                                } else {
-                                  if (currentDir === firstDir) {
-                                    header.column.toggleSorting(firstDir !== "desc")
+        <div className="rounded-md border">
+          <Table>
+            <TableHeader className="sticky top-0 bg-secondary/95">
+              {table.getHeaderGroups().map((headerGroup) => (
+                <TableRow key={headerGroup.id}>
+                  {headerGroup.headers.map((header) => {
+                    return (
+                      <TableHead key={header.id}>
+                        {header.isPlaceholder
+                          ? null
+                          : (
+                            header.column.getCanSort() ? (
+                              <Button
+                                variant="ghost"
+                                onClick={() => {
+                                  const firstDir = header.column.getFirstSortDir()
+                                  const currentDir = header.column.getIsSorted()
+                                  if (currentDir == false) {
+                                    header.column.toggleSorting(firstDir === "desc")
                                   } else {
-                                    header.column.clearSorting();
+                                    if (currentDir === firstDir) {
+                                      header.column.toggleSorting(firstDir !== "desc")
+                                    } else {
+                                      header.column.clearSorting();
+                                    }
                                   }
-                                }
-                              }}
-                            >
-                              {flexRender(
-                                header.column.columnDef.header,
-                                header.getContext()
-                              )}
-                              {header.column.getIsSorted() ? (
-                                header.column.getIsSorted() === "asc" ? (
-                                  <ArrowUp className={`ml-2 h-4 w-4`} />
+                                }}
+                              >
+                                {flexRender(
+                                  header.column.columnDef.header,
+                                  header.getContext()
+                                )}
+                                {header.column.getIsSorted() ? (
+                                  header.column.getIsSorted() === "asc" ? (
+                                    <ArrowUp className={`ml-2 h-4 w-4`} />
+                                  ) : (
+                                    <ArrowDown className={`ml-2 h-4 w-4`} />
+                                  )
                                 ) : (
-                                  <ArrowDown className={`ml-2 h-4 w-4`} />
-                                )
-                              ) : (
-                                <ArrowUpDown className={`ml-2 h-4 w-4`} />
-                              )}
-                            </Button>
-                          ) : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )
-                        )}
-                    </TableHead>
-                  )
-                })}
-              </TableRow>
-            ))}
-          </TableHeader>
-          <TableBody>
-            {table.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map((row) => (
-                <TableRow
-                  key={row.id}
-                  data-state={row.getIsSelected() && "selected"}
-                >
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
-                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                    </TableCell>
-                  ))}
+                                  <ArrowUpDown className={`ml-2 h-4 w-4`} />
+                                )}
+                              </Button>
+                            ) : flexRender(
+                              header.column.columnDef.header,
+                              header.getContext()
+                            )
+                          )}
+                      </TableHead>
+                    )
+                  })}
                 </TableRow>
-              ))
-            ) : (
-              <TableRow>
-                <TableCell colSpan={columns.length} className="h-24 text-center">
-                  {(isGarError || isReportError) ? "Failed to load report." : "Loading report..."}
-                </TableCell>
-              </TableRow>
-            )}
-          </TableBody>
-        </Table>
+              ))}
+            </TableHeader>
+            <TableBody>
+              {table.getRowModel().rows?.length ? (
+                table.getRowModel().rows.map((row) => (
+                  <TableRow
+                    key={row.id}
+                    data-state={row.getIsSelected() && "selected"}
+                    onClick={() => {
+                      setSelectedDetailsItemHost(row.original.gatewayHost)
+                      setIsDetailsSheetOpen(true)
+                    }}
+                    className={selectedDetailsItemHost === row.original.gatewayHost ? "bg-muted hover:bg-muted" : ""}
+                  >
+                    {row.getVisibleCells().map((cell) => (
+                      <TableCell key={cell.id}>
+                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                ))
+              ) : (
+                <TableRow>
+                  <TableCell colSpan={columns.length} className="h-24 text-center">
+                    {(isGarError || isReportError) ? "Failed to load report." : "Loading report..."}
+                  </TableCell>
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
+        </div>
       </div>
-    </div>
+      <Sheet
+        open={isDetailsSheetOpen}
+        // onOpenChange={(isOpen) => {
+        //   setIsSheetOpen(isOpen)
+        // }}
+        modal={false}
+      >
+        <SheetContent
+          side="bottom"
+          onCloseButtonClick={() => {
+            setIsDetailsSheetOpen(false)
+            // setSelectedItemId(undefined)
+          }}
+        >
+          <SheetHeader>
+            <SheetTitle className='pb-4'>
+              Assessment Details
+              {/* {selectedItem?.settings.label && <> - <code>{selectedItem?.settings.label}</code></>} */}
+            </SheetTitle>
+            {
+              selectedDetailsItem &&
+                <AssessmentDetails
+                  reportDatum={selectedDetailsItem}
+                />
+            }
+          </SheetHeader>
+        </SheetContent>
+      </Sheet>
+    </>
   )
 }
 
