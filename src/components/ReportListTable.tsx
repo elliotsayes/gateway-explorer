@@ -85,6 +85,7 @@ export const ReportListTable = ({ host, observer, garData, isGarError }: Props) 
     getPreviousPageParam: undefined,
     enabled: observer !== undefined,
   });
+  const gqlQueryEmpty = gqlData?.pages?.[0]?.length === 0;
 
   const tableData = useMemo(() => {
     if (gqlData === undefined) {
@@ -241,7 +242,11 @@ export const ReportListTable = ({ host, observer, garData, isGarError }: Props) 
               ) : (
                 <TableRow>
                   <TableCell colSpan={columns.length} className="h-24 text-center">
-                    {(isGarError || isGqlError) ? "Failed to load history." : "Loading history..."}
+                    {(isGarError || isGqlError) 
+                      ? "Failed to load history." 
+                      : (gqlQueryEmpty
+                        ? "No history found."
+                        : "Loading history...")}
                   </TableCell>
                 </TableRow>
               )}
