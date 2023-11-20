@@ -66,20 +66,20 @@ export const AssessmentDetailsArNS = ({ arnsName, arnsAssessment, assessmentType
           expected={expectedDataHash}
           actual={resolvedDataHash}
         />
-        {
-          timings && (
-            <Accordion type="single" collapsible>
-              <AccordionItem value="timings" className=" max-w-screen-sm">
-                <AccordionTrigger>Timings</AccordionTrigger>
-                <AccordionContent>
+        <Accordion type="single" collapsible>
+          <AccordionItem value="timings" className="max-w-screen-sm">
+            <AccordionTrigger disabled={timings === undefined}>Timings</AccordionTrigger>
+            <AccordionContent>
+              {
+                timings && (
                   <AssessmentTimings
                     timings={timings}
                   />
-                </AccordionContent>
-              </AccordionItem>
-            </Accordion>
-          )
-        }
+                )
+              }
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
       </CardContent>
     </Card>
   )
