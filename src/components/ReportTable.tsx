@@ -18,7 +18,8 @@ import { ColumnSelection } from "./ColumnSelection"
 import { 
   ArrowUpDown,
   ArrowDown,
-  ArrowUp
+  ArrowUp,
+  ArrowLeft
 } from "lucide-react"
 import { Button } from "./ui/button"
 import { useQuery } from "@tanstack/react-query"
@@ -29,7 +30,7 @@ import { ReportTableDatum, generateReportTableData } from "@/lib/observer/report
 import { defaultGARCacheURL } from "@/lib/consts"
 import { extractGarItems } from "@/lib/convert"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { useNavigate } from "@tanstack/react-router"
+import { Link, useNavigate } from "@tanstack/react-router"
 
 const columns: ColumnDef<ReportTableDatum>[] = [
   {
@@ -138,8 +139,18 @@ const ReportTable = ({ id }: Props) => {
 
   return (
     <div>
-      <div className="pb-2 flex items-end gap-2">
+      <div className="pb-2 flex items-center gap-1">
+        <Button
+          variant={"ghost"}
+          size={"iconSm"}
+          asChild
+        >
+          <Link to={"/"} >
+            <ArrowLeft />
+          </Link>
+        </Button>
         <Select
+          defaultValue={id}
           onValueChange={(value) => {
             if(value !== id) navigate({
               to: "/observer/$id/current",
