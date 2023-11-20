@@ -2,6 +2,13 @@ import { ArnsNameAssessment } from "@/lib/observer/types"
 import { StringComparitor } from "./StringComparitor";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { PassFailDetails } from "./PassFailDetails";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion"
+import { AssessmentTimings } from "./AssessmentTimings";
 
 interface Props {
   arnsName: string;
@@ -59,6 +66,20 @@ export const AssessmentDetailsArNS = ({ arnsName, arnsAssessment, assessmentType
           expected={expectedDataHash}
           actual={resolvedDataHash}
         />
+        {
+          timings && (
+            <Accordion type="single" collapsible>
+              <AccordionItem value="timings" className=" max-w-screen-sm">
+                <AccordionTrigger>Timings</AccordionTrigger>
+                <AccordionContent>
+                  <AssessmentTimings
+                    timings={timings}
+                  />
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
+          )
+        }
       </CardContent>
     </Card>
   )
