@@ -38,7 +38,7 @@ export const PassFailDetails = ({ pass, passText, failureText, failureDetails, s
             >
               {failureText ?? "Failed"}
               <InfoIcon
-                size={"14"}
+                size={"12"}
                 className="ml-0.5"
               />
             </Badge>
