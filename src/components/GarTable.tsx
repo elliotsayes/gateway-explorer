@@ -190,34 +190,34 @@ const columns: ColumnDef<z.infer<typeof zGatewayAddressRegistryItem>>[] = [
     },
     enableSorting: false,
   },
-  {
-    id: "Observation",
-    accessorKey: "observation.status",
-    header: "Observation",
-    size: 20,
-    cell: (cell) => {
-      const item = cell.row.original;
-      return (
-        <Button
-          className="h-auto px-1 py-0 text-xs text-muted-foreground"
-          size={"sm"}
-          variant={"outline"}
-          asChild
-        >
-          <Link
-            // to="observer/$host/run"
-            params={{ host: item.settings.fqdn }}
-            onClick={(e) => e.stopPropagation()}
-          >
-            <span className="line-clamp-1">
-              Run Test
-            </span>
-          </Link>
-        </Button>
-      )
-    },
-    enableSorting: false,
-  },
+  // {
+  //   id: "Observation",
+  //   accessorKey: "observation.status",
+  //   header: "Observation",
+  //   size: 20,
+  //   cell: (cell) => {
+  //     const item = cell.row.original;
+  //     return (
+  //       <Button
+  //         className="h-auto px-1 py-0 text-xs text-muted-foreground"
+  //         size={"sm"}
+  //         variant={"outline"}
+  //         asChild
+  //       >
+  //         <Link
+  //           // to="observer/$host/run"
+  //           params={{ host: item.settings.fqdn }}
+  //           onClick={(e) => e.stopPropagation()}
+  //         >
+  //           <span className="line-clamp-1">
+  //             Run Test
+  //           </span>
+  //         </Link>
+  //       </Button>
+  //     )
+  //   },
+  //   enableSorting: false,
+  // },
 ]
 
 interface Props {
