@@ -32,25 +32,25 @@ export const Root = () => {
       <div className='flex flex-col text-center text-muted-foreground gap-1 pt-2'>
         <div className='flex flex-row flex-grow justify-center gap-2'>
           <div className='flex'>
-            <a href='https://ar.io/' target='_blank'>
+            <a href='https://ar.io/' target='_blank' className="underline">
               Home
             </a>
           </div>
           <span className='font-bold'>•</span>
           <div className='flex'>
-            <a href='https://ar.io/docs/' target='_blank'>
+            <a href='https://ar.io/docs/' target='_blank' className="underline">
               Docs
             </a>
           </div>
           <span className='font-bold'>•</span>
           <div className='flex'>
-            <a href='https://github.com/ar-io' target='_blank'>
+            <a href='https://github.com/ar-io' target='_blank' className="underline">
               Github
             </a>
           </div>
           <span className='font-bold'>•</span>
           <div className='flex'>
-            <a href='https://discord.gg/7zUPfN4D6g' target='_blank'>
+            <a href='https://discord.gg/7zUPfN4D6g' target='_blank' className="underline">
               Discord
             </a>
           </div>
