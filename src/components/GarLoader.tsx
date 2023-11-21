@@ -55,12 +55,8 @@ const GarLoader = () => {
 
   const [memData, setMemData] = useState<Array<z.infer<typeof zGatewayAddressRegistryItem>>>();
   useEffect(() => {
-    if (procData !== undefined) {
-      setMemData(procData)
-    } else if (data !== undefined) {
-      setMemData(data)
-    }
-  }, [data, procData])
+    if (procData !== undefined) setMemData(procData)
+  }, [procData])
 
   const [selectedDetailsItemId, setSelectedDetailsItemId] = useState<string | undefined>(undefined)
   const selectedDetailsItem = procData?.find((item) => item.id === selectedDetailsItemId)
