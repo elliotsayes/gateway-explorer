@@ -172,7 +172,7 @@ const ReportSummaryTable = ({ host, label, garData, isGarError, reportData, isRe
             asChild
           >
             <Link
-              to={"/observer/$host/history"}
+              to={"/observer/$host"}
               params={{ host }}
             >
               {label}

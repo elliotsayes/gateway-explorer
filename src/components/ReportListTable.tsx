@@ -136,7 +136,7 @@ export const ReportListTable = ({ host, observer, garData, isGarError }: Props) 
             onValueChange={(value) => {
               if(value !== host) {
                 navigate({
-                  to: "/observer/$host/history",
+                  to: "/observer/$host",
                   params: { host: value },
                 })
               }

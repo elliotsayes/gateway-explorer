@@ -15,16 +15,16 @@ const explorerRoute = new Route({
 
 const importLazyComponents = () => import('./Lazy')
 
+export const observerRoute = new Route({
+  getParentRoute: () => rootRoute,
+  path: "/observer/$host",
+  component: lazyRouteComponent(importLazyComponents, 'Observer')
+});
+
 export const observerCurrentRoute = new Route({
   getParentRoute: () => rootRoute,
   path: "/observer/$host/current",
   component: lazyRouteComponent(importLazyComponents, 'ObserverCurrent'),
-});
-
-export const observerHistoryRoute = new Route({
-  getParentRoute: () => rootRoute,
-  path: "/observer/$host/history",
-  component: lazyRouteComponent(importLazyComponents, 'ObserverHistory')
 });
 
 export const observerTxRoute = new Route({
@@ -34,7 +34,7 @@ export const observerTxRoute = new Route({
 });
 
 // Create the route tree using your routes
-const routeTree = rootRoute.addChildren([explorerRoute, observerCurrentRoute, observerHistoryRoute, observerTxRoute]);
+const routeTree = rootRoute.addChildren([explorerRoute, observerRoute, observerCurrentRoute, observerTxRoute]);
 
 // Use Hash History to support arweave gateway
 const hashHistory = createHashHistory()
