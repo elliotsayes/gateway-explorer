@@ -23,7 +23,7 @@ import {
 import { Button } from "./ui/button"
 import { useMemo, useState } from "react"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { useNavigate } from "@tanstack/react-router"
+import { Link, useNavigate } from "@tanstack/react-router"
 import { zGatewayAddressRegistryItem } from "@/types"
 import { z } from "zod"
 import { useInfiniteQuery } from "@tanstack/react-query";
@@ -121,7 +121,7 @@ export const ReportListTable = ({ host, observer, garData, isGarError }: Props) 
   return (
     <>
       <div>
-        <div className="pb-2 flex items-center gap-1">
+        <div className="pb-2 flex items-center gap-2">
           {/* <Button
             variant={"ghost"}
             size={"iconSm"}
@@ -155,6 +155,17 @@ export const ReportListTable = ({ host, observer, garData, isGarError }: Props) 
               }
             </SelectContent>
           </Select>
+          <Button
+            variant={"default"}
+            asChild
+          >
+            <Link
+              to={"/observer/$host/current"}
+              params={{ host }}
+            >
+              Current
+            </Link>
+          </Button>
         </div>
         <div className="relative">
           <div className="right-0 md:absolute md:-top-12">
