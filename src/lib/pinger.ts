@@ -12,13 +12,14 @@ const pingUpdater = async (
 ) => {
   const newData = structuredClone(data);
   const pingPromises = data.map((item, index) => async () => {
+    const url = `${item.linkFull}/ar-io/healthcheck`;
+
     const delayMs = pingStaggerDelayMs * index;
     await new Promise((resolve) => setTimeout(resolve, delayMs));
     try {
       newData[index].ping = { status: "pending" };
       onUpdate?.(newData);
 
-      const url = `${item.linkFull}/ar-io/healthcheck`;
       const controller = new AbortController();
       const timeoutTrigger = setTimeout(() => controller.abort(), pingTimeout);
 
@@ -48,7 +49,7 @@ const pingUpdater = async (
         };
         onUpdate?.(newData);
       } catch (e) {
-        console.error(e);
+        // console.debug(`Error checking health: ${url}`, e);
         newData[index].health = {
           status: "error",
           error: e?.toString() ?? JSON.stringify(e),
@@ -56,7 +57,7 @@ const pingUpdater = async (
         onUpdate?.(newData);
       }
     } catch (e) {
-      console.error(e);
+      // console.debug(`Error fetching: ${url}`, e);
       newData[index].ping = {
         status: "error",
         error: e?.toString() ?? JSON.stringify(e),
