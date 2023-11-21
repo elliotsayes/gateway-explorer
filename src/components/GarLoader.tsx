@@ -41,7 +41,11 @@ const GarLoader = () => {
     queryKey: ['garProc', data],
     queryFn: async () => await pingUpdater(data!),
     enabled: data !== undefined,
-    placeholderData: data?.map((item) => ({ ...item, ping: { status: "pending" }})) as Array<z.infer<typeof zGatewayAddressRegistryItem>>,
+    placeholderData: data?.map((item) => ({
+      ...item,
+      ping: { status: "pending" },
+      health: { status: "pending" },
+    })) as Array<z.infer<typeof zGatewayAddressRegistryItem>>,
     refetchInterval: false,
     refetchOnMount: false,
     refetchOnReconnect: false,
