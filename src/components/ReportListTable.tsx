@@ -121,6 +121,9 @@ export const ReportListTable = ({ host, observer, garData, isGarError }: Props) 
   return (
     <>
       <div>
+        <div className="text-center md:text-left text-2xl px-1 pb-2">
+          Gateway Observations
+        </div>
         <div className="pb-2 flex items-center gap-2">
           {/* <Button
             variant={"ghost"}

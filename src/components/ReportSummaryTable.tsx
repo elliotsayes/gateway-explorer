@@ -131,6 +131,9 @@ const ReportSummaryTable = ({ host, label, garData, isGarError, reportData, isRe
   return (
     <>
       <div>
+        <div className="text-center md:text-left text-2xl px-1 pb-2">
+          Observer Report Viewer
+        </div>
         <div className="pb-2 flex items-center gap-2">
           {/* <Button
             variant={"ghost"}
