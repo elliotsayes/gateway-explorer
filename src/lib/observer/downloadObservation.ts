@@ -2,7 +2,6 @@ import arweaveGraphql, {
   GetTransactionsQuery,
   SortOrder,
 } from "arweave-graphql";
-import { z } from "zod";
 import { observerReportSchema } from "./schema";
 import { inflate } from "pako";
 
@@ -57,8 +56,6 @@ export const downloadReportInfoForTransaction = async (
   transaction: Transaction
 ) => {
   const txDataRes = await fetch(`https://${gatewayUrl}/${transaction.id}`);
-  let observerReport: z.infer<typeof observerReportSchema> | undefined =
-    undefined;
   if (
     transaction.tags.find(
       (t) =>
@@ -69,11 +66,10 @@ export const downloadReportInfoForTransaction = async (
     const txDataInflated = inflate(await txDataRes.arrayBuffer());
     const txDataText = new TextDecoder().decode(txDataInflated);
     const txDataJson = JSON.parse(txDataText);
-    observerReport = observerReportSchema.parse(txDataJson);
+    return observerReportSchema.parse(txDataJson);
   } else {
-    observerReport = observerReportSchema.parse(await txDataRes.json());
+    return observerReportSchema.parse(await txDataRes.json());
   }
-  return observerReport;
 };
 
 export const downloadCurrentReportInfoFromGateway = async (
