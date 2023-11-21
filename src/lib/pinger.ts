@@ -6,7 +6,7 @@ const pingTimeout = 5000; // 5s
 
 const pingUpdater = async (
   data: Array<z.infer<typeof zGatewayAddressRegistryItem>>,
-  onUpdate: (
+  onUpdate?: (
     newData: Array<z.infer<typeof zGatewayAddressRegistryItem>>
   ) => void
 ) => {
@@ -16,7 +16,7 @@ const pingUpdater = async (
     await new Promise((resolve) => setTimeout(resolve, delayMs));
     try {
       newData[index].ping = { status: "pending" };
-      onUpdate(newData);
+      onUpdate?.(newData);
 
       const url = `${item.linkFull}/ar-io/healthcheck`;
       const controller = new AbortController();
@@ -33,11 +33,11 @@ const pingUpdater = async (
 
       clearTimeout(timeoutTrigger);
       newData[index].ping = { status: "success", value: duration };
-      onUpdate(newData);
+      onUpdate?.(newData);
 
       try {
         newData[index].health = { status: "pending" };
-        onUpdate(newData);
+        onUpdate?.(newData);
 
         const healthJson = await fetchResult.json();
         const healthData = zGatewayHealthCheck.parse(healthJson);
@@ -46,14 +46,14 @@ const pingUpdater = async (
           status: "success",
           uptime: healthData.uptime,
         };
-        onUpdate(newData);
+        onUpdate?.(newData);
       } catch (e) {
         console.error(e);
         newData[index].health = {
           status: "error",
           error: e?.toString() ?? JSON.stringify(e),
         };
-        onUpdate(newData);
+        onUpdate?.(newData);
       }
     } catch (e) {
       console.error(e);
@@ -64,7 +64,7 @@ const pingUpdater = async (
       newData[index].health = {
         status: "error",
       };
-      onUpdate(newData);
+      onUpdate?.(newData);
     }
   });
   await Promise.all(pingPromises.map((p) => p()));

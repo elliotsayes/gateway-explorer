@@ -8,18 +8,23 @@ import { useEffect, useState } from 'react';
 import { pingUpdater } from '@/lib/pinger';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from './ui/sheet';
 import GatewayDetails from './GatewayDetails';
+import { z } from 'zod';
+import { zGatewayAddressRegistryItem } from '@/types';
 
 const GarLoader = () => {
-  const [isPinging, setIsPinging] = useState(false)
-
-  const { data, isLoading, isFetching, error, refetch, isRefetching } = useQuery({
+  const {
+    data,
+    isLoading,
+    isFetching,
+    error,
+  } = useQuery({
     queryKey: ['gar'], 
     queryFn: async () => {
       const fetchResult = await fetch(defaultGARCacheURL);
       const fetchJson = await fetchResult.json();
       const garItems = extractGarItems(fetchJson);
       return garItems;
-    }, 
+    },
     refetchInterval: false,
     refetchOnMount: false,
     refetchOnReconnect: false,
@@ -27,23 +32,34 @@ const GarLoader = () => {
     refetchOnWindowFocus: false,
   });
 
+  const {
+    data: procData,
+    isLoading: isProcLoading,
+    isFetching: isProcFetching,
+    refetch: procRefetch,
+  } = useQuery({
+    queryKey: ['garProc', data],
+    queryFn: async () => await pingUpdater(data!),
+    enabled: data !== undefined,
+    placeholderData: data?.map((item) => ({ ...item, ping: { status: "pending" }})) as Array<z.infer<typeof zGatewayAddressRegistryItem>>,
+    refetchInterval: false,
+    refetchOnMount: false,
+    refetchOnReconnect: false,
+    refetchIntervalInBackground: false,
+    refetchOnWindowFocus: false,
+  })
+
+  const [memData, setMemData] = useState<Array<z.infer<typeof zGatewayAddressRegistryItem>>>();
   useEffect(() => {
-    if (data && !isRefetching && !isPinging) {
-      setIsPinging(true);
-      if (data.length > 0 && procData.length < 1) setProcData(data);
-      (async () => {
-        const res = await pingUpdater(data, () => {});
-        setProcData(res);
-        setIsPinging(false);
-      })();
+    if (procData !== undefined) {
+      setMemData(procData)
+    } else if (data !== undefined) {
+      setMemData(data)
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data, isRefetching]);
+  }, [data, procData])
 
-
-  const [procData, setProcData] = useState(data ?? [])
   const [selectedDetailsItemId, setSelectedDetailsItemId] = useState<string | undefined>(undefined)
-  const selectedDetailsItem = procData.find((item) => item.id === selectedDetailsItemId)
+  const selectedDetailsItem = procData?.find((item) => item.id === selectedDetailsItemId)
   
   const [isDetailsSheetOpen, setIsDetailsSheetOpen] = useState(false)
   
@@ -52,11 +68,12 @@ const GarLoader = () => {
   return (
     <>
       <GarTable
-        data={procData}
-        isRefreshing={isLoading || isFetching || isPinging}
-        onRefresh={() => {refetch()}}
+        data={memData ?? []}
+        isRefreshing={isLoading || isProcLoading || isFetching || isProcFetching}
+        onRefresh={() => {procRefetch()}}
         onItemUpdate={(updatedItem) => {
-          setProcData((prevData) => {
+          setMemData((prevData) => {
+            if (prevData === undefined) return prevData;
             const prevItemIndex = prevData.findIndex((item) => item.id === updatedItem.id)
             if (prevItemIndex === -1) return prevData;
             const newData = [...prevData]
