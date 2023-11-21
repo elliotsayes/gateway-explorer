@@ -15,7 +15,7 @@ export const Root = () => {
           <CardTitle className='flex flex-col md:flex-row gap-2 px-2 items-center md:items-baseline'>
             <a
               href='/'
-              className='flex items-center px-1 gap-4'
+              className='flex items-center px-1 flex-col md:flex-row gap-2 md:gap-4'
             >
               <img src={arioLogo} width='100rem' />
               <span className='font-ario text-3xl'>
