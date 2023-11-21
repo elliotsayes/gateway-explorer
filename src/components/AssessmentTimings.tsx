@@ -3,7 +3,6 @@ import {
   TableBody,
   TableCaption,
   TableCell,
-  TableHead,
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
@@ -14,8 +13,16 @@ interface Props {
   timings: NonNullable<ArnsNameAssessment["timings"]>;
 }
 
-const timingNames = ["wait", "dns", "tcp", "tls", "firstByte", "download", "total"] as const;
-const timingLabels = {
+const timingNames = [
+  "wait",
+  "dns",
+  "tcp",
+  "tls",
+  "firstByte",
+  "download",
+  "total",
+] as const;
+const timingLabels: Record<typeof timingNames[number], string> = {
   wait: "Wait",
   dns: "DNS",
   tcp: "TCP",
@@ -23,7 +30,7 @@ const timingLabels = {
   firstByte: "First Byte",
   download: "Download",
   total: "Total",
-} as const;
+};
 
 export const AssessmentTimings = ({ timings }: Props) => {
   const timingRows = useMemo(
@@ -41,10 +48,6 @@ export const AssessmentTimings = ({ timings }: Props) => {
     <Table>
       <TableCaption>Timings for ArNS Resolution</TableCaption>
       <TableHeader>
-        <TableRow>
-          <TableHead className="w-[100px]">Type</TableHead>
-          <TableHead className="text-right">Value</TableHead>
-        </TableRow>
       </TableHeader>
       <TableBody>
         {timingRows.map((timingRow) => (
@@ -54,12 +57,6 @@ export const AssessmentTimings = ({ timings }: Props) => {
           </TableRow>
         ))}
       </TableBody>
-      {/* <TableFooter>
-        <TableRow>
-          <TableCell colSpan={3}>Total</TableCell>
-          <TableCell className="text-right">$2,500.00</TableCell>
-        </TableRow>
-      </TableFooter> */}
     </Table>
   )
 }
