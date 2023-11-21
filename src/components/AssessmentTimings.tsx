@@ -8,10 +8,6 @@ import {
 } from "@/components/ui/table"
 import { ArnsNameAssessment } from "@/lib/observer/types"
 import { useMemo } from "react"
- 
-interface Props {
-  timings: NonNullable<ArnsNameAssessment["timings"]>;
-}
 
 const timingNames = [
   "wait",
@@ -22,6 +18,7 @@ const timingNames = [
   "download",
   "total",
 ] as const;
+
 const timingLabels: Record<typeof timingNames[number], string> = {
   wait: "Wait",
   dns: "DNS",
@@ -32,6 +29,10 @@ const timingLabels: Record<typeof timingNames[number], string> = {
   total: "Total",
 };
 
+interface Props {
+  timings: NonNullable<ArnsNameAssessment["timings"]>;
+}
+
 export const AssessmentTimings = ({ timings }: Props) => {
   const timingRows = useMemo(
     () => {
@@ -39,7 +40,11 @@ export const AssessmentTimings = ({ timings }: Props) => {
         .map((timingName) => [timingName, timings[timingName]])
         .filter(([, value]) => value !== undefined) as [typeof timingNames[number], number][];
       return timingObjects
-        .map(([timingName, value]) => ({ label: timingLabels[timingName], value }))
+        .map(([name, value]) => ({
+          name,
+          value,
+          label: timingLabels[name],
+        }))
     },
     [timings],
   );
