@@ -33,8 +33,20 @@ export const observerTxRoute = new Route({
   component: lazyRouteComponent(importLazyComponents, 'ObserverTx')
 });
 
+export const splatRoute = new Route({
+  getParentRoute: () => rootRoute,
+  path: "*",
+  component: () => <div>404 Not Found</div>,
+});
+
 // Create the route tree using your routes
-const routeTree = rootRoute.addChildren([explorerRoute, observerRoute, observerCurrentRoute, observerTxRoute]);
+const routeTree = rootRoute.addChildren([
+  explorerRoute,
+  observerRoute,
+  observerCurrentRoute,
+  observerTxRoute,
+  splatRoute,
+]);
 
 // Use Hash History to support arweave gateway
 const hashHistory = createHashHistory()
