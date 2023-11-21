@@ -68,6 +68,7 @@ const pingUpdater = async (
     }
   });
   await Promise.all(pingPromises.map((p) => p()));
+  return newData;
 };
 
 export { pingUpdater };

@@ -28,17 +28,17 @@ const GarLoader = () => {
   });
 
   useEffect(() => {
-    if (data && !isRefetching) {
+    if (data && !isRefetching && !isPinging) {
+      setIsPinging(true);
+      if (data.length > 0 && procData.length < 1) setProcData(data);
       (async () => {
-        setIsPinging(true)
-        setProcData(data)
-        await pingUpdater(data, (newData) => {
-          setProcData([...newData])
-        })
-        setIsPinging(false)
-      })()
+        const res = await pingUpdater(data, () => {});
+        setProcData(res);
+        setIsPinging(false);
+      })();
     }
-  }, [data, isRefetching])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data, isRefetching]);
 
 
   const [procData, setProcData] = useState(data ?? [])
