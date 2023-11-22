@@ -130,7 +130,13 @@ export const ObservationListSingleGateway = ({ host }: Props) => {
     }
   })
 
-  const dbLoadedData = useLiveQuery(() => observationDb.gatewayAssessments.toArray())
+  const dbLoadedData = useLiveQuery(
+    () => observationDb.gatewayAssessments
+      .where('targetGatewayHost')
+      .equals(host)
+      .toArray(),
+    [host],
+  );
 
   const gatewayAssessmentData = dbLoadedData ?? []
   
