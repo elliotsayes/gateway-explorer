@@ -24,12 +24,12 @@ export const hostRoute = new Route({
 export const hostIndexRoute = new Route({
   getParentRoute: () => hostRoute,
   path: "/",
-  component: () => <div>TODO</div>
+  component: () => <div>TODO: Host Info</div>
 });
 
 export const reportsRoute = new Route({
   getParentRoute: () => hostRoute,
-  path: "/reports/",
+  path: "/reports",
   component: () => <Outlet/>
 });
 
@@ -51,6 +51,30 @@ export const reportsTxIdRoute = new Route({
   component: lazyRouteComponent(importLazyComponents, 'ObserverTx')
 });
 
+export const observeRoute = new Route({
+  getParentRoute: () => hostRoute,
+  path: "/observe",
+  component: () => <Outlet/>
+});
+
+export const observeIndexRoute = new Route({
+  getParentRoute: () => observeRoute,
+  path: "/",
+  component: () => <div>TODO: Browser Observation List</div>
+});
+
+export const rewardsRoute = new Route({
+  getParentRoute: () => hostRoute,
+  path: "/rewards",
+  component: () => <Outlet/>
+});
+
+export const rewardsIndexRoute = new Route({
+  getParentRoute: () => rewardsRoute,
+  path: "/",
+  component: () => <div>TODO: Rewards List</div>
+});
+
 export const splatRoute = new Route({
   getParentRoute: () => rootRoute,
   path: "*",
@@ -66,6 +90,9 @@ const routeTree = rootRoute.addChildren([
       reportsIndexRoute,
       reportsCurrentRoute,
       reportsTxIdRoute,
+    ]),
+    observeRoute.addChildren([
+      observeIndexRoute,
     ]),
   ]),
   splatRoute,
