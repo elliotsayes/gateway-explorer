@@ -4,6 +4,8 @@ import GarLoader from "./components/GarLoader";
 
 const importLazyReports = () => import('./LazyReports')
 
+const importLazyObserve = () => import('./LazyObserve')
+
 // Create a root route
 const rootRoute = new RootRoute({
   component: Root,
@@ -60,7 +62,7 @@ export const observeRoute = new Route({
 export const observeIndexRoute = new Route({
   getParentRoute: () => observeRoute,
   path: "/",
-  component: () => <div>TODO: Browser Observation List</div>
+  component: lazyRouteComponent(importLazyObserve, "ObserveIndex")
 });
 
 export const rewardsRoute = new Route({
