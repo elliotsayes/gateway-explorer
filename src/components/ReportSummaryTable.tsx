@@ -167,6 +167,7 @@ const ReportSummaryTable = ({ host, source, sourceId, garData, isGarError, repor
             source={source}
             sourceId={sourceId}
             reportData={reportData}
+            isError={isGarError || isReportError}
           />
         </div>
         <div className="pb-2 flex items-center gap-2">

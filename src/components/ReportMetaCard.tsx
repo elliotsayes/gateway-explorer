@@ -9,10 +9,10 @@ import {
   TableCell,
   TableRow,
 } from "@/components/ui/table"
+import { Skeleton } from "@/components/ui/skeleton"
 
 import TimeAgo from 'javascript-time-ago'
 import en from 'javascript-time-ago/locale/en'
-import { Skeleton } from "./ui/skeleton"
 TimeAgo.addDefaultLocale(en)
 const timeAgo = new TimeAgo('en')
 
@@ -21,9 +21,10 @@ interface Props {
   source: string;
   sourceId?: string;
   reportData?: ObserverReport;
+  isError: boolean;
 }
 
-export const ReportMetaCard = ({ host, source, sourceId, reportData }: Props) => {
+export const ReportMetaCard = ({ host, source, sourceId, reportData, isError }: Props) => {
   const staticRows = (
     <>
       <TableRow>
@@ -45,7 +46,25 @@ export const ReportMetaCard = ({ host, source, sourceId, reportData }: Props) =>
 
   let rows: React.ReactNode;
 
-  if (reportData === undefined) {
+  if (isError) {
+    rows = (
+      <>
+        {staticRows}
+        <TableRow>
+          <TableCell className="font-medium">Observer Address</TableCell>
+          <TableCell className="text-right"><span className="text-red-500">Failed</span></TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell className="font-medium">Epoch Start Height</TableCell>
+          <TableCell className="text-right"><span className="text-red-500">Failed</span></TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell className="font-medium">Generated At</TableCell>
+          <TableCell className="text-right"><span className="text-red-500">Failed</span></TableCell>
+        </TableRow>
+      </>
+    )
+  } else if (reportData === undefined) {
     rows = (
       <>
         {staticRows}
