@@ -2,7 +2,7 @@ import { RootRoute, Route, Router, createHashHistory, lazyRouteComponent, Outlet
 import { Root } from "./Root";
 import GarLoader from "./components/GarLoader";
 
-const importLazyComponents = () => import('./Lazy')
+const importLazyReports = () => import('./LazyReports')
 
 // Create a root route
 const rootRoute = new RootRoute({
@@ -36,19 +36,19 @@ export const reportsRoute = new Route({
 export const reportsIndexRoute = new Route({
   getParentRoute: () => reportsRoute,
   path: "/",
-  component: lazyRouteComponent(importLazyComponents, "ReportsIndex")
+  component: lazyRouteComponent(importLazyReports, "ReportsIndex")
 });
 
 export const reportsCurrentRoute = new Route({
   getParentRoute: () => reportsRoute,
   path: "/current",
-  component: lazyRouteComponent(importLazyComponents, "ReportsCurrent"),
+  component: lazyRouteComponent(importLazyReports, "ReportsCurrent"),
 });
 
 export const reportsTxIdRoute = new Route({
   getParentRoute: () => reportsRoute,
   path: "/tx/$txId",
-  component: lazyRouteComponent(importLazyComponents, "ReportsTxId")
+  component: lazyRouteComponent(importLazyReports, "ReportsTxId")
 });
 
 export const observeRoute = new Route({
