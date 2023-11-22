@@ -7,7 +7,7 @@ import {
   ArnsNameAssessment,
   ArnsNameAssessments,
   ArnsResolution,
-  ObserverReport,
+  GatewayAssessment,
   OwnershipAssessment,
 } from "./types";
 import { zGatewayAddressRegistryItem } from "@/types";
@@ -224,17 +224,11 @@ const assessArnsNames = async ({
   });
 };
 
-export const generateReportForHost = async (
+export const generateGatewayAssessmentForHost = async (
   host: z.infer<typeof zGatewayAddressRegistryItem>,
   specifiedPrescribedNames: string[],
   specifiedChosenNames: string[]
-): Promise<
-  Pick<
-    ObserverReport,
-    "epochStartHeight" | "generatedAt" | "gatewayAssessments"
-  >
-> => {
-  const epochStartHeight = 0;
+): Promise<GatewayAssessment> => {
   const prescribedNames = specifiedPrescribedNames;
   const chosenNames = specifiedChosenNames;
 
@@ -275,11 +269,5 @@ export const generateReportForHost = async (
     pass: ownershipAssessment.pass && namesPass,
   };
 
-  return {
-    epochStartHeight,
-    generatedAt: +(Date.now() / 1000).toFixed(0),
-    gatewayAssessments: {
-      [host.settings.fqdn]: gatewayAssessment,
-    },
-  };
+  return gatewayAssessment;
 };
