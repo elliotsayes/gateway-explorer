@@ -28,11 +28,11 @@ export const ReportMetaCard = ({ host, source, sourceId, reportData, isError }: 
   const staticRows = (
     <>
       <TableRow>
-        <TableCell className="font-medium">Host</TableCell>
+        <TableCell className="font-medium">Observer Host</TableCell>
         <TableCell className="text-right">{host}</TableCell>
       </TableRow>
       <TableRow>
-        <TableCell className="font-medium">Source</TableCell>
+        <TableCell className="font-medium">Report Source</TableCell>
         <TableCell className="text-right">{source}</TableCell>
       </TableRow>
       {sourceId !== undefined && (
