@@ -132,7 +132,12 @@ export const ObservationListSingleGateway = ({ host }: Props) => {
 
   const gatewayAssessmentData = dbLoadedData ?? []
   
-  const [sorting, setSorting] = useState<SortingState>([])
+  const [sorting, setSorting] = useState<SortingState>([
+    {
+      id: "Timestamp",
+      desc: true,
+    }
+  ])
 
   const table = useReactTable({
     data: gatewayAssessmentData,
