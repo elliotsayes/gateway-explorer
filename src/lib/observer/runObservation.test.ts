@@ -6,7 +6,7 @@ test(
   async () => {
     const gatewayAddress = "ar-io.dev";
     const result = await getArnsResolution({
-      fqdn: gatewayAddress,
+      host: gatewayAddress,
       arnsName: "bitcoin",
     });
 
@@ -36,7 +36,7 @@ test(
   async () => {
     const gatewayAddress = "ar-io.dev";
     const result = await getArnsResolution({
-      fqdn: gatewayAddress,
+      host: gatewayAddress,
       arnsName: "iyQaJzUFg0iwW8jjr1UNPVvHMI5Hr6qB",
     });
 
