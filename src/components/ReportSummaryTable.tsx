@@ -151,7 +151,7 @@ const ReportSummaryTable = ({ host, label, garData, isGarError, reportData, isRe
                 setIsDetailsSheetOpen(false)
                 setSelectedDetailsItemHost(undefined)
                 navigate({
-                  to: "/observer/$host/current",
+                  to: "/gateway/$host/observer/current",
                   params: { host: value },
                 })
               }
@@ -175,7 +175,7 @@ const ReportSummaryTable = ({ host, label, garData, isGarError, reportData, isRe
             asChild
           >
             <Link
-              to={"/observer/$host"}
+              to={"/gateway/$host/reports"}
               params={{ host }}
             >
               {label}

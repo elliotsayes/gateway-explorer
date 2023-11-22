@@ -177,7 +177,7 @@ const columns: ColumnDef<z.infer<typeof zGatewayAddressRegistryItem>>[] = [
           asChild
         >
           <Link
-            to="observer/$host/current"
+            to="/gateway/$host/reports/current"
             params={{ host: item.settings.fqdn }}
             onClick={(e) => e.stopPropagation()}
           >
