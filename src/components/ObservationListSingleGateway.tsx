@@ -223,7 +223,7 @@ export const ObservationListSingleGateway = ({ host }: Props) => {
         </Select>
         <Button
           onClick={canRunAssessment ? () => mutate() : undefined}
-          className={`${!canRunAssessment ? 'cursor-wait' : ''} ${isPending ? 'animate-pulse' : ''}`}
+          className={` w-36 ${!canRunAssessment ? 'cursor-wait' : ''} ${isPending ? 'animate-pulse' : ''}`}
         >
           Run Observation
         </Button>
