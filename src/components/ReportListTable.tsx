@@ -261,7 +261,7 @@ export const ReportListTable = ({ host, observer, garData, isGarError }: Props) 
               to={"/gateway/$host/reports/current"}
               params={{ host }}
             >
-              Current
+              Go to Current
             </Link>
           </Button>
         </div>
