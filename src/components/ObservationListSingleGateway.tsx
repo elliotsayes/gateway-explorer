@@ -4,8 +4,9 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { garQuery } from "@/lib/query";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { useState } from "react";
-import { ReportTableDatum, generateReportSummaryTableData } from "@/lib/observer/report";
+import { GatewayAssessmentSummary, generateGatewayAssessmentSummary } from "@/lib/observer/report";
 import { AssessmentDetails } from "./AssessmentDetails";
+import { GatewayAssessmentPersistRow, observationDb } from "@/lib/idb/observation";
 
 interface Props {
   host: string;
@@ -13,7 +14,7 @@ interface Props {
 
 export const ObservationListSingleGateway = ({ host }: Props) => {
   const [isAssessmentSheetOpen, setIsDetailsSheetOpen] = useState(false);
-  const [selectedAssessment, setSelectedAssessment] = useState<ReportTableDatum | undefined>(undefined);
+  const [selectedAssessment, setSelectedAssessment] = useState<GatewayAssessmentSummary | undefined>(undefined);
 
   const {
     data,
@@ -37,11 +38,25 @@ export const ObservationListSingleGateway = ({ host }: Props) => {
       );
       return res;
     },
-    onSuccess: (data) => {
+    onSuccess: async (data) => {
       console.log(`Generated Assessment for ${host}`, data)
-      const datum = generateReportSummaryTableData(host, data);
-      setSelectedAssessment(datum)
+      
+      // Show Summary
+      const gatewayAssessmentSummary = generateGatewayAssessmentSummary(host, data);
+      console.log(`Showing summary`, gatewayAssessmentSummary)
+      setSelectedAssessment(gatewayAssessmentSummary)
       setIsDetailsSheetOpen(true)
+      
+      // Persist
+      const persistRow: GatewayAssessmentPersistRow = {
+        type: "browser",
+        timestamp: Date.now(),
+        targetGatewayHost: host,
+        gatewayAssessmentSummary,
+      }
+
+      const result = await observationDb.gatewayAssessments.add(persistRow);
+      console.log(`Saving assessment result`, result)
     }
   })
 

@@ -7,7 +7,7 @@ export type PassFailStats = {
   passRate: number;
 };
 
-export type ReportTableDatum = {
+export type GatewayAssessmentSummary = {
   gatewayHost: string;
   gatewayAssessment: GatewayAssessment;
   statistics: {
@@ -33,10 +33,10 @@ const passFail = (asssessments: ArnsNameAssessments): PassFailStats => {
   };
 };
 
-export const generateReportSummaryTableData = (
+export const generateGatewayAssessmentSummary = (
   gatewayHost: string,
   gatewayAssessment: GatewayAssessment
-): ReportTableDatum => {
+): GatewayAssessmentSummary => {
   const { arnsAssessments } = gatewayAssessment;
   const chosenNamesPassFail = passFail(arnsAssessments.chosenNames);
   const prescribedNamesPassFail = passFail(arnsAssessments.prescribedNames);

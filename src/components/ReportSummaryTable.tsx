@@ -25,7 +25,7 @@ import {
 import { Button } from "./ui/button"
 import { useMemo, useState } from "react"
 import { PassFailCell } from "./PassFailCell"
-import { ReportTableDatum, generateReportSummaryTableData } from "@/lib/observer/report"
+import { GatewayAssessmentSummary, generateGatewayAssessmentSummary } from "@/lib/observer/report"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Link, useNavigate } from "@tanstack/react-router"
 import { ObserverReport } from "@/lib/observer/types"
@@ -34,7 +34,7 @@ import { z } from "zod"
 import { AssessmentDetails } from "./AssessmentDetails";
 import { ReportMetaCard } from "./ReportMetaCard";
 
-const columns: ColumnDef<ReportTableDatum>[] = [
+const columns: ColumnDef<GatewayAssessmentSummary>[] = [
   {
     id: "Observed Host",
     accessorKey: "gatewayHost",
@@ -96,11 +96,11 @@ interface Props {
 const ReportSummaryTable = ({ host, source, sourceId, garData, isGarError, reportData, isReportError }: Props) => {
   const [sorting, setSorting] = useState<SortingState>([])
 
-  const gatewayAssessmentData: ReportTableDatum[] = useMemo(() => 
+  const gatewayAssessmentData: GatewayAssessmentSummary[] = useMemo(() => 
     Object.entries(reportData?.gatewayAssessments ?? {})
     .map(
       ([gatewayHost, gatewayAssessment]) => 
-        generateReportSummaryTableData(gatewayHost, gatewayAssessment)
+        generateGatewayAssessmentSummary(gatewayHost, gatewayAssessment)
     ),
     [reportData?.gatewayAssessments],
   );

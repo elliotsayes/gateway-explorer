@@ -1,11 +1,11 @@
-import { ReportTableDatum } from "@/lib/observer/report"
+import { GatewayAssessmentSummary } from "@/lib/observer/report"
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { AssessmentDetailsArNS } from "./AssessmentDetailsArNS";
 import { StringComparitor } from "./StringComparitor";
 import { PassFailDetails } from "./PassFailDetails";
 
 interface Props {
-  reportDatum: ReportTableDatum
+  reportDatum: GatewayAssessmentSummary
 }
 
 export const AssessmentDetails = ({ reportDatum }: Props) => {
