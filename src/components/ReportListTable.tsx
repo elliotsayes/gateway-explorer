@@ -29,7 +29,6 @@ import { z } from "zod"
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { queryObserverReportTransactions } from "@/lib/observer/downloadObservation";
 import { SortOrder, Transaction } from "arweave-graphql";
-import { fromAsyncGenerator } from "@/lib/utils";
 import { ReportHistoryTableData, generateReportHistoryTableData } from "@/lib/observer/history";
 
 const columns: ColumnDef<ReportHistoryTableData>[] = [
@@ -66,7 +65,7 @@ const columns: ColumnDef<ReportHistoryTableData>[] = [
       const ts = cell.row.original.timestamp;
       return (
         <code className="break-all text-xs">
-          {ts === undefined ? "Unknown" : ts}
+          {ts === undefined ? "unknown" : ts}
         </code>
       )
     }
@@ -90,29 +89,31 @@ export const ReportListTable = ({ host, observer, garData, isGarError }: Props) 
   } = useInfiniteQuery({
     queryKey: ['observerReportListArweave', host], 
     queryFn: async ({ pageParam }) => {
-      return await fromAsyncGenerator(
-        queryObserverReportTransactions({
-            owners: observer!.id,
-            sort: SortOrder.HeightDesc,
-            after: pageParam,
-            first: 20,
-          },
-          false,
-        ));
+      const queryRes = await queryObserverReportTransactions({
+        owners: observer!.id,
+        sort: SortOrder.HeightDesc,
+        after: pageParam,
+        first: 20,
+      });
+      return queryRes;
     },
     initialPageParam: undefined as string | undefined,
-    getNextPageParam: (lastPage) => lastPage?.[lastPage.length-1]?.cursor,
+    getNextPageParam: (lastPage) => {
+      if (!lastPage.transactions.pageInfo.hasNextPage) return undefined;
+      const edges = lastPage.transactions.edges;
+      return edges[edges.length - 1].cursor;
+    },
     getPreviousPageParam: undefined,
     enabled: observer !== undefined,
   });
-  const gqlQueryEmpty = gqlData?.pages?.[0]?.length === 0;
+  const gqlQueryEmpty = gqlData?.pages?.[0].transactions.edges?.length === 0;
 
   const tableData = useMemo(() => {
     if (gqlData === undefined) {
       return []
     }
     return gqlData.pages.map((page) => {
-      return page.map((item) => {
+      return page.transactions.edges.map((item) => {
         return generateReportHistoryTableData(item.node as Transaction)
       })
     }).flat()

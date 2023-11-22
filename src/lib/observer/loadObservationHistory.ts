@@ -1,5 +1,5 @@
 import { observationDb } from "../idb/observation";
-import { queryObserverReportTransactions } from "./downloadObservation";
+import { generateObserverReportTransactions } from "./downloadObservation";
 
 const cursorKey = (observerAddresses?: string[]) => {
   if (observerAddresses === undefined) {
@@ -12,7 +12,7 @@ export const loadObservationsLatest = async (
   n: number,
   observerAddresses?: string[]
 ) => {
-  for await (const transactionEdge of queryObserverReportTransactions(
+  for await (const transactionEdge of generateObserverReportTransactions(
     {
       first: n,
       owners: observerAddresses,
@@ -29,7 +29,7 @@ export const loadObservationHistory = async (
   startCursor?: string,
   observerAddresses?: string[]
 ) => {
-  for await (const transactionEdge of queryObserverReportTransactions(
+  for await (const transactionEdge of generateObserverReportTransactions(
     {
       after: startCursor,
       owners: observerAddresses,

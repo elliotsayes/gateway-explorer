@@ -1,7 +1,7 @@
 import { describe, it, expect } from "bun:test";
 import {
   GetObserverReportTxIdsArgs,
-  queryObserverReportTransactions,
+  generateObserverReportTransactions,
   downloadReportInfoForTransaction,
   downloadCurrentReportInfoFromGateway,
 } from "./downloadObservation";
@@ -17,7 +17,7 @@ describe("getObserverReportsTxIdsArweave", () => {
     };
 
     const transactions = await Array.fromAsync(
-      queryObserverReportTransactions(args, false)
+      generateObserverReportTransactions(args, false)
     );
 
     // console.log(transactions);
