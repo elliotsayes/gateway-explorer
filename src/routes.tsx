@@ -36,19 +36,19 @@ export const reportsRoute = new Route({
 export const reportsIndexRoute = new Route({
   getParentRoute: () => reportsRoute,
   path: "/",
-  component: lazyRouteComponent(importLazyComponents, 'Observer')
+  component: lazyRouteComponent(importLazyComponents, "ReportsIndex")
 });
 
 export const reportsCurrentRoute = new Route({
   getParentRoute: () => reportsRoute,
   path: "/current",
-  component: lazyRouteComponent(importLazyComponents, 'ObserverCurrent'),
+  component: lazyRouteComponent(importLazyComponents, "ReportsCurrent"),
 });
 
 export const reportsTxIdRoute = new Route({
   getParentRoute: () => reportsRoute,
   path: "/tx/$txId",
-  component: lazyRouteComponent(importLazyComponents, 'ObserverTx')
+  component: lazyRouteComponent(importLazyComponents, "ReportsTxId")
 });
 
 export const observeRoute = new Route({
