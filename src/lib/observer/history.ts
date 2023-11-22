@@ -14,6 +14,7 @@ export const generateReportHistoryTableData = (
   const encoding = gqlTransaction.tags
     .find((tag) => tag.name === "Content-Encoding")
     ?.value.toLowerCase();
+
   return {
     txId: gqlTransaction.id,
     observerId: gqlTransaction.owner.address,

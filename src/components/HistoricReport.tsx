@@ -45,7 +45,8 @@ export const HistoricReport = ({ host, txId }: Props) => {
   return (
     <ReportSummaryTable
       host={host}
-      label={`txId: ${txId.slice(0, 8)}...`}
+      source={"Arweave Tx"}
+      sourceId={txId}
       garData={garData}
       isGarError={isGarError}
       reportData={reportTxData?.reportData}

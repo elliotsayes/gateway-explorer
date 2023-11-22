@@ -20,7 +20,7 @@ import {
   ArrowUpDown,
   ArrowDown,
   ArrowUp,
-  XIcon
+  ArrowLeft,
 } from "lucide-react"
 import { Button } from "./ui/button"
 import { useMemo, useState } from "react"
@@ -32,6 +32,7 @@ import { ObserverReport } from "@/lib/observer/types"
 import { zGatewayAddressRegistryItem } from "@/types"
 import { z } from "zod"
 import { AssessmentDetails } from "./AssessmentDetails";
+import { ReportMetaCard } from "./ReportMetaCard";
 
 const columns: ColumnDef<ReportTableDatum>[] = [
   {
@@ -82,7 +83,8 @@ const columns: ColumnDef<ReportTableDatum>[] = [
 
 interface Props {
   host: string;
-  label: string;
+  source: string;
+  sourceId?: string;
   garData?: Array<z.infer<typeof zGatewayAddressRegistryItem>>;
   isGarError: boolean;
   reportData?: ObserverReport;
@@ -91,7 +93,7 @@ interface Props {
   isReportError: boolean;
 }
 
-const ReportSummaryTable = ({ host, label, garData, isGarError, reportData, isReportError }: Props) => {
+const ReportSummaryTable = ({ host, source, sourceId, garData, isGarError, reportData, isReportError }: Props) => {
   const [sorting, setSorting] = useState<SortingState>([])
 
   const gatewayAssessmentData: ReportTableDatum[] = useMemo(() => 
@@ -129,23 +131,45 @@ const ReportSummaryTable = ({ host, label, garData, isGarError, reportData, isRe
   const [selectedDetailsItemHost, setSelectedDetailsItemHost] = useState<string | undefined>(undefined)
 
   const selectedDetailsItem = gatewayAssessmentData.find((item) => item.gatewayHost === selectedDetailsItemHost)
+  
+  const showSelect = (source === "Current")
 
   return (
     <>
       <div>
-        <div className="text-center md:text-left text-2xl px-1 pb-2">
-          Gateway Report Details
-        </div>
-        <div className="pb-2 flex items-center gap-2">
-          {/* <Button
+        <div className="flex flex-row justify-center md:justify-start text-2xl px-1 pb-2">
+          <Button
             variant={"ghost"}
             size={"iconSm"}
             asChild
           >
-            <Link to={"/"} >
+            <Link
+              to="/gateway/$host/reports"
+              params={{ host }}
+            >
               <ArrowLeft />
             </Link>
-          </Button> */}
+          </Button>
+          <span>
+            Gateway Report Results
+          </span>
+          <Button
+            variant={"ghost"}
+            size={"iconSm"}
+            className={"invisible hidden"}
+          >
+            <ArrowLeft /> 
+          </Button>
+        </div>
+        <div className="pb-4">
+          <ReportMetaCard
+            host={host}
+            source={source}
+            sourceId={sourceId}
+            reportData={reportData}
+          />
+        </div>
+        <div className="pb-2 flex items-center gap-2">
           <Select
             defaultValue={host}
             onValueChange={(value) => {
@@ -159,7 +183,7 @@ const ReportSummaryTable = ({ host, label, garData, isGarError, reportData, isRe
               }
             }}
           >
-            <SelectTrigger className="md:max-w-xs">
+            <SelectTrigger className={`md:max-w-xs ${showSelect ? '' : 'invisible'}`}>
               <SelectValue placeholder={"Select observer"} />
             </SelectTrigger>
             <SelectContent>
@@ -172,21 +196,6 @@ const ReportSummaryTable = ({ host, label, garData, isGarError, reportData, isRe
               }
             </SelectContent>
           </Select>
-          <Button
-            variant={"destructive"}
-            asChild
-          >
-            <Link
-              to={"/gateway/$host/reports"}
-              params={{ host }}
-            >
-              {label}
-              <XIcon
-                size={12}
-                className="ml-2"
-              />
-            </Link>
-          </Button>
         </div>
         <div className="relative">
           <div className="right-0 md:absolute md:-top-12">
