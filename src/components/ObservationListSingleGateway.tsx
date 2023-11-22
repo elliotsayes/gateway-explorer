@@ -20,6 +20,8 @@ import {
 } from "@/components/ui/table"
 import { ArrowDown, ArrowUp, ArrowUpDown } from "lucide-react";
 import { ColumnSelection } from "./ColumnSelection";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { useNavigate } from "@tanstack/react-router";
 
 const columns: ColumnDef<GatewayAssessmentStandalone>[] = [
   {
@@ -83,12 +85,12 @@ export const ObservationListSingleGateway = ({ host }: Props) => {
   const [selectedAssessment, setSelectedAssessment] = useState<GatewayAssessmentStandalone | undefined>(undefined);
 
   const {
-    data,
+    data: garData,
     isError,
   } = useQuery(garQuery);
 
-  const target = data?.find((item) => item.settings.fqdn === host)
-  const targetNotFound = (data !== undefined) && (target === undefined);
+  const target = garData?.find((item) => item.settings.fqdn === host)
+  const targetNotFound = (garData !== undefined) && (target === undefined);
 
   const {
     mutate,
@@ -157,6 +159,8 @@ export const ObservationListSingleGateway = ({ host }: Props) => {
     }
   })
 
+  const navigate = useNavigate()
+
   if (isError) {
     return (
       <div>
@@ -179,17 +183,49 @@ export const ObservationListSingleGateway = ({ host }: Props) => {
 
   return (
     <div>
-      <Button
-        onClick={canRunAssessment ? () => mutate() : undefined}
-        className={`${!canRunAssessment ? 'cursor-wait' : ''} ${isPending ? 'animate-pulse' : ''}`}
-      >
-        Run Observation
-      </Button>
-      <p>ObservationListSingleGateway: {host}</p>
+      <div className="flex flex-row justify-center md:justify-start px-1 pb-2">
+        <span className="text-2xl">
+          Observe Gateway
+        </span>
+      </div>
+      <div className="flex flex-row gap-2 py-2">
+        <Select
+          defaultValue={host}
+          onValueChange={(value) => {
+            if(value !== host) {
+              setIsDetailsSheetOpen(false)
+              setSelectedAssessment(undefined)
+              navigate({
+                to: "/gateway/$host/observe",
+                params: { host: value },
+              })
+            }
+          }}
+        >
+          <SelectTrigger className={`lg:max-w-sm`}>
+            <SelectValue placeholder={"Select observer"} />
+          </SelectTrigger>
+          <SelectContent>
+            {
+              garData?.map((item) => (
+                <SelectItem key={item.id} value={item.settings.fqdn}>
+                  {item.settings.label} ({item.linkDisplay})
+                </SelectItem>
+              ))
+            }
+          </SelectContent>
+        </Select>
+        <Button
+          onClick={canRunAssessment ? () => mutate() : undefined}
+          className={`${!canRunAssessment ? 'cursor-wait' : ''} ${isPending ? 'animate-pulse' : ''}`}
+        >
+          Run Observation
+        </Button>
+      </div>
       <div className="relative">
-          <div className="right-0 md:absolute md:-top-12">
+          <div className="right-0 lg:absolute lg:-top-12">
             <div className="pb-2 flex flex-row items-end gap-2">
-              <div className="ml-2 mr-auto md:mr-0 md:ml-auto text-muted-foreground">
+              <div className="ml-2 mr-auto lg:mr-0 lg:ml-auto text-muted-foreground">
                 {assessmentPassedCount}/{assessmentCount} passed
               </div>
               <ColumnSelection table={table} />
