@@ -1,7 +1,8 @@
 import Dexie, { Table } from "dexie";
 import { GatewayAssessmentSummary } from "../observer/report";
 
-export interface GatewayAssessmentPersistRow {
+export interface GatewayAssessmentStandalone {
+  id: string;
   type: string;
   timestamp: number;
   targetGatewayHost: string;
@@ -9,12 +10,12 @@ export interface GatewayAssessmentPersistRow {
 }
 
 export class ObservationDatabase extends Dexie {
-  public gatewayAssessments!: Table<GatewayAssessmentPersistRow, string>;
+  public gatewayAssessments!: Table<GatewayAssessmentStandalone, string>;
 
   public constructor() {
     super("ObservationDatabase");
     this.version(1).stores({
-      gatewayAssessments: "type, timestamp, targetGatewayHost",
+      gatewayAssessments: "id, type, timestamp, targetGatewayHost",
     });
   }
 }

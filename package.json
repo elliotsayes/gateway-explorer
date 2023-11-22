@@ -29,6 +29,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
     "dexie": "^3.2.4",
+    "dexie-react-hooks": "^1.1.7",
     "filesize": "^10.1.0",
     "javascript-time-ago": "^2.5.9",
     "ky": "^1.0.1",

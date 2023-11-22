@@ -4,9 +4,75 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { garQuery } from "@/lib/query";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { useState } from "react";
-import { GatewayAssessmentSummary, generateGatewayAssessmentSummary } from "@/lib/observer/report";
+import { generateGatewayAssessmentSummary } from "@/lib/observer/report";
 import { AssessmentDetails } from "./AssessmentDetails";
-import { GatewayAssessmentPersistRow, observationDb } from "@/lib/idb/observation";
+import { GatewayAssessmentStandalone, observationDb } from "@/lib/idb/observation";
+import { ColumnDef, SortingState, flexRender, getCoreRowModel, getSortedRowModel, useReactTable } from "@tanstack/react-table";
+import { PassFailCell } from "./PassFailCell";
+import { useLiveQuery } from "dexie-react-hooks";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table"
+import { ArrowDown, ArrowUp, ArrowUpDown } from "lucide-react";
+import { ColumnSelection } from "./ColumnSelection";
+
+const columns: ColumnDef<GatewayAssessmentStandalone>[] = [
+  {
+    id: "Timestamp",
+    accessorKey: "timestamp",
+    header: "Timestamp",
+    cell: (cell) => <span className="text-xs">{new Date(cell.row.original.timestamp).toLocaleString()}</span>
+  },
+  {
+    id: "Observed Host",
+    accessorKey: "gatewayAssessmentSummary.gatewayHost",
+    header: "Observed Host",
+    enableHiding: false,
+  },
+  {
+    id: "Expected Owner",
+    accessorKey: "gatewayAssessmentSummary.gatewayAssessment.ownershipAssessment.expectedWallet",
+    header: "Expected Owner",
+    cell: (cell) => <code className="break-all text-xs">{cell.row.original.gatewayAssessmentSummary.gatewayAssessment.ownershipAssessment.expectedWallet ?? '<none>'}</code>
+  },
+  {
+    id: "Observed Owner",
+    accessorKey: "gatewayAssessmentSummary.gatewayAssessment.ownershipAssessment.observedWallet",
+    header: "Observed Owner",
+    cell: (cell) => <code className="break-all text-xs">{cell.row.original.gatewayAssessmentSummary.gatewayAssessment.ownershipAssessment.observedWallet ?? '<none>'}</code>
+  },
+  {
+    id: "Ownership Result",
+    accessorKey: "gatewayAssessmentSummary.gatewayAssessment.ownershipAssessment.pass",
+    header: "Ownership Result",
+    cell: (cell) => <PassFailCell pass={cell.row.original.gatewayAssessmentSummary.gatewayAssessment.ownershipAssessment.pass} />,
+  },
+  {
+    id: "ArNS Result",
+    accessorKey: "gatewayAssessmentSummary.gatewayAssessment.arnsAssessments.pass",
+    header: "ArNS Result",
+    cell: (cell) => (
+      <PassFailCell pass={cell.row.original.gatewayAssessmentSummary.gatewayAssessment.arnsAssessments.pass}>
+        <span className="text-xs text-muted-foreground line-clamp-1">
+         ({cell.row.original.gatewayAssessmentSummary.statistics.passFail.allNames.pass}
+         /
+         {cell.row.original.gatewayAssessmentSummary.statistics.passFail.allNames.total})
+        </span>
+      </PassFailCell>
+    ),
+  },
+  {
+    id: "Overall Result",
+    accessorKey: "gatewayAssessmentSummary.gatewayAssessment.pass",
+    header: "Overall Result",
+    cell: (cell) => <PassFailCell pass={cell.row.original.gatewayAssessmentSummary.gatewayAssessment.pass} />,
+  },
+];
 
 interface Props {
   host: string;
@@ -14,7 +80,7 @@ interface Props {
 
 export const ObservationListSingleGateway = ({ host }: Props) => {
   const [isAssessmentSheetOpen, setIsDetailsSheetOpen] = useState(false);
-  const [selectedAssessment, setSelectedAssessment] = useState<GatewayAssessmentSummary | undefined>(undefined);
+  const [selectedAssessment, setSelectedAssessment] = useState<GatewayAssessmentStandalone | undefined>(undefined);
 
   const {
     data,
@@ -40,23 +106,49 @@ export const ObservationListSingleGateway = ({ host }: Props) => {
     },
     onSuccess: async (data) => {
       console.log(`Generated Assessment for ${host}`, data)
-      
-      // Show Summary
+
       const gatewayAssessmentSummary = generateGatewayAssessmentSummary(host, data);
-      console.log(`Showing summary`, gatewayAssessmentSummary)
-      setSelectedAssessment(gatewayAssessmentSummary)
-      setIsDetailsSheetOpen(true)
-      
-      // Persist
-      const persistRow: GatewayAssessmentPersistRow = {
+      const gatewayAssessmentStandalone: GatewayAssessmentStandalone = {
+        id: window.crypto.randomUUID(),
         type: "browser",
         timestamp: Date.now(),
         targetGatewayHost: host,
         gatewayAssessmentSummary,
       }
 
-      const result = await observationDb.gatewayAssessments.add(persistRow);
-      console.log(`Saving assessment result`, result)
+      // Show Summary
+      console.log(`Showing summary`, gatewayAssessmentSummary)
+      setSelectedAssessment(gatewayAssessmentStandalone)
+      setIsDetailsSheetOpen(true)
+      
+      // Persist
+      console.log(`Saving assessment row`, gatewayAssessmentStandalone)
+      const result = await observationDb.gatewayAssessments.add(gatewayAssessmentStandalone);
+      console.log(`Save result`, result)
+    }
+  })
+
+  const dbLoadedData = useLiveQuery(() => observationDb.gatewayAssessments.toArray())
+
+  const gatewayAssessmentData = dbLoadedData ?? []
+  
+  const [sorting, setSorting] = useState<SortingState>([])
+
+  const table = useReactTable({
+    data: gatewayAssessmentData,
+    columns,
+    getCoreRowModel: getCoreRowModel(),
+    onSortingChange: setSorting,
+    getSortedRowModel: getSortedRowModel(),
+    state: {
+      sorting,
+    },
+    initialState: {
+      columnVisibility: {
+        "Observed Host": false,
+        "Expected Owner": false,
+        "Observed Owner": false,
+      }
     }
   })
 
@@ -77,6 +169,8 @@ export const ObservationListSingleGateway = ({ host }: Props) => {
   }
 
   const canRunAssessment = target !== undefined && !isPending;
+  const assessmentCount = gatewayAssessmentData.length ?? 0
+  const assessmentPassedCount = gatewayAssessmentData.filter(item => item.gatewayAssessmentSummary.gatewayAssessment.pass).length
 
   return (
     <div>
@@ -87,6 +181,98 @@ export const ObservationListSingleGateway = ({ host }: Props) => {
         Run Observation
       </Button>
       <p>ObservationListSingleGateway: {host}</p>
+      <div className="relative">
+          <div className="right-0 md:absolute md:-top-12">
+            <div className="pb-2 flex flex-row items-end gap-2">
+              <div className="ml-2 mr-auto md:mr-0 md:ml-auto text-muted-foreground">
+                {assessmentPassedCount}/{assessmentCount} passed
+              </div>
+              <ColumnSelection table={table} />
+            </div>
+          </div>
+        </div>
+      <div className="rounded-md border">
+        <Table>
+          <TableHeader className="sticky top-0 bg-secondary/95">
+            {table.getHeaderGroups().map((headerGroup) => (
+              <TableRow key={headerGroup.id}>
+                {headerGroup.headers.map((header) => {
+                  return (
+                    <TableHead key={header.id}>
+                      {header.isPlaceholder
+                        ? null
+                        : (
+                          header.column.getCanSort() ? (
+                            <Button
+                              variant="ghost"
+                              onClick={() => {
+                                const firstDir = header.column.getFirstSortDir()
+                                const currentDir = header.column.getIsSorted()
+                                if (currentDir == false) {
+                                  header.column.toggleSorting(firstDir === "desc")
+                                } else {
+                                  if (currentDir === firstDir) {
+                                    header.column.toggleSorting(firstDir !== "desc")
+                                  } else {
+                                    header.column.clearSorting();
+                                  }
+                                }
+                              }}
+                            >
+                              {flexRender(
+                                header.column.columnDef.header,
+                                header.getContext()
+                              )}
+                              {header.column.getIsSorted() ? (
+                                header.column.getIsSorted() === "asc" ? (
+                                  <ArrowUp className={`ml-2 h-4 w-4`} />
+                                ) : (
+                                  <ArrowDown className={`ml-2 h-4 w-4`} />
+                                )
+                              ) : (
+                                <ArrowUpDown className={`ml-2 h-4 w-4`} />
+                              )}
+                            </Button>
+                          ) : flexRender(
+                            header.column.columnDef.header,
+                            header.getContext()
+                          )
+                        )}
+                    </TableHead>
+                  )
+                })}
+              </TableRow>
+            ))}
+          </TableHeader>
+          <TableBody>
+            {table.getRowModel().rows?.length ? (
+              table.getRowModel().rows.map((row) => (
+                <TableRow
+                  key={row.id}
+                  data-state={row.getIsSelected() && "selected"}
+                  onClick={() => {
+                    setSelectedAssessment(row.original)
+                    setIsDetailsSheetOpen(true)
+                  }}
+                  className={selectedAssessment?.id === row.original.id ? "bg-muted hover:bg-muted" : ""}
+                >
+                  {row.getVisibleCells().map((cell) => (
+                    <TableCell key={cell.id}>
+                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))
+            ) : (
+              <TableRow>
+                <TableCell colSpan={columns.length} className="h-24 text-center">
+                  {(isError) ? "Failed to load assessments." : "No assessments."}
+                </TableCell>
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
+      </div>
       <Sheet
         open={isAssessmentSheetOpen}
         // onOpenChange={(isOpen) => {
@@ -110,7 +296,7 @@ export const ObservationListSingleGateway = ({ host }: Props) => {
           {
             selectedAssessment &&
               <AssessmentDetails
-                reportDatum={selectedAssessment}
+                reportDatum={selectedAssessment.gatewayAssessmentSummary}
               />
           }
         </SheetContent>
