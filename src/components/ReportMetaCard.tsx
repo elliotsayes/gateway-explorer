@@ -17,7 +17,7 @@ TimeAgo.addDefaultLocale(en)
 const timeAgo = new TimeAgo('en')
 
 interface Props {
-  host: string;
+  host: React.ReactNode;
   source: string;
   sourceId?: string;
   reportData?: ObserverReport;

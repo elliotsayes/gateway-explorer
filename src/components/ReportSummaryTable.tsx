@@ -131,13 +131,11 @@ const ReportSummaryTable = ({ host, source, sourceId, garData, isGarError, repor
   const [selectedDetailsItemHost, setSelectedDetailsItemHost] = useState<string | undefined>(undefined)
 
   const selectedDetailsItem = gatewayAssessmentData.find((item) => item.gatewayHost === selectedDetailsItemHost)
-  
-  const showSelect = (source === "Current")
 
   return (
     <>
       <div>
-        <div className="flex flex-row justify-center md:justify-start text-2xl px-1 pb-2">
+        <div className="flex flex-row justify-center md:justify-start px-1 pb-2">
           <Button
             variant={"ghost"}
             size={"iconSm"}
@@ -150,7 +148,7 @@ const ReportSummaryTable = ({ host, source, sourceId, garData, isGarError, repor
               <ArrowLeft />
             </Link>
           </Button>
-          <span>
+          <span className="text-2xl">
             Gateway Report Results
           </span>
           <Button
@@ -163,40 +161,46 @@ const ReportSummaryTable = ({ host, source, sourceId, garData, isGarError, repor
         </div>
         <div className="pb-4">
           <ReportMetaCard
-            host={host}
+            host={(source !== "Current") ? (
+              <span>{host}</span>
+            ) : (
+              <Select
+                defaultValue={host}
+                onValueChange={(value) => {
+                  if(value !== host) {
+                    setIsDetailsSheetOpen(false)
+                    setSelectedDetailsItemHost(undefined)
+                    navigate({
+                      to: "/gateway/$host/reports/current",
+                      params: { host: value },
+                    })
+                  }
+                }}
+              >
+                <SelectTrigger className={`ml-auto max-w-sm`}>
+                  <SelectValue placeholder={"Select observer"} />
+                </SelectTrigger>
+                <SelectContent>
+                  {
+                    garData?.map((item) => (
+                      <SelectItem key={item.id} value={item.settings.fqdn}>
+                        {item.settings.label} ({item.linkDisplay})
+                      </SelectItem>
+                    ))
+                  }
+                </SelectContent>
+              </Select>
+            )}
             source={source}
             sourceId={sourceId}
             reportData={reportData}
             isError={isGarError || isReportError}
           />
         </div>
-        <div className="pb-2 flex items-center gap-2">
-          <Select
-            defaultValue={host}
-            onValueChange={(value) => {
-              if(value !== host) {
-                setIsDetailsSheetOpen(false)
-                setSelectedDetailsItemHost(undefined)
-                navigate({
-                  to: "/gateway/$host/reports",
-                  params: { host: value },
-                })
-              }
-            }}
-          >
-            <SelectTrigger className={`md:max-w-xs ${showSelect ? '' : 'invisible'}`}>
-              <SelectValue placeholder={"Select observer"} />
-            </SelectTrigger>
-            <SelectContent>
-              {
-                garData?.map((item) => (
-                  <SelectItem key={item.id} value={item.settings.fqdn}>
-                    {item.settings.label} ({item.linkDisplay})
-                  </SelectItem>
-                ))
-              }
-            </SelectContent>
-          </Select>
+        <div className="px-1 py-2 flex items-center gap-2">
+          <span className="text-2xl">
+            Gateway Assessments
+          </span>
         </div>
         <div className="relative">
           <div className="right-0 md:absolute md:-top-12">
