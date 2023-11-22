@@ -229,7 +229,10 @@ interface Props {
 }
 
 const GarTable = ({ data, onRefresh, isRefreshing, onItemSelect, selectedItemId }: Props) => {
-  const [sorting, setSorting] = React.useState<SortingState>([])
+  const [sorting, setSorting] = React.useState<SortingState>([{
+    id: "Stake",
+    desc: true,
+  }])
 
   const table = useReactTable({
     data,
@@ -248,7 +251,7 @@ const GarTable = ({ data, onRefresh, isRefreshing, onItemSelect, selectedItemId 
         "Start Block": false,
         "Note": false,
         "Uptime": false,
-      }
+      },
     }
   })
 
