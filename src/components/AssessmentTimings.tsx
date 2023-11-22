@@ -1,7 +1,12 @@
 import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion"
+import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHeader,
   TableRow,
@@ -30,14 +35,14 @@ const timingLabels: Record<typeof timingNames[number], string> = {
 };
 
 interface Props {
-  timings: NonNullable<ArnsNameAssessment["timings"]>;
+  timings: ArnsNameAssessment["timings"];
 }
 
 export const AssessmentTimings = ({ timings }: Props) => {
   const timingRows = useMemo(
     () => {
       const timingObjects = timingNames
-        .map((timingName) => [timingName, timings[timingName]])
+        .map((timingName) => [timingName, timings?.[timingName]])
         .filter(([, value]) => value !== undefined) as [typeof timingNames[number], number][];
       return timingObjects
         .map(([name, value]) => ({
@@ -49,20 +54,32 @@ export const AssessmentTimings = ({ timings }: Props) => {
     [timings],
   );
 
+  const shouldExpandDefault = timingRows.length === 1;
+
   return (
-    <Table>
-      <TableCaption>Timings for ArNS Resolution</TableCaption>
-      <TableHeader>
-      </TableHeader>
-      <TableBody>
-        {timingRows.map((timingRow) => (
-          <TableRow key={timingRow.label}>
-            <TableCell className="font-medium">{timingRow.label}</TableCell>
-            <TableCell className="text-right">{timingRow.value}ms</TableCell>
-          </TableRow>
-        ))}
-      </TableBody>
-    </Table>
+    <Accordion type="single" collapsible defaultValue={shouldExpandDefault ? "timings" : undefined}>
+      <AccordionItem value="timings" className="max-w-screen-sm">
+        <AccordionTrigger disabled={timings === undefined}>Timings</AccordionTrigger>
+        <AccordionContent>
+          {
+            timings && (
+              <Table>
+                <TableHeader>
+                </TableHeader>
+                <TableBody>
+                  {timingRows.map((timingRow) => (
+                    <TableRow key={timingRow.label}>
+                      <TableCell className="font-medium">{timingRow.label}</TableCell>
+                      <TableCell className="text-right">{timingRow.value}ms</TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            )
+          }
+        </AccordionContent>
+      </AccordionItem>
+    </Accordion>
   )
 }
 
