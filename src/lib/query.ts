@@ -7,6 +7,7 @@ export const garQuery = {
     const fetchResult = await fetch(defaultGARCacheURL);
     const fetchJson = await fetchResult.json();
     const garItems = extractGarItems(fetchJson);
+    garItems.sort((a, b) => a.start - b.start);
     return garItems;
   },
   refetchInterval: false,
