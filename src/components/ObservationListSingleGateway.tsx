@@ -102,7 +102,7 @@ export const ObservationListSingleGateway = ({ host }: Props) => {
       const res = await generateGatewayAssessmentForHost(
         target,
         [],
-        ['ardrive-dapp'],
+        ['dapp_ardrive'],
       );
       return res;
     },
