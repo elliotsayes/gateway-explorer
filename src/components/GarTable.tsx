@@ -164,7 +164,7 @@ const columns: ColumnDef<z.infer<typeof zGatewayAddressRegistryItem>>[] = [
     sortUndefined: -1,
   },
   {
-    id: "Reports",
+    id: "Observer Reports",
     accessorKey: "settings.fqdn",
     header: "Observer Report",
     cell: (cell) => {
@@ -177,12 +177,12 @@ const columns: ColumnDef<z.infer<typeof zGatewayAddressRegistryItem>>[] = [
           asChild
         >
           <Link
-            to="/gateway/$host/reports/current"
+            to="/gateway/$host/reports"
             params={{ host: item.settings.fqdn }}
             onClick={(e) => e.stopPropagation()}
           >
             <span className="line-clamp-1">
-              Open Report
+              View Reports
             </span>
           </Link>
         </Button>
@@ -190,34 +190,33 @@ const columns: ColumnDef<z.infer<typeof zGatewayAddressRegistryItem>>[] = [
     },
     enableSorting: false,
   },
-  // {
-  //   id: "Observation",
-  //   accessorKey: "observation.status",
-  //   header: "Observation",
-  //   size: 20,
-  //   cell: (cell) => {
-  //     const item = cell.row.original;
-  //     return (
-  //       <Button
-  //         className="h-auto px-1 py-0 text-xs text-muted-foreground"
-  //         size={"sm"}
-  //         variant={"outline"}
-  //         asChild
-  //       >
-  //         <Link
-  //           // to="observer/$host/run"
-  //           params={{ host: item.settings.fqdn }}
-  //           onClick={(e) => e.stopPropagation()}
-  //         >
-  //           <span className="line-clamp-1">
-  //             Run Test
-  //           </span>
-  //         </Link>
-  //       </Button>
-  //     )
-  //   },
-  //   enableSorting: false,
-  // },
+  {
+    id: "Observe",
+    accessorKey: "observation.status",
+    header: "Observe",
+    cell: (cell) => {
+      const item = cell.row.original;
+      return (
+        <Button
+          className="h-auto px-1 py-0 text-xs text-muted-foreground"
+          size={"sm"}
+          variant={"outline"}
+          asChild
+        >
+          <Link
+            to="/gateway/$host/observe"
+            params={{ host: item.settings.fqdn }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <span className="line-clamp-1">
+              Observe Now
+            </span>
+          </Link>
+        </Button>
+      )
+    },
+    enableSorting: false,
+  },
 ]
 
 interface Props {
