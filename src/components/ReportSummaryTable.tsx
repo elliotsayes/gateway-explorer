@@ -86,6 +86,8 @@ interface Props {
   garData?: Array<z.infer<typeof zGatewayAddressRegistryItem>>;
   isGarError: boolean;
   reportData?: ObserverReport;
+  // TODO: Add reportMeta
+  // reportMeta?: ObserverReportMeta;
   isReportError: boolean;
 }
 
@@ -132,7 +134,7 @@ const ReportSummaryTable = ({ host, label, garData, isGarError, reportData, isRe
     <>
       <div>
         <div className="text-center md:text-left text-2xl px-1 pb-2">
-          Observer Report Viewer
+          Gateway Report Details
         </div>
         <div className="pb-2 flex items-center gap-2">
           {/* <Button
