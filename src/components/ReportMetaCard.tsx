@@ -52,15 +52,15 @@ export const ReportMetaCard = ({ host, source, sourceId, reportData, isError }: 
         {staticRows}
         <TableRow>
           <TableCell className="font-medium">Observer Address</TableCell>
-          <TableCell className="text-right"><span className="text-red-500">Failed</span></TableCell>
+          <TableCell className="text-right"><span className="text-muted-foreground">Failed</span></TableCell>
         </TableRow>
         <TableRow>
           <TableCell className="font-medium">Epoch Start Height</TableCell>
-          <TableCell className="text-right"><span className="text-red-500">Failed</span></TableCell>
+          <TableCell className="text-right"><span className="text-muted-foreground">Failed</span></TableCell>
         </TableRow>
         <TableRow>
           <TableCell className="font-medium">Generated At</TableCell>
-          <TableCell className="text-right"><span className="text-red-500">Failed</span></TableCell>
+          <TableCell className="text-right"><span className="text-muted-foreground">Failed</span></TableCell>
         </TableRow>
       </>
     )
