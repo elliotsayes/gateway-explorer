@@ -1,8 +1,4 @@
-import { defaultGARCacheURL } from '@/lib/consts'
-import { extractGarItems } from '@/lib/convert';
-import { 
-  useQuery,
-} from '@tanstack/react-query'
+import { useQuery,} from '@tanstack/react-query'
 import { GarTable } from './GarTable';
 import { useEffect, useState } from 'react';
 import { pingUpdater } from '@/lib/pinger';
@@ -10,6 +6,7 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle } from './ui/sheet';
 import GatewayDetails from './GatewayDetails';
 import { z } from 'zod';
 import { zGatewayAddressRegistryItem } from '@/types';
+import { garQuery } from '@/lib/query';
 
 const GarLoader = () => {
   const {
@@ -17,20 +14,7 @@ const GarLoader = () => {
     isLoading,
     isFetching,
     error,
-  } = useQuery({
-    queryKey: ['gar'], 
-    queryFn: async () => {
-      const fetchResult = await fetch(defaultGARCacheURL);
-      const fetchJson = await fetchResult.json();
-      const garItems = extractGarItems(fetchJson);
-      return garItems;
-    },
-    refetchInterval: false,
-    refetchOnMount: false,
-    refetchOnReconnect: false,
-    refetchIntervalInBackground: false,
-    refetchOnWindowFocus: false,
-  });
+  } = useQuery(garQuery);
 
   const {
     data: procData,

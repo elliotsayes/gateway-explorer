@@ -1,8 +1,7 @@
 
 import { useQuery } from "@tanstack/react-query"
-import { defaultGARCacheURL } from "@/lib/consts"
-import { extractGarItems } from "@/lib/convert"
 import { ReportListTable } from "./ReportListTable";
+import { garQuery } from "@/lib/query";
 
 interface Props {
   host: string;
@@ -12,15 +11,7 @@ export const ReportListSingleGateway = ({ host }: Props) => {
   const {
     data: garData,
     isError: isGarError,
-  } = useQuery({
-    queryKey: ['gar'], 
-    queryFn: async () => {
-      const fetchResult = await fetch(defaultGARCacheURL);
-      const fetchJson = await fetchResult.json();
-      const garItems = extractGarItems(fetchJson);
-      return garItems;
-    },
-  });
+  } = useQuery(garQuery);
 
   const observer = garData?.find((item) => item.settings.fqdn === host)
   const observerNotFound = (garData !== undefined) && (observer === undefined);
