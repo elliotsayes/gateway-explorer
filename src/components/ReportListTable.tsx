@@ -30,21 +30,15 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import { queryObserverReportTransactions } from "@/lib/observer/downloadObservation";
 import { SortOrder, Transaction } from "arweave-graphql";
 import { ReportHistoryTableData, generateReportHistoryTableData } from "@/lib/observer/history";
+import { filesize } from "filesize"
+
+import TimeAgo from 'javascript-time-ago'
+import en from 'javascript-time-ago/locale/en'
+TimeAgo.addDefaultLocale(en)
+
+const timeAgo = new TimeAgo('en')
 
 const columns: ColumnDef<ReportHistoryTableData>[] = [
-  {
-    id: "Transaction Id",
-    accessorKey: "txId",
-    header: "Transaction Id",
-    enableHiding: false,
-    cell: (cell) => {
-      return (
-        <code className="break-all text-xs">
-          {cell.row.original.txId}
-        </code>
-      )
-    }
-  },
   {
     id: "Observer Id",
     accessorKey: "observer",
@@ -52,7 +46,19 @@ const columns: ColumnDef<ReportHistoryTableData>[] = [
     cell: (cell) => {
       return (
         <code className="break-all text-xs">
-          {cell.row.original.observer}
+          {cell.row.original.observerId}
+        </code>
+      )
+    }
+  },
+  {
+    id: "Transaction Id",
+    accessorKey: "txId",
+    header: "Transaction Id",
+    cell: (cell) => {
+      return (
+        <code className="break-all text-xs">
+          {cell.row.original.txId}
         </code>
       )
     }
@@ -66,6 +72,71 @@ const columns: ColumnDef<ReportHistoryTableData>[] = [
       return (
         <code className="break-all text-xs">
           {ts === undefined ? "unknown" : ts}
+        </code>
+      )
+    }
+  },
+  {
+    id: "Uploaded",
+    accessorKey: "timestamp",
+    header: "Uploaded",
+    cell: (cell) => {
+      const ts = cell.row.original.timestamp;
+      if (ts === undefined) return (<>Unknown</>)
+      const u = new Date(0).setUTCSeconds(ts)
+      return (
+        <>
+          {
+            Intl.DateTimeFormat("locale", {
+              year: "numeric",
+              month: "short",
+              day: "numeric",
+              hour: "numeric",
+              minute: "numeric",
+              second: "numeric",
+            }).format(u)
+          }
+        </>
+      )
+    }
+  },
+  {
+    id: "Age",
+    accessorKey: "timestamp",
+    header: "Age",
+    cell: (cell) => {
+      const ts = cell.row.original.timestamp;
+      if (ts === undefined) return (<>Unknown</>)
+      const timeAgoString = timeAgo.format(ts * 1000)
+      return (
+        <>
+          {timeAgoString}
+        </>
+      )
+    }
+  },
+  {
+    id: "Size",
+    accessorKey: "size",
+    header: "Size",
+    cell: (cell) => {
+      const sizeString = filesize(cell.row.original.size)
+      return (
+        <>
+          {sizeString}
+        </>
+      )
+    }
+  },
+  {
+    id: "Encoding",
+    accessorKey: "encoding",
+    header: "Encoding",
+    cell: (cell) => {
+      const encoding = cell.row.original.encoding;
+      return (
+        <code>
+          {encoding ?? "none"}
         </code>
       )
     }
@@ -133,6 +204,9 @@ export const ReportListTable = ({ host, observer, garData, isGarError }: Props) 
     initialState: {
       columnVisibility: {
         "Observer Id": false,
+        // "Transaction Id": false,
+        "Timestamp": false,
+        "Encoding": false,
       }
     }
   })
