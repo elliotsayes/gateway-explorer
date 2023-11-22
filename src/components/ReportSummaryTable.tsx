@@ -135,7 +135,7 @@ const ReportSummaryTable = ({ host, source, sourceId, garData, isGarError, repor
   return (
     <>
       <div>
-        <div className="flex flex-row justify-center md:justify-start px-1 pb-2">
+        <div className="flex flex-row justify-center md:justify-start gap-2 md:gap-1 pb-2">
           <Button
             variant={"ghost"}
             size={"iconSm"}
@@ -151,13 +151,7 @@ const ReportSummaryTable = ({ host, source, sourceId, garData, isGarError, repor
           <span className="text-2xl">
             Gateway Report Results
           </span>
-          <Button
-            variant={"ghost"}
-            size={"iconSm"}
-            className={"invisible hidden"}
-          >
-            <ArrowLeft /> 
-          </Button>
+          <div className="sm:w-8" />
         </div>
         <div className="pb-4">
           <ReportMetaCard
