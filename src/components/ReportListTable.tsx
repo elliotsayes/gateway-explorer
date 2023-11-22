@@ -38,11 +38,25 @@ const columns: ColumnDef<ReportHistoryTableData>[] = [
     accessorKey: "txId",
     header: "Transaction Id",
     enableHiding: false,
+    cell: (cell) => {
+      return (
+        <code className="break-all text-xs">
+          {cell.row.original.txId}
+        </code>
+      )
+    }
   },
   {
     id: "Observer Id",
     accessorKey: "observer",
     header: "Observer Id",
+    cell: (cell) => {
+      return (
+        <code className="break-all text-xs">
+          {cell.row.original.observer}
+        </code>
+      )
+    }
   },
   {
     id: "Timestamp",
@@ -51,7 +65,9 @@ const columns: ColumnDef<ReportHistoryTableData>[] = [
     cell: (cell) => {
       const ts = cell.row.original.timestamp;
       return (
-        <span>{ts === undefined ? "Unknown" : ts}</span>
+        <code className="break-all text-xs">
+          {ts === undefined ? "Unknown" : ts}
+        </code>
       )
     }
   },
@@ -68,6 +84,9 @@ export const ReportListTable = ({ host, observer, garData, isGarError }: Props) 
   const {
     data: gqlData,
     isError: isGqlError,
+    hasNextPage,
+    fetchNextPage,
+    isFetchingNextPage,
   } = useInfiniteQuery({
     queryKey: ['observerReportListArweave', host], 
     queryFn: async ({ pageParam }) => {
@@ -76,6 +95,7 @@ export const ReportListTable = ({ host, observer, garData, isGarError }: Props) 
             owners: observer!.id,
             sort: SortOrder.HeightDesc,
             after: pageParam,
+            first: 20,
           },
           false,
         ));
@@ -234,25 +254,49 @@ export const ReportListTable = ({ host, observer, garData, isGarError }: Props) 
               ))}
             </TableHeader>
             <TableBody>
-              {table.getRowModel().rows?.length ? (
-                table.getRowModel().rows.map((row) => (
-                  <TableRow
-                    key={row.id}
-                    data-state={row.getIsSelected() && "selected"}
-                    onClick={() => {
-                      navigate({
-                        to: "/gateway/$host/reports/tx/$txId",
-                        params: { host: host, txId: row.original.txId },
-                      })
-                    }}
-                  >
-                    {row.getVisibleCells().map((cell) => (
-                      <TableCell key={cell.id}>
-                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                      </TableCell>
-                    ))}
-                  </TableRow>
-                ))
+              {
+              table.getRowModel().rows?.length ? (
+                <>
+                  {
+                    table.getRowModel().rows.map((row) => (
+                      <TableRow
+                        key={row.id}
+                        data-state={row.getIsSelected() && "selected"}
+                        onClick={() => {
+                          navigate({
+                            to: "/gateway/$host/reports/tx/$txId",
+                            params: { host: host, txId: row.original.txId },
+                          })
+                        }}
+                      >
+                        {row.getVisibleCells().map((cell) => (
+                          <TableCell key={cell.id}>
+                            {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                          </TableCell>
+                        ))}
+                      </TableRow>
+                    ))
+                  }
+                  {
+                    hasNextPage && (
+                      <TableRow>
+                        <TableCell colSpan={columns.length} className="text-center">
+                          <Button
+                            variant="outline"
+                            onClick={isFetchingNextPage
+                              ? undefined 
+                              : () => {fetchNextPage()}
+                            }
+                            disabled={isFetchingNextPage}
+                            className={isFetchingNextPage ? "animate-pulse cursor-wait" : ""}
+                          >
+                            Load more
+                          </Button>
+                        </TableCell>
+                      </TableRow>
+                    )
+                  }
+                </>
               ) : (
                 <TableRow>
                   <TableCell colSpan={columns.length} className="h-24 text-center">
