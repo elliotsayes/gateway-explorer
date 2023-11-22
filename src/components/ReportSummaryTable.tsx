@@ -153,7 +153,7 @@ const ReportSummaryTable = ({ host, label, garData, isGarError, reportData, isRe
                 setIsDetailsSheetOpen(false)
                 setSelectedDetailsItemHost(undefined)
                 navigate({
-                  to: "/gateway/$host/observer/current",
+                  to: "/gateway/$host/reports",
                   params: { host: value },
                 })
               }

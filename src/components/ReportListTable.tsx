@@ -139,7 +139,7 @@ export const ReportListTable = ({ host, observer, garData, isGarError }: Props) 
             onValueChange={(value) => {
               if(value !== host) {
                 navigate({
-                  to: "/gateway/$host/observer",
+                  to: "/gateway/$host/reports",
                   params: { host: value },
                 })
               }
@@ -241,7 +241,7 @@ export const ReportListTable = ({ host, observer, garData, isGarError }: Props) 
                     data-state={row.getIsSelected() && "selected"}
                     onClick={() => {
                       navigate({
-                        to: "/gateway/$host/observer/tx/$txId",
+                        to: "/gateway/$host/reports/tx/$txId",
                         params: { host: host, txId: row.original.txId },
                       })
                     }}
