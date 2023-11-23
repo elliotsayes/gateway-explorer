@@ -151,6 +151,11 @@ interface Props {
 }
 
 export const ReportListTable = ({ host, observer, garData, isGarError }: Props) => {
+  const owners = [
+    observer?.id,
+    // observer?.settings.properties,
+  ].filter((item) => item !== undefined).sort() as string[];
+
   const {
     data: gqlData,
     isError: isGqlError,
@@ -158,10 +163,10 @@ export const ReportListTable = ({ host, observer, garData, isGarError }: Props) 
     fetchNextPage,
     isFetchingNextPage,
   } = useInfiniteQuery({
-    queryKey: ['observerReportListArweave', host], 
+    queryKey: ['observerReportListArweave', owners], 
     queryFn: async ({ pageParam }) => {
       const queryRes = await queryObserverReportTransactions({
-        owners: observer!.id,
+        owners: owners,
         sort: SortOrder.HeightDesc,
         after: pageParam,
         first: 20,
