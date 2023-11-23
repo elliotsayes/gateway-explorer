@@ -196,12 +196,12 @@ export const ObservationListSingleGateway = ({ host }: Props) => {
 
   return (
     <div>
-      <div className="flex flex-row justify-center md:justify-start px-1 pb-2">
+      <div className="flex flex-row justify-center lg:justify-start px-1 pb-2">
         <span className="text-2xl">
           Observe Gateway
         </span>
       </div>
-      <div className="flex flex-col lg:flex-row items-center md:items-start gap-2 py-2">
+      <div className="flex flex-col lg:flex-row items-center lg:items-start gap-2 py-2">
         <Select
           defaultValue={host}
           onValueChange={(value) => {
@@ -215,7 +215,7 @@ export const ObservationListSingleGateway = ({ host }: Props) => {
             }
           }}
         >
-          <SelectTrigger className={`max-w-[24.65rem] lg:max-w-[12rem]`}>
+          <SelectTrigger className={`max-w-[23.5rem] lg:max-w-[12rem] xl:max-w-[23.5rem]`}>
             <SelectValue placeholder={"Select observer"} />
           </SelectTrigger>
           <SelectContent>
@@ -267,9 +267,9 @@ export const ObservationListSingleGateway = ({ host }: Props) => {
             id="arnsNames"
             name="arnsNames"
             ref={arnsNamesRef}
-            className={`max-w-[12rem]`}
-            defaultValue={`dapp_ardrive`}
+            defaultValue={DEFAULT_ARNS}
             placeholder="e.g. bazar,gateways"
+            className={`max-w-[12rem]`}
           />
           <Button
             type="submit"
