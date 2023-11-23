@@ -23,6 +23,7 @@ export const zGatewayAddressRegistryItemData = z.object({
   status: z.enum(["joined"]),
   start: z.number().int().nonnegative(),
   end: z.number().int().nonnegative(),
+  observerWallet: zArweaveTxId,
 });
 
 export const zGatewayAddressRegistryCache = z.object({

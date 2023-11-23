@@ -152,8 +152,8 @@ interface Props {
 
 export const ReportListTable = ({ host, observer, garData, isGarError }: Props) => {
   const owners = [
-    observer?.id,
-    // observer?.settings.properties,
+    // observer?.id,
+    observer?.observerWallet,
   ].filter((item) => item !== undefined).sort() as string[];
 
   const {
