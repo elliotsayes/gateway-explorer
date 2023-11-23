@@ -23,6 +23,9 @@ import { ColumnSelection } from "./ColumnSelection";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { useNavigate } from "@tanstack/react-router";
 import { Input } from "@/components/ui/input";
+import { useToast } from "./ui/use-toast";
+
+const DEFAULT_ARNS = 'dapp_ardrive';
 
 const columns: ColumnDef<GatewayAssessmentStandalone>[] = [
   {
@@ -167,8 +170,9 @@ export const ObservationListSingleGateway = ({ host }: Props) => {
     }
   })
 
-  const arnsNamesRef = useRef<HTMLInputElement>(null)
   const navigate = useNavigate()
+  const arnsNamesRef = useRef<HTMLInputElement>(null)
+  const { toast } = useToast()
 
   if (isError) {
     return (
@@ -229,20 +233,30 @@ export const ObservationListSingleGateway = ({ host }: Props) => {
           onSubmit={(event) => {
             event.preventDefault()
             console.log(`Submit`, event)
+            
+            const arnsNamesRefCurrent = arnsNamesRef.current
+            if (arnsNamesRefCurrent === null) return;
 
-            const arnsNames = arnsNamesRef.current?.value;
+            let arnsNames = arnsNamesRefCurrent.value;
             console.log(`ArNS Names`, arnsNames)
-            if (arnsNames === undefined) return;
+            if (arnsNames.length === 0) {
+              arnsNamesRefCurrent.value = DEFAULT_ARNS
+              arnsNames = DEFAULT_ARNS
+            }
 
             const arnsNamesList = arnsNames
               .split(',')
               .map(item => item.trim())
               .filter(item => item.length > 0)
             // TODO: Validate ArNS Names
-
             console.log(`ArNS Names`, arnsNamesList)
+            if (arnsNamesList.length === 0) {
+              toast({
+                title: `Please enter valid ArNS name(s)`,
+              })
+              return;
+            }
 
-            if (arnsNamesList.length === 0) return;
             mutate(arnsNamesList);
           }}
         >
