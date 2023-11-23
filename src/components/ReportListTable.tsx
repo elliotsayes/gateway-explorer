@@ -183,6 +183,7 @@ export const ReportListTable = ({ host, observer, garData, isGarError }: Props) 
     enabled: observer !== undefined,
   });
   const gqlQueryEmpty = gqlData?.pages?.[0].transactions.edges?.length === 0;
+  const gqlQueryLengthUnknown = gqlData?.pages[gqlData.pages.length -1].transactions.pageInfo.hasNextPage ?? true;
 
   const tableData = useMemo(() => {
     if (gqlData === undefined) {
@@ -274,7 +275,9 @@ export const ReportListTable = ({ host, observer, garData, isGarError }: Props) 
           <div className="right-0 md:absolute md:-top-12">
             <div className="pb-2 flex flex-row items-end gap-2">
               <div className="ml-2 mr-auto md:mr-0 md:ml-auto text-muted-foreground">
-                {tableData.length} loaded
+                {tableData.length}
+                {gqlQueryLengthUnknown ? `/?` : `/${tableData.length}`}
+                {' '}loaded
               </div>
               <ColumnSelection table={table} />
             </div>
