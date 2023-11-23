@@ -26,8 +26,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Link, useNavigate } from "@tanstack/react-router"
 import { zGatewayAddressRegistryItem } from "@/types"
 import { z } from "zod"
-import { useInfiniteQuery } from "@tanstack/react-query";
-import { queryObserverReportTransactions } from "@/lib/observer/downloadObservation";
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
+import { downloadObserverInfo, queryObserverReportTransactions } from "@/lib/observer/downloadObservation";
 import { SortOrder, Transaction } from "arweave-graphql";
 import { ReportHistoryTableData, generateReportHistoryTableData } from "@/lib/observer/history";
 import { filesize } from "filesize"
@@ -151,9 +151,22 @@ interface Props {
 }
 
 export const ReportListTable = ({ host, observer, garData, isGarError }: Props) => {
+  const {
+    data: observerInfo,
+  } = useQuery({
+    queryKey: ['observerInfo', observer?.linkFull],
+    queryFn: async () => {
+      const res = await downloadObserverInfo(observer!.linkFull)
+      return res;
+    },
+    enabled: observer !== undefined,
+  })
+
   const owners = [
-    // observer?.id,
-    observer?.observerWallet,
+    ...new Set([
+      observer?.observerWallet,
+      observerInfo?.wallet,
+    ]),
   ].filter((item) => item !== undefined).sort() as string[];
 
   const {
@@ -180,7 +193,7 @@ export const ReportListTable = ({ host, observer, garData, isGarError }: Props) 
       return edges[edges.length - 1].cursor;
     },
     getPreviousPageParam: undefined,
-    enabled: observer !== undefined,
+    enabled: observer !== undefined && observerInfo !== undefined,
   });
   const gqlQueryEmpty = gqlData?.pages?.[0].transactions.edges?.length === 0;
   const gqlQueryLengthUnknown = gqlData?.pages[gqlData.pages.length -1].transactions.pageInfo.hasNextPage ?? true;

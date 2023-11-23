@@ -4,6 +4,7 @@ import arweaveGraphql, {
 } from "arweave-graphql";
 import { observerReportSchema } from "./schema";
 import { inflate } from "pako";
+import { zGatewayObserverInfo } from "@/types";
 
 const gatewayUrl = "arweave.net";
 const graphqlUrl = "arweave.net/graphql";
@@ -97,4 +98,11 @@ export const downloadCurrentReportInfoFromGateway = async (
   return await fetch(currentReportUrl)
     .then((res) => res.json())
     .then((json) => observerReportSchema.parse(json));
+};
+
+export const downloadObserverInfo = async (linkFull: string) => {
+  const currentReportUrl = `${linkFull}/ar-io/observer/info`;
+  return await fetch(currentReportUrl)
+    .then((res) => res.json())
+    .then((json) => zGatewayObserverInfo.parse(json));
 };

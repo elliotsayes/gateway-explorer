@@ -79,3 +79,8 @@ export const zGatewayAddressRegistryItem = z.intersection(
   }),
   zGatewayAddressRegistryItemData
 );
+
+export const zGatewayObserverInfo = z.object({
+  wallet: zArweaveTxId,
+  contractId: zArweaveTxId,
+});

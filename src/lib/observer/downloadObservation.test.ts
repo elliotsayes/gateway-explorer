@@ -4,6 +4,7 @@ import {
   generateObserverReportTransactions,
   downloadReportInfoForTransaction,
   downloadCurrentReportInfoFromGateway,
+  downloadObserverInfo,
 } from "./downloadObservation";
 import { SortOrder } from "arweave-graphql";
 import transaction from "../../fixtures/ReportTransaction.json";
@@ -46,5 +47,16 @@ describe("downloadCurrentReportInfoFromGateway", () => {
     // console.log(reportInfo);
 
     expect(reportInfo).toBeDefined();
+  });
+});
+
+describe("downloadObserverInfo", () => {
+  it("should fetch observer info from an gateway node", async () => {
+    const linkFull = "https://vilenarios.com";
+    const observerInfo = await downloadObserverInfo(linkFull);
+
+    // console.log(observerInfo);
+
+    expect(observerInfo).toBeDefined();
   });
 });
