@@ -3,7 +3,7 @@ import { Button } from "./ui/button";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { garQuery } from "@/lib/query";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { generateGatewayAssessmentSummary } from "@/lib/observer/report";
 import { AssessmentDetails } from "./AssessmentDetails";
 import { GatewayAssessmentStandalone, observationDb } from "@/lib/idb/observation";
@@ -22,6 +22,7 @@ import { ArrowDown, ArrowUp, ArrowUpDown } from "lucide-react";
 import { ColumnSelection } from "./ColumnSelection";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { useNavigate } from "@tanstack/react-router";
+import { Input } from "@/components/ui/input";
 
 const columns: ColumnDef<GatewayAssessmentStandalone>[] = [
   {
@@ -97,12 +98,13 @@ export const ObservationListSingleGateway = ({ host }: Props) => {
     isPending,
   } = useMutation({
     mutationKey: ['observationReportCurrent', target?.id],
-    mutationFn: async () => {
+    mutationFn: async (arnsNames: string[]) => {
       if (target === undefined) throw Error('Target is undefined');
+      if (arnsNames.length === 0) throw Error('ArNS Names is undefined');
       const res = await generateGatewayAssessmentForHost(
         target,
         [],
-        ['dapp_ardrive'],
+        arnsNames,
       );
       return res;
     },
@@ -165,6 +167,7 @@ export const ObservationListSingleGateway = ({ host }: Props) => {
     }
   })
 
+  const arnsNamesRef = useRef<HTMLInputElement>(null)
   const navigate = useNavigate()
 
   if (isError) {
@@ -194,7 +197,7 @@ export const ObservationListSingleGateway = ({ host }: Props) => {
           Observe Gateway
         </span>
       </div>
-      <div className="flex flex-row gap-2 py-2">
+      <div className="flex flex-col lg:flex-row items-center md:items-start gap-2 py-2">
         <Select
           defaultValue={host}
           onValueChange={(value) => {
@@ -208,7 +211,7 @@ export const ObservationListSingleGateway = ({ host }: Props) => {
             }
           }}
         >
-          <SelectTrigger className={`lg:max-w-sm`}>
+          <SelectTrigger className={`max-w-[24.65rem] lg:max-w-[12rem]`}>
             <SelectValue placeholder={"Select observer"} />
           </SelectTrigger>
           <SelectContent>
@@ -221,12 +224,48 @@ export const ObservationListSingleGateway = ({ host }: Props) => {
             }
           </SelectContent>
         </Select>
-        <Button
-          onClick={canRunAssessment ? () => mutate() : undefined}
-          className={` w-36 ${!canRunAssessment ? 'cursor-wait' : ''} ${isPending ? 'animate-pulse' : ''}`}
+        <form
+          className="flex flex-row items-baseline gap-2 px-1"
+          onSubmit={(event) => {
+            event.preventDefault()
+            console.log(`Submit`, event)
+
+            const arnsNames = arnsNamesRef.current?.value;
+            console.log(`ArNS Names`, arnsNames)
+            if (arnsNames === undefined) return;
+
+            const arnsNamesList = arnsNames
+              .split(',')
+              .map(item => item.trim())
+              .filter(item => item.length > 0)
+            // TODO: Validate ArNS Names
+
+            console.log(`ArNS Names`, arnsNamesList)
+
+            if (arnsNamesList.length === 0) return;
+            mutate(arnsNamesList);
+          }}
         >
-          Run Observation
-        </Button>
+          <label htmlFor="arnsNames" className="text-sm">
+            ArNS:
+          </label>
+          <Input
+            id="arnsNames"
+            name="arnsNames"
+            ref={arnsNamesRef}
+            className={`max-w-[12rem]`}
+            defaultValue={`dapp_ardrive`}
+            placeholder="e.g. bazar,gateways"
+          />
+          <Button
+            type="submit"
+            className={`w-36 ${!canRunAssessment ? 'cursor-wait' : ''} ${isPending ? 'animate-pulse' : ''}`}
+          >
+            <span className="line-clamp-1">
+              Observe
+            </span>
+          </Button>
+        </form>
       </div>
       <div className="relative">
           <div className="right-0 lg:absolute lg:-top-12">
