@@ -76,7 +76,7 @@ export const getArnsResolution = async ({
   port?: number;
   arnsName: string;
 }): Promise<z.infer<typeof arnsResolutionSchema>> => {
-  const url = `"https"://${arnsName}.${host}:${port ?? 443}/`;
+  const url = `https://${arnsName}.${host}:${port ?? 443}/`;
 
   const startTimestamp = Date.now();
   const response = await ky.get(url, {
