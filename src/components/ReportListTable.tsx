@@ -153,6 +153,7 @@ interface Props {
 export const ReportListTable = ({ host, observer, garData, isGarError }: Props) => {
   const {
     data: observerInfo,
+    isError: isObserverInfoError,
   } = useQuery({
     queryKey: ['observerInfo', observer?.linkFull],
     queryFn: async () => {
@@ -193,7 +194,7 @@ export const ReportListTable = ({ host, observer, garData, isGarError }: Props) 
       return edges[edges.length - 1].cursor;
     },
     getPreviousPageParam: undefined,
-    enabled: observer !== undefined && observerInfo !== undefined,
+    enabled: observer !== undefined && (observerInfo !== undefined || isObserverInfoError),
   });
   const gqlQueryEmpty = gqlData?.pages?.[0].transactions.edges?.length === 0;
   const gqlQueryLengthUnknown = gqlData?.pages[gqlData.pages.length -1].transactions.pageInfo.hasNextPage ?? true;
