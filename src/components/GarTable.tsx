@@ -166,7 +166,7 @@ const columns: ColumnDef<z.infer<typeof zGatewayAddressRegistryItem>>[] = [
   {
     id: "Observer Reports",
     accessorKey: "settings.fqdn",
-    header: "Observer Report",
+    header: "Observer Reports",
     cell: (cell) => {
       const item = cell.row.original;
       return (
