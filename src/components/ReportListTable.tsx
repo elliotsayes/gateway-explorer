@@ -261,7 +261,7 @@ export const ReportListTable = ({ host, observer, garData, isGarError }: Props) 
             <SelectContent>
               {
                 garData?.map((item) => (
-                  <SelectItem key={item.id} value={item.settings.fqdn}>
+                  <SelectItem key={item.id} value={item.fqdnKey}>
                     {item.settings.label} ({item.linkDisplay})
                   </SelectItem>
                 ))

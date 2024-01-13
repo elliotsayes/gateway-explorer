@@ -177,7 +177,7 @@ const ReportSummaryTable = ({ host, source, sourceId, garData, isGarError, repor
                 <SelectContent>
                   {
                     garData?.map((item) => (
-                      <SelectItem key={item.id} value={item.settings.fqdn}>
+                      <SelectItem key={item.id} value={item.fqdnKey}>
                         {item.settings.label} ({item.linkDisplay})
                       </SelectItem>
                     ))

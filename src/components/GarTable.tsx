@@ -178,7 +178,7 @@ const columns: ColumnDef<z.infer<typeof zGatewayAddressRegistryItem>>[] = [
         >
           <Link
             to="/gateway/$host/reports"
-            params={{ host: item.settings.fqdn }}
+            params={{ host: item.fqdnKey }}
             onClick={(e) => e.stopPropagation()}
           >
             <span className="line-clamp-1">
@@ -205,7 +205,7 @@ const columns: ColumnDef<z.infer<typeof zGatewayAddressRegistryItem>>[] = [
         >
           <Link
             to="/gateway/$host/observe"
-            params={{ host: item.settings.fqdn }}
+            params={{ host: item.fqdnKey }}
             onClick={(e) => e.stopPropagation()}
           >
             <span className="line-clamp-1">

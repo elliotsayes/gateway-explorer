@@ -93,7 +93,7 @@ export const ObservationListSingleGateway = ({ host }: Props) => {
     isError,
   } = useQuery(garQuery);
 
-  const target = garData?.find((item) => item.settings.fqdn === host)
+  const target = garData?.find((item) => item.fqdnKey === host)
   const targetNotFound = (garData !== undefined) && (target === undefined);
 
   const {
@@ -221,7 +221,7 @@ export const ObservationListSingleGateway = ({ host }: Props) => {
           <SelectContent>
             {
               garData?.map((item) => (
-                <SelectItem key={item.id} value={item.settings.fqdn}>
+                <SelectItem key={item.id} value={item.fqdnKey}>
                   {item.settings.label} ({item.linkDisplay})
                 </SelectItem>
               ))
