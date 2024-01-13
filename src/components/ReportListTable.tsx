@@ -31,12 +31,7 @@ import { downloadObserverInfo, queryObserverReportTransactions } from "@/lib/obs
 import { SortOrder, Transaction } from "arweave-graphql";
 import { ReportHistoryTableData, generateReportHistoryTableData } from "@/lib/observer/history";
 import { filesize } from "filesize"
-
-import TimeAgo from 'javascript-time-ago'
-import en from 'javascript-time-ago/locale/en'
-TimeAgo.addDefaultLocale(en)
-
-const timeAgo = new TimeAgo('en')
+import { timeAgo } from "@/lib/timeago"
 
 const columns: ColumnDef<ReportHistoryTableData>[] = [
   {
