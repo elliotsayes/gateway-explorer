@@ -24,7 +24,7 @@ export async function queryObserverReportTransactions(
   const pageArgs = {
     tags: [
       { name: "App-Name", values: ["AR-IO Observer"] },
-      // { name: "App-Version", values: ["0.0.1"] },
+      { name: "App-Version", values: ["0.0.1", "0.0.2"] },
       // { name: "Content-Type", values: ["application/json"] },
       // { name: "Content-Encoding", values: ["gzip"] },
     ],
@@ -42,10 +42,10 @@ export async function* generateObserverReportTransactions(
 ) {
   let queryRes: GetTransactionsQuery | undefined = undefined;
   do {
-    const pageArgs = {
+    const pageArgs: Parameters<typeof gql.getTransactions>[0] = {
       tags: [
         { name: "App-Name", values: ["AR-IO Observer"] },
-        // { name: "App-Version", values: ["0.0.1"] },
+        { name: "App-Version", values: ["0.0.1", "0.0.2"] },
         // { name: "Content-Type", values: ["application/json"] },
         // { name: "Content-Encoding", values: ["gzip"] },
       ],
