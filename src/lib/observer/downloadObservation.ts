@@ -21,7 +21,7 @@ export type Transaction = TransactionEdge["node"];
 export async function queryObserverReportTransactions(
   args: GetObserverReportTxIdsArgs
 ) {
-  const pageArgs = {
+  const pageArgs: GetObserverReportTxIdsArgs = {
     tags: [
       { name: "App-Name", values: ["AR-IO Observer"] },
       { name: "App-Version", values: ["0.0.1", "0.0.2"] },
@@ -42,7 +42,7 @@ export async function* generateObserverReportTransactions(
 ) {
   let queryRes: GetTransactionsQuery | undefined = undefined;
   do {
-    const pageArgs: Parameters<typeof gql.getTransactions>[0] = {
+    const pageArgs: GetObserverReportTxIdsArgs = {
       tags: [
         { name: "App-Name", values: ["AR-IO Observer"] },
         { name: "App-Version", values: ["0.0.1", "0.0.2"] },
