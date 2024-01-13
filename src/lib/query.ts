@@ -8,7 +8,7 @@ export const garQuery = queryOptions({
     const fetchResult = await fetch(defaultGARCacheURL);
     const fetchJson = await fetchResult.json();
     const garItems = extractGarItems(fetchJson);
-    garItems.sort((a, b) => a.settings.fqdn.localeCompare(b.settings.fqdn));
+    garItems.sort((a, b) => a.fqdnKey.localeCompare(b.fqdnKey));
     return garItems;
   },
   refetchInterval: false,
