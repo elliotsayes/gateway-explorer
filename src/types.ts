@@ -47,6 +47,7 @@ export const zArioObservation = z.object({
 export const zGatewayAddressRegistryItem = z.intersection(
   z.object({
     id: zArweaveTxId,
+    fqdnKey: z.string(),
     linkFull: z.string().url(),
     linkDisplay: z.string(),
     ping: z.discriminatedUnion("status", [
