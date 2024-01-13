@@ -11,21 +11,27 @@ import transaction from "../../fixtures/ReportTransaction.json";
 import transactionData from "../../fixtures/ReportTransactionData.json";
 
 describe("getObserverReportsTxIdsArweave", () => {
-  it("should fetch transactions from Arweave GraphQL endpoint", async () => {
-    const args: GetObserverReportTxIdsArgs = {
-      first: 10,
-      sort: SortOrder.HeightDesc,
-    };
+  it(
+    "should fetch transactions from Arweave GraphQL endpoint",
+    async () => {
+      const args: GetObserverReportTxIdsArgs = {
+        first: 10,
+        sort: SortOrder.HeightDesc,
+      };
 
-    const transactions = await Array.fromAsync(
-      generateObserverReportTransactions(args, false)
-    );
+      const transactions = await Array.fromAsync(
+        generateObserverReportTransactions(args, false)
+      );
 
-    // console.log(transactions);
+      // console.log(transactions);
 
-    expect(transactions).toBeDefined();
-    expect(transactions.length).toBeGreaterThan(0);
-  });
+      expect(transactions).toBeDefined();
+      expect(transactions.length).toBeGreaterThan(0);
+    },
+    {
+      timeout: 30000,
+    }
+  );
 });
 
 describe("getReportInfo", () => {
