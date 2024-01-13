@@ -12,11 +12,11 @@ const gql = arweaveGraphql(graphqlUrl);
 
 type TransactionEdge = GetTransactionsQuery["transactions"]["edges"][0];
 
+export type Transaction = TransactionEdge["node"];
+
 export type GetObserverReportTxIdsArgs = Parameters<
   typeof gql.getTransactions
 >["0"];
-
-export type Transaction = TransactionEdge["node"];
 
 export async function queryObserverReportTransactions(
   args: GetObserverReportTxIdsArgs
