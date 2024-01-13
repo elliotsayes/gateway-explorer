@@ -11,10 +11,10 @@ const extractGarItems = (
   const gatewayEntries = Object.entries(garCache.gateways);
   return gatewayEntries.map(([txId, item]) => {
     const fqdnIndex = gatewayEntries
-      .filter(([, match]) => match.settings.fqdn == item.settings.fqdn)
-      .findIndex(([txId]) => txId === txId);
+      .filter(([, matchItem]) => matchItem.settings.fqdn == item.settings.fqdn)
+      .findIndex(([matchTx]) => matchTx === txId);
     const fqdnKey =
-      fqdnIndex == 0
+      fqdnIndex === 0
         ? item.settings.fqdn
         : `${item.settings.fqdn}${`~${fqdnIndex}`}`;
     return {
