@@ -1,7 +1,8 @@
+import { queryOptions } from "@tanstack/react-query";
 import { defaultGARCacheURL } from "./consts";
 import { extractGarItems } from "./convert";
 
-export const garQuery = {
+export const garQuery = queryOptions({
   queryKey: ["gar"],
   queryFn: async () => {
     const fetchResult = await fetch(defaultGARCacheURL);
@@ -15,4 +16,4 @@ export const garQuery = {
   refetchOnReconnect: false,
   refetchIntervalInBackground: false,
   refetchOnWindowFocus: false,
-} as const;
+});
