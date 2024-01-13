@@ -11,7 +11,7 @@ export const zGatewayVault = z.object({
 
 export const zGatewayAddressRegistryItemData = z.object({
   operatorStake: z.number().int().nonnegative(),
-  vaults: z.array(zGatewayVault),
+  vaults: z.record(zArweaveTxId, zGatewayVault),
   settings: z.object({
     label: z.string(),
     fqdn: z.string().regex(/^[a-z0-9-]+(\.[a-z0-9-]+)*$/i),
@@ -47,6 +47,7 @@ export const zArioObservation = z.object({
 export const zGatewayAddressRegistryItem = z.intersection(
   z.object({
     id: zArweaveTxId,
+    fqdnKey: z.string(),
     linkFull: z.string().url(),
     linkDisplay: z.string(),
     ping: z.discriminatedUnion("status", [

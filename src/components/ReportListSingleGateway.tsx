@@ -13,7 +13,7 @@ export const ReportListSingleGateway = ({ host }: Props) => {
     isError: isGarError,
   } = useQuery(garQuery);
 
-  const observer = garData?.find((item) => item.settings.fqdn === host)
+  const observer = garData?.find((item) => item.fqdnKey === host)
   const observerNotFound = (garData !== undefined) && (observer === undefined);
 
   if (observerNotFound) {
