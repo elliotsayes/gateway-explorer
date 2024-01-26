@@ -26,7 +26,7 @@ import {
 } from "lucide-react"
 import { Button } from "./ui/button"
 import { formatDuration } from "@/lib/utils"
-import { Link } from "@tanstack/react-router"
+import { HostLinksDropdown } from "./HostLinksDropdown"
 
 const columns: ColumnDef<z.infer<typeof zGatewayAddressRegistryItem>>[] = [
   {
@@ -164,66 +164,24 @@ const columns: ColumnDef<z.infer<typeof zGatewayAddressRegistryItem>>[] = [
     sortUndefined: -1,
   },
   {
-    id: "Observer Reports",
-    accessorKey: "settings.fqdn",
-    header: "Observer Reports",
-    cell: (cell) => {
-      const item = cell.row.original;
-      return (
-        <Button
-          className="h-auto px-1 py-0 text-xs text-muted-foreground"
-          size={"sm"}
-          variant={"outline"}
-          asChild
-        >
-          <Link
-            to="/gateway/$host/reports"
-            params={{ host: item.fqdnKey }}
-            onClick={(e) => e.stopPropagation()}
-          >
-            <span className="line-clamp-1">
-              View Reports
-            </span>
-          </Link>
-        </Button>
-      )
-    },
-    enableSorting: false,
-  },
-  {
-    id: "Observe",
-    accessorKey: "observation.status",
-    header: "Observe",
-    cell: (cell) => {
-      const item = cell.row.original;
-      return (
-        <Button
-          className="h-auto px-1 py-0 text-xs text-muted-foreground"
-          size={"sm"}
-          variant={"outline"}
-          asChild
-        >
-          <Link
-            to="/gateway/$host/observe"
-            params={{ host: item.fqdnKey }}
-            onClick={(e) => e.stopPropagation()}
-          >
-            <span className="line-clamp-1">
-              Observe Now
-            </span>
-          </Link>
-        </Button>
-      )
-    },
-    enableSorting: false,
-  },
-  {
     id: "Rewards",
     accessorFn: (item) => item.incentiveInfo?.weights.normalizedCompositeWeight ?? 0,
     header: "Rewards",
     cell: (cell) => <div className="max-w-[16rem]"><span className="text-muted-foreground line-clamp-1">
       {((cell.row.original.incentiveInfo?.weights.normalizedCompositeWeight ?? 0) * 100).toFixed(2)}%
     </span></div>
+  },
+  {
+    id: "Dropdown Extra",
+    accessorKey: "settings.fqdnKey",
+    header: "",
+    cell: (cell) => {
+      const item = cell.row.original;
+      return (
+        <HostLinksDropdown fqdnKey={item.fqdnKey} />
+      )
+    },
+    enableSorting: false,
   },
 ]
 
