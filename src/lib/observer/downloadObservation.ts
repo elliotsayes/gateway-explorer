@@ -24,7 +24,7 @@ export async function queryObserverReportTransactions(
   const pageArgs: GetObserverReportTxIdsArgs = {
     tags: [
       { name: "App-Name", values: ["AR-IO Observer"] },
-      { name: "App-Version", values: ["0.0.1", "0.0.2"] },
+      // { name: "App-Version", values: ["0.0.1", "0.0.2"] },
       // { name: "Content-Type", values: ["application/json"] },
       // { name: "Content-Encoding", values: ["gzip"] },
     ],
@@ -45,7 +45,7 @@ export async function* generateObserverReportTransactions(
     const pageArgs: GetObserverReportTxIdsArgs = {
       tags: [
         { name: "App-Name", values: ["AR-IO Observer"] },
-        { name: "App-Version", values: ["0.0.1", "0.0.2"] },
+        // { name: "App-Version", values: ["0.0.1", "0.0.2"] },
         // { name: "Content-Type", values: ["application/json"] },
         // { name: "Content-Encoding", values: ["gzip"] },
       ],

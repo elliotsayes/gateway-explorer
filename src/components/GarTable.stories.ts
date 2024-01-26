@@ -54,8 +54,8 @@ export const MultipleItems: Story = {
 };
 
 import GatewayAddressRegistryCache from "../fixtures/GatewayAddressRegistryCache.json";
-import { zGatewayAddressRegistryCache } from "@/types";
 import { extractGarItems } from "@/lib/convert";
+import { zGatewayAddressRegistryCache } from "@/lib/gar/schema";
 const garCache = zGatewayAddressRegistryCache.parse(
   GatewayAddressRegistryCache
 );

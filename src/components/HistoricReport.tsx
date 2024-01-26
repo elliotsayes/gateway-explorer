@@ -1,8 +1,7 @@
 
 import { useQuery } from "@tanstack/react-query"
-import { downloadReportInfoForTransaction, querySingleTransaction } from "@/lib/observer/downloadObservation"
 import { ReportSummaryTable } from "./ReportSummaryTable";
-import { garQuery } from "@/lib/query";
+import { garQuery, reportTxQueryBuilder } from "@/lib/query";
 
 interface Props {
   host: string
@@ -22,15 +21,7 @@ export const HistoricReport = ({ host, txId }: Props) => {
     data: reportTxData,
     isError: isReportTxError,
   } = useQuery({
-    queryKey: ['observationReportTx', txId],
-    queryFn: async () => {
-      const tx = await querySingleTransaction(txId);
-      const reportData = await downloadReportInfoForTransaction(tx)
-      return {
-        tx,
-        reportData,
-      }
-    },
+    ...reportTxQueryBuilder(txId),
     enabled: observer !== undefined,
   });
 

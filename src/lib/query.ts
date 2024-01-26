@@ -1,13 +1,24 @@
-import { queryOptions } from "@tanstack/react-query";
+import { QueryClient, queryOptions } from "@tanstack/react-query";
 import { defaultGARCacheURL } from "./consts";
 import { extractGarItems } from "./convert";
+import {
+  downloadReportInfoForTransaction,
+  querySingleTransaction,
+} from "./observer/downloadObservation";
+import { fetchIncentiveContractData } from "./incentive/fetchIncentiveContractData";
+import { zGatewayAddressRegistryCache } from "./gar/schema";
+
+export const queryClient = new QueryClient();
 
 export const garQuery = queryOptions({
   queryKey: ["gar"],
   queryFn: async () => {
-    const fetchResult = await fetch(defaultGARCacheURL);
-    const fetchJson = await fetchResult.json();
-    const garItems = extractGarItems(fetchJson);
+    const garCache = await fetch(defaultGARCacheURL)
+      .then((res) => res.json())
+      .then((json) => zGatewayAddressRegistryCache.parse(json));
+    const incentiveContractData = await fetchIncentiveContractData();
+
+    const garItems = extractGarItems(garCache, incentiveContractData);
     garItems.sort((a, b) => a.fqdnKey.localeCompare(b.fqdnKey));
     return garItems;
   },
@@ -17,3 +28,16 @@ export const garQuery = queryOptions({
   refetchIntervalInBackground: false,
   refetchOnWindowFocus: false,
 });
+
+export const reportTxQueryBuilder = (txId: string) =>
+  queryOptions({
+    queryKey: ["observationReportTx", txId],
+    queryFn: async () => {
+      const tx = await querySingleTransaction(txId);
+      const reportData = await downloadReportInfoForTransaction(tx);
+      return {
+        tx,
+        reportData,
+      };
+    },
+  });

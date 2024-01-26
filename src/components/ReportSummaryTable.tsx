@@ -155,6 +155,7 @@ const ReportSummaryTable = ({ host, source, sourceId, garData, isGarError, repor
         </div>
         <div className="pb-4">
           <ReportMetaCard
+            key={`${source}_${sourceId}`}
             host={(source !== "Current") ? (
               <span>{host}</span>
             ) : (
@@ -186,9 +187,11 @@ const ReportSummaryTable = ({ host, source, sourceId, garData, isGarError, repor
               </Select>
             )}
             source={source}
-            sourceId={sourceId}
+            txId={sourceId}
             reportData={reportData}
             isError={isGarError || isReportError}
+            garData={garData}
+            fqdnKey={host}
           />
         </div>
         <div className="px-1 py-2 flex items-center gap-2">

@@ -1,0 +1,225 @@
+{
+  "contractTxId": "_NctcA2sRy1-J4OmIQZbYFPM17piNcbdBPH2ncX2RL8",
+  "result": {
+    "1H7WZIWhzwTH9FIcnuMqYkTsoyv1OTfGa_amvuYwrgo": {
+      "end": 0,
+      "observerWallet": "1H7WZIWhzwTH9FIcnuMqYkTsoyv1OTfGa_amvuYwrgo",
+      "operatorStake": 95048,
+      "settings": {
+        "fqdn": "permagate.io",
+        "label": "Permagate",
+        "note": "Owned and managed by @dtfiedler - if it breaks, find him.",
+        "port": 443,
+        "properties": "FH1aVetOoulPGqgYukj0VE0wIhDy90WiQoV3U2PeY44",
+        "protocol": "https"
+      },
+      "start": 1252209,
+      "stats": {
+        "failedConsecutiveEpochs": 0,
+        "passedEpochCount": 17,
+        "submittedEpochCount": 2,
+        "totalEpochParticipationCount": 21,
+        "totalEpochsPrescribedCount": 17
+      },
+      "status": "joined",
+      "vaults": {},
+      "weights": {
+        "stakeWeight": 9.5048,
+        "tenureWeight": 0.7570756172839506,
+        "gatewayRewardRatioWeight": 0.8181818181818182,
+        "observerRewardRatioWeight": 0.16666666666666666,
+        "compositeWeight": 0.98125259006734,
+        "normalizedCompositeWeight": 0.44837953384339996
+      }
+    },
+    "M0WP8KSzCvKpzC-HPF1WcddLgGaL9J4DGi76iMnhrN4": {
+      "end": 0,
+      "observerWallet": "M0WP8KSzCvKpzC-HPF1WcddLgGaL9J4DGi76iMnhrN4",
+      "operatorStake": 65000,
+      "settings": {
+        "fqdn": "permaweb.name",
+        "label": "Permaweb Name",
+        "note": "Primarily just a test server for L1 indexing.",
+        "port": 443,
+        "properties": "FH1aVetOoulPGqgYukj0VE0wIhDy90WiQoV3U2PeY44",
+        "protocol": "https"
+      },
+      "start": 1341931,
+      "stats": {
+        "failedConsecutiveEpochs": 0,
+        "passedEpochCount": 17,
+        "submittedEpochCount": 14,
+        "totalEpochParticipationCount": 21,
+        "totalEpochsPrescribedCount": 16
+      },
+      "status": "joined",
+      "vaults": {},
+      "weights": {
+        "stakeWeight": 6.5,
+        "tenureWeight": 0.06477623456790123,
+        "gatewayRewardRatioWeight": 0.8181818181818182,
+        "observerRewardRatioWeight": 0.8823529411764706,
+        "compositeWeight": 0.3039633467023172,
+        "normalizedCompositeWeight": 0.13889486262707504
+      }
+    },
+    "NdZ3YRwMB2AMwwFYjKn1g88Y9nRybTo0qhS1ORq_E7g": {
+      "end": 0,
+      "observerWallet": "NdZ3YRwMB2AMwwFYjKn1g88Y9nRybTo0qhS1ORq_E7g",
+      "operatorStake": 99999,
+      "settings": {
+        "fqdn": "permagate.io",
+        "label": "Permagate",
+        "note": "Owned and managed by the REAL @dtfiedler - if it breaks, find him.",
+        "port": 443,
+        "properties": "FH1aVetOoulPGqgYukj0VE0wIhDy90WiQoV3U2PeY44",
+        "protocol": "https"
+      },
+      "start": 1342463,
+      "stats": {
+        "failedConsecutiveEpochs": 1,
+        "passedEpochCount": 7,
+        "submittedEpochCount": 0,
+        "totalEpochParticipationCount": 21,
+        "totalEpochsPrescribedCount": 6
+      },
+      "status": "joined",
+      "vaults": {},
+      "weights": {
+        "stakeWeight": 9.9999,
+        "tenureWeight": 0.0606712962962963,
+        "gatewayRewardRatioWeight": 0.36363636363636365,
+        "observerRewardRatioWeight": 0.14285714285714285,
+        "compositeWeight": 0.031517241341991346,
+        "normalizedCompositeWeight": 0.014401680183062959
+      }
+    },
+    "QGWqtJdLLgm2ehFWiiPzMaoFLD50CnGuzZIPEdoDRGQ": {
+      "end": 0,
+      "observerWallet": "QGWqtJdLLgm2ehFWiiPzMaoFLD50CnGuzZIPEdoDRGQ",
+      "operatorStake": 250000,
+      "settings": {
+        "fqdn": "ar-io.dev",
+        "label": "AR.IO Test",
+        "note": "Test Gateway operated by PDS for the AR.IO ecosystem.",
+        "port": 443,
+        "properties": "raJgvbFU-YAnku-WsupIdbTsqqGLQiYpGzoqk9SCVgY",
+        "protocol": "https"
+      },
+      "start": 1252182,
+      "stats": {
+        "failedConsecutiveEpochs": 4,
+        "passedEpochCount": 8,
+        "submittedEpochCount": 0,
+        "totalEpochParticipationCount": 21,
+        "totalEpochsPrescribedCount": 21
+      },
+      "status": "joined",
+      "vaults": {},
+      "weights": {
+        "stakeWeight": 25,
+        "tenureWeight": 0.7572839506172839,
+        "gatewayRewardRatioWeight": 0.4090909090909091,
+        "observerRewardRatioWeight": 0.045454545454545456,
+        "compositeWeight": 0.3520431588613407,
+        "normalizedCompositeWeight": 0.1608647447770541
+      }
+    },
+    "iKryOeZQMONi2965nKz528htMMN_sBcjlhc-VncoRjA": {
+      "end": 0,
+      "observerWallet": "iKryOeZQMONi2965nKz528htMMN_sBcjlhc-VncoRjA",
+      "operatorStake": 10005,
+      "settings": {
+        "fqdn": "gatewaypie.com",
+        "label": "Gatewaypie",
+        "note": "Test gateway part of the AR.IO Gateway Ops Video Series.  Check it on Youtube!",
+        "port": 443,
+        "properties": "FH1aVetOoulPGqgYukj0VE0wIhDy90WiQoV3U2PeY44",
+        "protocol": "https"
+      },
+      "start": 1252170,
+      "stats": {
+        "failedConsecutiveEpochs": 1,
+        "passedEpochCount": 15,
+        "submittedEpochCount": 6,
+        "totalEpochParticipationCount": 21,
+        "totalEpochsPrescribedCount": 11
+      },
+      "status": "joined",
+      "vaults": {},
+      "weights": {
+        "stakeWeight": 1.0005,
+        "tenureWeight": 0.7573765432098766,
+        "gatewayRewardRatioWeight": 0.7272727272727273,
+        "observerRewardRatioWeight": 0.5833333333333334,
+        "compositeWeight": 0.32147191638608313,
+        "normalizedCompositeWeight": 0.14689533507681693
+      }
+    },
+    "wlcEhTQY_qjDKTvTDZsb53aX8wivbOJZKnhLswdueZw": {
+      "end": 0,
+      "observerWallet": "wlcEhTQY_qjDKTvTDZsb53aX8wivbOJZKnhLswdueZw",
+      "operatorStake": 25000,
+      "settings": {
+        "fqdn": "vilenarios.com",
+        "label": "Vilenarios",
+        "note": "A test gateway for ArDrive L2 data",
+        "port": 443,
+        "properties": "FH1aVetOoulPGqgYukj0VE0wIhDy90WiQoV3U2PeY44",
+        "protocol": "https"
+      },
+      "start": 1252161,
+      "stats": {
+        "failedConsecutiveEpochs": 0,
+        "passedEpochCount": 17,
+        "submittedEpochCount": 0,
+        "totalEpochParticipationCount": 21,
+        "totalEpochsPrescribedCount": 12
+      },
+      "status": "joined",
+      "vaults": {},
+      "weights": {
+        "stakeWeight": 2.5,
+        "tenureWeight": 0.757445987654321,
+        "gatewayRewardRatioWeight": 0.8181818181818182,
+        "observerRewardRatioWeight": 0.07692307692307693,
+        "compositeWeight": 0.11917856449106452,
+        "normalizedCompositeWeight": 0.05445817899646194
+      }
+    },
+    "xN_aVln30LmoCffwmk5_kRkcyQZyZWy1o_TNtM_CTm0": {
+      "end": 0,
+      "observerWallet": "xN_aVln30LmoCffwmk5_kRkcyQZyZWy1o_TNtM_CTm0",
+      "operatorStake": 25000,
+      "settings": {
+        "fqdn": "perma.online",
+        "label": "Perma Online",
+        "note": "Just a little gateway with the big dreams of being more perma than DTF.",
+        "port": 443,
+        "properties": "FH1aVetOoulPGqgYukj0VE0wIhDy90WiQoV3U2PeY44",
+        "protocol": "https"
+      },
+      "start": 1341982,
+      "stats": {
+        "failedConsecutiveEpochs": 0,
+        "passedEpochCount": 17,
+        "submittedEpochCount": 2,
+        "totalEpochParticipationCount": 21,
+        "totalEpochsPrescribedCount": 4
+      },
+      "status": "joined",
+      "vaults": {},
+      "weights": {
+        "stakeWeight": 2.5,
+        "tenureWeight": 0.06438271604938271,
+        "gatewayRewardRatioWeight": 0.8181818181818182,
+        "observerRewardRatioWeight": 0.6,
+        "compositeWeight": 0.07901515151515151,
+        "normalizedCompositeWeight": 0.03610566449612927
+      }
+    }
+  },
+  "evaluationOptions": {
+    "sourceType": "arweave"
+  }
+}
