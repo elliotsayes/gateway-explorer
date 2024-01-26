@@ -32,6 +32,7 @@ import { SortOrder, Transaction } from "arweave-graphql";
 import { ReportHistoryTableData, generateReportHistoryTableData } from "@/lib/observer/history";
 import { filesize } from "filesize"
 import { timeAgo } from "@/lib/timeago"
+import { useToast } from "./ui/use-toast"
 
 const columns: ColumnDef<ReportHistoryTableData>[] = [
   {
@@ -136,6 +137,19 @@ const columns: ColumnDef<ReportHistoryTableData>[] = [
       )
     }
   },
+  {
+    id: "Version",
+    accessorKey: "version",
+    header: "Version",
+    cell: (cell) => {
+      const version = cell.row.original.version;
+      return (
+        <code>
+          {version ?? "none"}
+        </code>
+      )
+    }
+  },
 ];
 
 interface Props {
@@ -146,6 +160,8 @@ interface Props {
 }
 
 export const ReportListTable = ({ host, observer, garData, isGarError }: Props) => {
+  const { toast } = useToast();
+
   const {
     data: observerInfo,
     isError: isObserverInfoError,
@@ -355,6 +371,15 @@ export const ReportListTable = ({ host, observer, garData, isGarError }: Props) 
                         key={row.id}
                         data-state={row.getIsSelected() && "selected"}
                         onClick={() => {
+                          if (row.original.isSupportedVersion === false) {
+                            const version = row.original.version;
+                            toast({
+                              title: "Unsupported report version",
+                              description: `This report is using version ${version} which is currently unsupported by Gateway Explorer.`,
+                              duration: 2000,
+                            })
+                            return;
+                          }
                           navigate({
                             to: "/gateway/$host/reports/tx/$txId",
                             params: { host: host, txId: row.original.txId },
@@ -362,7 +387,7 @@ export const ReportListTable = ({ host, observer, garData, isGarError }: Props) 
                         }}
                       >
                         {row.getVisibleCells().map((cell) => (
-                          <TableCell key={cell.id}>
+                          <TableCell key={cell.id} className={cell.row.original.isSupportedVersion ? "" : "text-muted-foreground"}>
                             {flexRender(cell.column.columnDef.cell, cell.getContext())}
                           </TableCell>
                         ))}
