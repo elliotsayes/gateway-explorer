@@ -30,7 +30,6 @@ const extractGarItems = (
         weights: incentiveItem.weights,
       };
     }
-    if (incentiveInfo != undefined) console.log("incentiveItem", incentiveItem);
 
     return {
       id: txId,
