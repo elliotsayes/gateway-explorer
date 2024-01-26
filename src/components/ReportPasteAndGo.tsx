@@ -52,20 +52,22 @@ const ReportPasteAndGo = (props: ReportPasteAndGoProps) => {
   }, [navigate, garData, initialTxId, txId, fallbackFqdnKey, firing]);
 
   return (
-    <div className='flex flex-row items-center'>
+    <div className='relative'>
       <Input
         type='text'
-        className='pr-8'
-        placeholder='Paste Report txId'
+        className='pr-8 text-right'
+        placeholder='Paste Report TxId'
         onChange={(e) => {
           e.preventDefault();
           setTxId(e.target.value);
         }}
         value={txId}
       />
-      <Loader 
-        className={`relative -left-7 animate-spin-slow transition-opacity ${firing ? 'opacity-80' : 'opacity-0'}`}
-      />
+      <div className='absolute right-1 top-0 bottom-0 flex flex-col justify-center'>
+        <Loader
+          className={`flex animate-spin-slow transition-opacity ${firing ? 'opacity-80' : 'opacity-0'}`}
+        />
+      </div>
     </div>
   )
 }
