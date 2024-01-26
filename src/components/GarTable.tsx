@@ -217,6 +217,14 @@ const columns: ColumnDef<z.infer<typeof zGatewayAddressRegistryItem>>[] = [
     },
     enableSorting: false,
   },
+  {
+    id: "Rewards",
+    accessorFn: (item) => item.incentiveInfo?.weights.normalizedCompositeWeight ?? 0,
+    header: "Rewards",
+    cell: (cell) => <div className="max-w-[16rem]"><span className="text-muted-foreground line-clamp-1">
+      {((cell.row.original.incentiveInfo?.weights.normalizedCompositeWeight ?? 0) * 100).toFixed(2)}%
+    </span></div>
+  },
 ]
 
 interface Props {

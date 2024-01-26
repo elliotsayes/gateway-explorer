@@ -39,11 +39,9 @@ export const zGatewayAddressRegistryItem = z.intersection(
         result: zArioObservation,
       }),
     ]),
-  }),
-  zGatewayAddressRegistryItemData,
-  z.object({
     incentiveInfo: incentiveInfoSchema.optional(),
-  })
+  }),
+  zGatewayAddressRegistryItemData
 );
 
 export const zGatewayObserverInfo = z.object({
