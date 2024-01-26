@@ -23,6 +23,7 @@ const HostLinksDropdown = (props: HostLinksDropdownProps) => {
         <Link
           to="/gateway/$host/observe"
           params={{ host: fqdnKey }}
+          onClick={(e) => e.stopPropagation()}
         >
           <DropdownMenuItem>
             Run Observation
@@ -31,6 +32,7 @@ const HostLinksDropdown = (props: HostLinksDropdownProps) => {
         <Link
           to="/gateway/$host/reports"
           params={{ host: fqdnKey }}
+          onClick={(e) => e.stopPropagation()}
         >
           <DropdownMenuItem
             className="cursor-pointer"
