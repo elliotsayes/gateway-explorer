@@ -182,6 +182,7 @@ const columns: ColumnDef<z.infer<typeof zGatewayAddressRegistryItem>>[] = [
       )
     },
     enableSorting: false,
+    enableHiding: false,
   },
 ]
 
