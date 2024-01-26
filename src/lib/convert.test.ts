@@ -1,11 +1,9 @@
 import { expect, test } from "bun:test";
 import GatewayAddressRegistryCache from "../fixtures/GatewayAddressRegistryCache.json";
-import {
-  zGatewayAddressRegistryCache,
-  zGatewayAddressRegistryItem,
-} from "../types";
+import { zGatewayAddressRegistryItem } from "../types";
 import { extractGarItems } from "./convert";
 import { z } from "zod";
+import { zGatewayAddressRegistryCache } from "./gar/schema";
 
 test("convert GatewayAddressRegistryCache fixture", () => {
   const garCache = zGatewayAddressRegistryCache.parse(

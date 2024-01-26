@@ -1,10 +1,11 @@
-import { zArweaveTxId, zGatewayAddressRegistryItem } from '@/types'
+import { zGatewayAddressRegistryItem } from '@/types'
 import { z } from 'zod'
 import { Input } from './ui/input';
 import { useEffect, useRef, useState } from 'react';
 import { queryClient, reportTxQueryBuilder } from '@/lib/query';
 import { useNavigate } from '@tanstack/react-router';
 import { Loader } from 'lucide-react';
+import { zArweaveTxId } from '@/lib/gar/schema';
 
 interface ReportPasteAndGoProps {
   garData?: Array<z.infer<typeof zGatewayAddressRegistryItem>>
