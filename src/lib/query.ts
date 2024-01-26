@@ -1,6 +1,12 @@
-import { queryOptions } from "@tanstack/react-query";
+import { QueryClient, queryOptions } from "@tanstack/react-query";
 import { defaultGARCacheURL } from "./consts";
 import { extractGarItems } from "./convert";
+import {
+  downloadReportInfoForTransaction,
+  querySingleTransaction,
+} from "./observer/downloadObservation";
+
+export const queryClient = new QueryClient();
 
 export const garQuery = queryOptions({
   queryKey: ["gar"],
@@ -17,3 +23,16 @@ export const garQuery = queryOptions({
   refetchIntervalInBackground: false,
   refetchOnWindowFocus: false,
 });
+
+export const reportTxQueryBuilder = (txId: string) =>
+  queryOptions({
+    queryKey: ["observationReportTx", txId],
+    queryFn: async () => {
+      const tx = await querySingleTransaction(txId);
+      const reportData = await downloadReportInfoForTransaction(tx);
+      return {
+        tx,
+        reportData,
+      };
+    },
+  });
