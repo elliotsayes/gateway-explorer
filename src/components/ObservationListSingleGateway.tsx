@@ -1,7 +1,7 @@
 import { generateGatewayAssessmentForHost } from "@/lib/observer/runObservation";
 import { Button } from "./ui/button";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { garQuery } from "@/lib/query";
+import { garQueryBuilder } from "@/lib/query";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { useRef, useState } from "react";
 import { generateGatewayAssessmentSummary } from "@/lib/observer/report";
@@ -24,6 +24,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { useNavigate } from "@tanstack/react-router";
 import { Input } from "@/components/ui/input";
 import { useToast } from "./ui/use-toast";
+import { defaultNetwork } from "@/lib/networks";
 
 const DEFAULT_ARNS = 'dapp_ardrive';
 
@@ -91,7 +92,7 @@ export const ObservationListSingleGateway = ({ host }: Props) => {
   const {
     data: garData,
     isError,
-  } = useQuery(garQuery);
+  } = useQuery(garQueryBuilder(defaultNetwork));
 
   const target = garData?.find((item) => item.fqdnKey === host)
   const targetNotFound = (garData !== undefined) && (target === undefined);

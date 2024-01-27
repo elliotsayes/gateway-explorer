@@ -1,7 +1,8 @@
 
 import { useQuery } from "@tanstack/react-query"
 import { ReportListTable } from "./ReportListTable";
-import { garQuery } from "@/lib/query";
+import { garQueryBuilder } from "@/lib/query";
+import { defaultNetwork } from "@/lib/networks";
 
 interface Props {
   host: string;
@@ -11,7 +12,7 @@ export const ReportListSingleGateway = ({ host }: Props) => {
   const {
     data: garData,
     isError: isGarError,
-  } = useQuery(garQuery);
+  } = useQuery(garQueryBuilder(defaultNetwork));
 
   const observer = garData?.find((item) => item.fqdnKey === host)
   const observerNotFound = (garData !== undefined) && (observer === undefined);
