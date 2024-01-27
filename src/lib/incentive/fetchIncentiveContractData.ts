@@ -1,12 +1,10 @@
+import { Network, networkConfigMap } from "../networks";
 import { incentiveContractEndpointSchema } from "./schema";
 
-const contractTxId = "_NctcA2sRy1-J4OmIQZbYFPM17piNcbdBPH2ncX2RL8";
-const getContractEndpointUrl = (contractTxId: string) =>
-  `https://dev.arns.app/v1/contract/${contractTxId}/read/gateways`;
-const contractEndpointUrl = getContractEndpointUrl(contractTxId);
-
-export const fetchIncentiveContractData = async () => {
-  const contractEndpointData = await fetch(contractEndpointUrl)
+export const fetchIncentiveContractData = async (network: Network) => {
+  const contractTxId = networkConfigMap[network].incentiveContractTxId;
+  const endpoint = networkConfigMap[network].incentiveContractEndpoint;
+  const contractEndpointData = await fetch(endpoint)
     .then((res) => res.json())
     .then((json) => incentiveContractEndpointSchema.parse(json));
   if (contractEndpointData.contractTxId !== contractTxId) {

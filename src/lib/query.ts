@@ -14,10 +14,10 @@ export const garQueryBuilder = (network: Network) =>
   queryOptions({
     queryKey: ["gar", network],
     queryFn: async () => {
-      const garCache = await fetch(networkConfigMap[network].garCacheUrl)
+      const garCache = await fetch(networkConfigMap[network].garCacheEndpoint)
         .then((res) => res.json())
         .then((json) => zGatewayAddressRegistryCache.parse(json));
-      const incentiveContractData = await fetchIncentiveContractData();
+      const incentiveContractData = await fetchIncentiveContractData(network);
 
       const garItems = extractGarItems(garCache, incentiveContractData);
       garItems.sort((a, b) => a.fqdnKey.localeCompare(b.fqdnKey));
