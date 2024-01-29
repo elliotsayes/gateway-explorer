@@ -14,7 +14,7 @@ export const garQueryBuilder = (network: Network) =>
   queryOptions({
     queryKey: ["gar", network],
     queryFn: async () => {
-      const garCache = await fetch(networkConfigMap[network].garCacheEndpoint)
+      const garCache = await fetch(networkConfigMap[network].endpoints.garCache)
         .then((res) => res.json())
         .then((json) => zGatewayAddressRegistryCache.parse(json));
       const incentiveContractData = await fetchIncentiveContractData(network);

@@ -3,26 +3,32 @@ export const defaultNetwork = networks[0];
 
 export type Network = (typeof networks)[number];
 
-type NetworkConfig = {
-  garCacheEndpoint: string;
-  incentiveContractTxId: string;
-  incentiveContractEndpoint: string;
+type ContractTxIdConfig = {
+  garCache: string;
+  incentive: string;
 };
 
-const garCacheTxIdMap: Record<Network, string> = {
-  mainnet: "bLAgYxAdX2Ry-nt6aH2ixgvJXbpsEYm28NgJgyqfs-U",
-  devnet: "bLAgYxAdX2Ry-nt6aH2ixgvJXbpsEYm28NgJgyqfs-U",
+export const contractTxIdMap: Record<Network, ContractTxIdConfig> = {
+  mainnet: {
+    garCache: "bLAgYxAdX2Ry-nt6aH2ixgvJXbpsEYm28NgJgyqfs-U",
+    incentive: "_NctcA2sRy1-J4OmIQZbYFPM17piNcbdBPH2ncX2RL8",
+  },
+  devnet: {
+    garCache: "bLAgYxAdX2Ry-nt6aH2ixgvJXbpsEYm28NgJgyqfs-U",
+    incentive: "_NctcA2sRy1-J4OmIQZbYFPM17piNcbdBPH2ncX2RL8",
+  },
 };
 
-const incentiveTxIdMap: Record<Network, string> = {
-  mainnet: "_NctcA2sRy1-J4OmIQZbYFPM17piNcbdBPH2ncX2RL8",
-  devnet: "_NctcA2sRy1-J4OmIQZbYFPM17piNcbdBPH2ncX2RL8",
+type EndpointConfig = {
+  garCache: string;
+  incentive: string;
 };
 
 const subdomainMap: Record<Network, string> = {
   mainnet: "api",
   devnet: "dev",
 };
+
 const endpointBuilder = (
   network: Network,
   contractTxId: string,
@@ -31,31 +37,25 @@ const endpointBuilder = (
 ) =>
   `https://${subdomainMap[network]}.arns.app/${version}/contract/${contractTxId}${path}`;
 
+type NetworkConfig = {
+  contractTxIds: ContractTxIdConfig;
+  endpoints: EndpointConfig;
+};
+
+const configBuilder = (network: Network): NetworkConfig => {
+  const contractTxIds = contractTxIdMap[network];
+  const endpoints = {
+    garCache: endpointBuilder(network, contractTxIds.garCache, "/gateways"),
+    incentive: endpointBuilder(
+      network,
+      contractTxIds.incentive,
+      "/read/gateways"
+    ),
+  };
+  return { contractTxIds, endpoints };
+};
+
 export const networkConfigMap: Record<Network, NetworkConfig> = {
-  mainnet: {
-    garCacheEndpoint: endpointBuilder(
-      "mainnet",
-      garCacheTxIdMap.mainnet,
-      "/gateways"
-    ),
-    incentiveContractTxId: incentiveTxIdMap.mainnet,
-    incentiveContractEndpoint: endpointBuilder(
-      "mainnet",
-      incentiveTxIdMap.mainnet,
-      "/read/gateways"
-    ),
-  },
-  devnet: {
-    garCacheEndpoint: endpointBuilder(
-      "devnet",
-      garCacheTxIdMap.devnet,
-      "/gateways"
-    ),
-    incentiveContractTxId: incentiveTxIdMap.devnet,
-    incentiveContractEndpoint: endpointBuilder(
-      "devnet",
-      incentiveTxIdMap.devnet,
-      "/read/gateways"
-    ),
-  },
+  mainnet: configBuilder("mainnet"),
+  devnet: configBuilder("devnet"),
 };
