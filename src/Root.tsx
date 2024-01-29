@@ -7,8 +7,11 @@ import {
 } from "@/components/ui/card"
 import arioLogo from './assets/ar.io-white.png'
 import { Toaster } from "./components/ui/toaster"
+import { useNetwork } from "./hooks/useNetwork"
 
 export const Root = () => {
+  const network = useNetwork();
+
   return (
     <>
       <div className="max-h-[100vh] px-2 md:px-8 lg:px-16 py-4">
@@ -22,6 +25,10 @@ export const Root = () => {
                 <img src={arioLogo} width='100rem' />
                 <span className='font-ario text-3xl'>
                   Gateway Explorer
+                  {
+                    network == "devnet" && 
+                      <sup className='text-lg text-muted-foreground'>&nbsp;dev</sup>
+                  }
                 </span>
               </a>
             </CardTitle>

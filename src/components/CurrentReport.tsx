@@ -3,16 +3,18 @@ import { useQuery } from "@tanstack/react-query"
 import { downloadCurrentReportInfoFromGateway } from "@/lib/observer/downloadObservation"
 import { ReportSummaryTable } from "./ReportSummaryTable";
 import { garQueryBuilder } from "@/lib/query";
+import { useNetwork } from "@/hooks/useNetwork";
 
 interface Props {
   host: string;
 }
 
 export const CurrentReport = ({ host }: Props) => {
+  const network = useNetwork();
   const {
     data: garData,
     isError: isGarError,
-  } = useQuery(garQueryBuilder("mainnet"));
+  } = useQuery(garQueryBuilder(network));
 
   const observer = garData?.find((item) => item.fqdnKey === host)
   const observerNotFound = (garData !== undefined) && (observer === undefined);
