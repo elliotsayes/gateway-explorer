@@ -8,6 +8,9 @@ import {
 import arioLogo from './assets/ar.io-white.png'
 import { Toaster } from "./components/ui/toaster"
 import { useNetwork } from "./hooks/useNetwork"
+import { ExternalLinkIcon, InfoIcon } from "lucide-react"
+import { Tooltip } from "./components/ui/tooltip"
+import { TooltipContent, TooltipProvider, TooltipTrigger } from "@radix-ui/react-tooltip"
 
 export const Root = () => {
   const network = useNetwork();
@@ -17,7 +20,7 @@ export const Root = () => {
       <div className="max-h-[100vh] px-2 md:px-8 lg:px-16 py-4">
         <Card>
           <CardHeader>
-            <CardTitle className='flex flex-col md:flex-row gap-2 px-2 items-center md:items-baseline'>
+            <CardTitle className='flex flex-col md:flex-row px-2 items-center md:items-baseline'>
               <a
                 href='/'
                 className='flex items-center px-1 flex-col md:flex-row gap-2 md:gap-4'
@@ -25,12 +28,48 @@ export const Root = () => {
                 <img src={arioLogo} width='100rem' />
                 <span className='font-ario text-3xl'>
                   Gateway Explorer
-                  {
-                    network == "devnet" && 
-                      <sup className='text-lg text-muted-foreground'>&nbsp;dev</sup>
-                  }
                 </span>
               </a>
+              {
+                network == "devnet" && 
+                  <sup className='text-lg text-muted-foreground'>
+                    &nbsp;dev
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger>
+                          <InfoIcon size={12} className="ml-0.5" />
+                        </TooltipTrigger>
+                        <TooltipContent align="start" className="z-50">
+                          <Card className="font-normal text-sm px-2 py-1">
+                            <a href='https://gateways.permagate.io/' target='_blank' className="underline flex flex-row items-baseline">
+                              <span className="">Go to mainnet</span><ExternalLinkIcon size={12} className='flex ml-0.5' />
+                            </a>
+                          </Card>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
+                  </sup>
+              }
+              {
+                network == "mainnet" && 
+                  <sup className='text-lg text-muted-foreground'>
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger>
+                          <InfoIcon size={12} />
+                        </TooltipTrigger>
+                        <TooltipContent align="start" className="z-50">
+                          <Card className="font-normal text-sm px-2 py-1">
+                            <span>On mainnet</span>
+                            <a href='https://gateways.ar-io.dev/' target='_blank' className="underline flex flex-row items-baseline">
+                              <span className="">Go to devnet</span><ExternalLinkIcon size={12} className='flex ml-0.5' />
+                            </a>
+                          </Card>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
+                  </sup>
+              }
             </CardTitle>
             {/* <CardDescription>List of all Gateways</CardDescription> */}
           </CardHeader>
