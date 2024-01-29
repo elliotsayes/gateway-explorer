@@ -2,8 +2,8 @@ import { Network, networkConfigMap } from "../networks";
 import { incentiveContractEndpointSchema } from "./schema";
 
 export const fetchIncentiveContractData = async (network: Network) => {
-  const contractTxId = networkConfigMap[network].endpoints.incentive;
-  const endpoint = networkConfigMap[network].contractTxIds.incentive;
+  const contractTxId = networkConfigMap[network].contractTxIds.incentive;
+  const endpoint = networkConfigMap[network].endpoints.incentive;
   const contractEndpointData = await fetch(endpoint)
     .then((res) => res.json())
     .then((json) => incentiveContractEndpointSchema.parse(json));
