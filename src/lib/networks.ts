@@ -1,5 +1,5 @@
 export const networks = ["mainnet", "devnet"] as const;
-export const defaultNetwork = networks[0];
+export const defaultNetwork: Network = "mainnet";
 
 export type Network = (typeof networks)[number];
 

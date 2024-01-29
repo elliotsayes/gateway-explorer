@@ -1,4 +1,4 @@
-import { Network } from '@/lib/networks';
+import { Network, defaultNetwork } from '@/lib/networks';
 import { useEffect } from 'react';
 
 const url = new URL(window.location.href);
@@ -6,7 +6,7 @@ const hostname = url.hostname;
 const domainParts = hostname.split('.');
 const tld = domainParts.slice(-1)[0];
 
-let currentNetwork: Network = import.meta.env.VITE_DEFAULT_NETWORK ?? 'mainnet';
+let currentNetwork: Network = import.meta.env.VITE_DEFAULT_NETWORK ?? defaultNetwork;
 if (tld === 'dev') {
   currentNetwork = 'devnet';
 }

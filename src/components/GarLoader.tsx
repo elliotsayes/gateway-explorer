@@ -6,8 +6,7 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle } from './ui/sheet';
 import GatewayDetails from './GatewayDetails';
 import { z } from 'zod';
 import { zGatewayAddressRegistryItem } from '@/types';
-import { garQueryBuilder } from '@/lib/query';
-import { defaultNetwork } from '@/lib/networks';
+import { useGarData } from '@/hooks/useGarData';
 
 const GarLoader = () => {
   const {
@@ -15,7 +14,7 @@ const GarLoader = () => {
     isLoading,
     isFetching,
     error,
-  } = useQuery(garQueryBuilder(defaultNetwork));
+  } = useGarData();
 
   const {
     data: procData,
