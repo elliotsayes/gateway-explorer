@@ -8,7 +8,7 @@ import {
 import arioLogo from './assets/ar.io-white.png'
 import { Toaster } from "./components/ui/toaster"
 import { useNetwork } from "./hooks/useNetwork"
-import { ExternalLinkIcon, InfoIcon } from "lucide-react"
+import { ArrowLeftRightIcon, InfoIcon } from "lucide-react"
 import { Tooltip } from "./components/ui/tooltip"
 import { TooltipContent, TooltipProvider, TooltipTrigger } from "@radix-ui/react-tooltip"
 
@@ -45,8 +45,8 @@ export const Root = () => {
                               e.preventDefault()
                               setNetwork('mainnet')
                               window.location.reload()
-                            }} className="underline flex flex-row items-baseline">
-                              <span className="">Go to mainnet</span><ExternalLinkIcon size={12} className='flex ml-0.5' />
+                            }} className="underline cursor-pointer flex flex-row items-baseline">
+                              <span className="">Switch to mainnet</span><ArrowLeftRightIcon size={12} className='flex ml-0.5' />
                             </a>
                           </Card>
                         </TooltipContent>
@@ -69,8 +69,8 @@ export const Root = () => {
                               e.preventDefault()
                               setNetwork('devnet')
                               window.location.reload()
-                            }} className="underline flex flex-row items-baseline">
-                              <span className="">Go to devnet</span><ExternalLinkIcon size={12} className='flex ml-0.5' />
+                            }} className="underline cursor-pointer flex flex-row items-baseline">
+                              <span className="">Switch to devnet</span><ArrowLeftRightIcon size={12} className='flex ml-0.5' />
                             </a>
                           </Card>
                         </TooltipContent>
