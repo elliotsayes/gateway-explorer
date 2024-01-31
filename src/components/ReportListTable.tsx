@@ -1,6 +1,7 @@
 import {
   ColumnDef,
   SortingState,
+  VisibilityState,
   flexRender,
   getCoreRowModel,
   getSortedRowModel,
@@ -33,6 +34,7 @@ import { ReportHistoryTableData, generateReportHistoryTableData } from "@/lib/ob
 import { filesize } from "filesize"
 import { timeAgo } from "@/lib/timeago"
 import { useToast } from "./ui/use-toast"
+import useLocalStorage from "@rehooks/local-storage"
 
 const columns: ColumnDef<ReportHistoryTableData>[] = [
   {
@@ -222,6 +224,11 @@ export const ReportListTable = ({ host, observer, garData, isGarError }: Props) 
   }, [gqlData])
   
   const [sorting, setSorting] = useState<SortingState>([])
+  const [columnVisibility, setColumnVisibility] = useLocalStorage<VisibilityState>("report-list", {
+    "Observer Id": false,
+    "Timestamp": false,
+    "Encoding": false,
+  });
 
   const table = useReactTable({
     data: tableData,
@@ -229,16 +236,17 @@ export const ReportListTable = ({ host, observer, garData, isGarError }: Props) 
     getCoreRowModel: getCoreRowModel(),
     onSortingChange: setSorting,
     getSortedRowModel: getSortedRowModel(),
+    onColumnVisibilityChange: (updater) => {
+      const newValue = typeof updater === "function"
+        ? updater(columnVisibility) : updater
+      setColumnVisibility(newValue)
+    },
     state: {
       sorting,
+      columnVisibility,
     },
     initialState: {
-      columnVisibility: {
-        "Observer Id": false,
-        // "Transaction Id": false,
-        "Timestamp": false,
-        "Encoding": false,
-      }
+      columnVisibility,
     }
   })
 
