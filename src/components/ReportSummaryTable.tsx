@@ -1,6 +1,7 @@
 import {
   ColumnDef,
   SortingState,
+  VisibilityState,
   flexRender,
   getCoreRowModel,
   getSortedRowModel,
@@ -33,6 +34,7 @@ import { zGatewayAddressRegistryItem } from "@/types"
 import { z } from "zod"
 import { AssessmentDetails } from "./AssessmentDetails";
 import { ReportMetaCard } from "./ReportMetaCard";
+import useLocalStorage from "@rehooks/local-storage";
 
 const columns: ColumnDef<GatewayAssessmentSummary>[] = [
   {
@@ -94,8 +96,6 @@ interface Props {
 }
 
 const ReportSummaryTable = ({ host, source, sourceId, garData, isGarError, reportData, isReportError }: Props) => {
-  const [sorting, setSorting] = useState<SortingState>([])
-
   const gatewayAssessmentData: GatewayAssessmentSummary[] = useMemo(() => 
     Object.entries(reportData?.gatewayAssessments ?? {})
     .map(
@@ -105,20 +105,29 @@ const ReportSummaryTable = ({ host, source, sourceId, garData, isGarError, repor
     [reportData?.gatewayAssessments],
   );
 
+  const [sorting, setSorting] = useState<SortingState>([])
+  const [columnVisibility, setColumnVisibility] = useLocalStorage<VisibilityState>("report-summary", {
+    "Expected Owner": false,
+    "Observed Owner": false,
+  })
+
   const table = useReactTable({
     data: gatewayAssessmentData,
     columns,
     getCoreRowModel: getCoreRowModel(),
     onSortingChange: setSorting,
     getSortedRowModel: getSortedRowModel(),
+    onColumnVisibilityChange: (updater) => {
+      const newValue = typeof updater === "function"
+        ? updater(columnVisibility) : updater
+      setColumnVisibility(newValue)
+    },
     state: {
       sorting,
+      columnVisibility,
     },
     initialState: {
-      columnVisibility: {
-        "Expected Owner": false,
-        "Observed Owner": false,
-      }
+      columnVisibility,
     }
   })
 
