@@ -18,7 +18,7 @@ export const Root = () => {
   return (
     <>
       <div className="max-h-[100vh] px-2 md:px-8 lg:px-16 py-4">
-        <Card>
+        <div>
           <CardHeader>
             <CardTitle className='flex flex-col md:flex-row px-2 items-center md:items-baseline'>
               <a
@@ -76,7 +76,7 @@ export const Root = () => {
           <CardContent>
             <Outlet />
           </CardContent>
-        </Card>
+        </div>
         <div className='flex flex-col text-center text-muted-foreground gap-1 pt-2'>
           <div className='flex flex-row flex-grow justify-center gap-2'>
             <div className='flex'>
