@@ -13,7 +13,7 @@ import { Tooltip } from "./components/ui/tooltip"
 import { TooltipContent, TooltipProvider, TooltipTrigger } from "@radix-ui/react-tooltip"
 
 export const Root = () => {
-  const network = useNetwork();
+  const { network, setNetwork } = useNetwork();
 
   return (
     <>
@@ -41,7 +41,11 @@ export const Root = () => {
                         </TooltipTrigger>
                         <TooltipContent align="start" className="z-50">
                           <Card className="font-normal text-sm px-2 py-1">
-                            <a href='https://gateways.permagate.io/' target='_blank' className="underline flex flex-row items-baseline">
+                            <a onClick={(e) => {
+                              e.preventDefault()
+                              setNetwork('mainnet')
+                              window.location.reload()
+                            }} className="underline flex flex-row items-baseline">
                               <span className="">Go to mainnet</span><ExternalLinkIcon size={12} className='flex ml-0.5' />
                             </a>
                           </Card>
@@ -61,7 +65,11 @@ export const Root = () => {
                         <TooltipContent align="start" className="z-50">
                           <Card className="font-normal text-sm px-2 py-1">
                             <span>On mainnet</span>
-                            <a href='https://gateways.ar-io.dev/' target='_blank' className="underline flex flex-row items-baseline">
+                            <a onClick={(e) => {
+                              e.preventDefault()
+                              setNetwork('devnet')
+                              window.location.reload()
+                            }} className="underline flex flex-row items-baseline">
                               <span className="">Go to devnet</span><ExternalLinkIcon size={12} className='flex ml-0.5' />
                             </a>
                           </Card>
