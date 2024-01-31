@@ -4,6 +4,7 @@ import * as React from "react"
 import {
   ColumnDef,
   SortingState,
+  VisibilityState,
   flexRender,
   getCoreRowModel,
   getSortedRowModel,
@@ -27,6 +28,7 @@ import {
 import { Button } from "./ui/button"
 import { formatDuration } from "@/lib/utils"
 import { HostLinksDropdown } from "./HostLinksDropdown"
+import useLocalStorage from "@rehooks/local-storage"
 
 const columns: ColumnDef<z.infer<typeof zGatewayAddressRegistryItem>>[] = [
   {
@@ -209,24 +211,32 @@ const GarTable = ({ data, onRefresh, isRefreshing, onItemSelect, selectedItemId 
     },
   ])
 
+  const [columnVisibility, setColumnVisibility] = useLocalStorage<VisibilityState>('gar-table-visibility', {
+    "Owner ID": false,
+    "Properties ID": false,
+    "Status": false,
+    "Start Block": false,
+    "Note": false,
+    "Uptime": false,
+  });
+
   const table = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
     onSortingChange: setSorting,
     getSortedRowModel: getSortedRowModel(),
+    onColumnVisibilityChange: (updater) => {
+      const newValue = typeof updater === "function"
+        ? updater(columnVisibility) : updater
+      setColumnVisibility(newValue)
+    },
     state: {
       sorting,
+      columnVisibility,
     },
     initialState: {
-      columnVisibility: {
-        "Owner ID": false,
-        "Properties ID": false,
-        "Status": false,
-        "Start Block": false,
-        "Note": false,
-        "Uptime": false,
-      },
+      columnVisibility,
     }
   })
 
