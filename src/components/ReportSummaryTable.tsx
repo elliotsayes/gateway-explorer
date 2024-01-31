@@ -1,7 +1,6 @@
 import {
   ColumnDef,
   SortingState,
-  VisibilityState,
   flexRender,
   getCoreRowModel,
   getSortedRowModel,
@@ -34,7 +33,7 @@ import { zGatewayAddressRegistryItem } from "@/types"
 import { z } from "zod"
 import { AssessmentDetails } from "./AssessmentDetails";
 import { ReportMetaCard } from "./ReportMetaCard";
-import useLocalStorage from "@rehooks/local-storage";
+import { useVisibilityStatePersistent } from "@/hooks/useVisibilityStatePersisent";
 
 const columns: ColumnDef<GatewayAssessmentSummary>[] = [
   {
@@ -106,7 +105,7 @@ const ReportSummaryTable = ({ host, source, sourceId, garData, isGarError, repor
   );
 
   const [sorting, setSorting] = useState<SortingState>([])
-  const [columnVisibility, setColumnVisibility] = useLocalStorage<VisibilityState>("report-summary", {
+  const [columnVisibility, onColumnVisibilityChange] = useVisibilityStatePersistent("report-summary", {
     "Expected Owner": false,
     "Observed Owner": false,
   })
@@ -117,18 +116,11 @@ const ReportSummaryTable = ({ host, source, sourceId, garData, isGarError, repor
     getCoreRowModel: getCoreRowModel(),
     onSortingChange: setSorting,
     getSortedRowModel: getSortedRowModel(),
-    onColumnVisibilityChange: (updater) => {
-      const newValue = typeof updater === "function"
-        ? updater(columnVisibility) : updater
-      setColumnVisibility(newValue)
-    },
+    onColumnVisibilityChange,
     state: {
       sorting,
       columnVisibility,
     },
-    initialState: {
-      columnVisibility,
-    }
   })
 
   const assessmentCount = gatewayAssessmentData.length ?? 0
