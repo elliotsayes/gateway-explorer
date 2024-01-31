@@ -153,7 +153,7 @@ export const ObservationListSingleGateway = ({ host }: Props) => {
     }
   ])
 
-  const [columnVisibility, setColumnVisibility] = useLocalStorage<VisibilityState>("report-list", {
+  const [columnVisibility, setColumnVisibility] = useLocalStorage<VisibilityState>("observation-list", {
     "Observed Host": false,
     "Expected Owner": false,
     "Observed Owner": false,
@@ -174,9 +174,6 @@ export const ObservationListSingleGateway = ({ host }: Props) => {
       sorting,
       columnVisibility,
     },
-    initialState: {
-      columnVisibility,
-    }
   })
 
   const navigate = useNavigate()

@@ -245,9 +245,6 @@ export const ReportListTable = ({ host, observer, garData, isGarError }: Props) 
       sorting,
       columnVisibility,
     },
-    initialState: {
-      columnVisibility,
-    }
   })
 
   const navigate = useNavigate()

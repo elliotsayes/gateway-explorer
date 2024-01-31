@@ -235,9 +235,6 @@ const GarTable = ({ data, onRefresh, isRefreshing, onItemSelect, selectedItemId 
       sorting,
       columnVisibility,
     },
-    initialState: {
-      columnVisibility,
-    }
   })
 
   const healthy = data.filter((item) => item.health.status === "success").length
