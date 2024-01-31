@@ -173,6 +173,7 @@ export const ReportListTable = ({ host, observer, garData, isGarError }: Props) 
       return res;
     },
     enabled: observer !== undefined,
+    retry: false,
   })
 
   const owners = [
