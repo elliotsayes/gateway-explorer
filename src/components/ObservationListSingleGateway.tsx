@@ -6,7 +6,7 @@ import { useRef, useState } from "react";
 import { generateGatewayAssessmentSummary } from "@/lib/observer/report";
 import { AssessmentDetails } from "./AssessmentDetails";
 import { GatewayAssessmentStandalone, observationDb } from "@/lib/idb/observation";
-import { ColumnDef, SortingState, flexRender, getCoreRowModel, getSortedRowModel, useReactTable } from "@tanstack/react-table";
+import { ColumnDef, SortingState, VisibilityState, flexRender, getCoreRowModel, getSortedRowModel, useReactTable } from "@tanstack/react-table";
 import { PassFailCell } from "./PassFailCell";
 import { useLiveQuery } from "dexie-react-hooks";
 import {
@@ -24,6 +24,7 @@ import { useNavigate } from "@tanstack/react-router";
 import { Input } from "@/components/ui/input";
 import { useToast } from "./ui/use-toast";
 import { useGarData } from "@/hooks/useGarData";
+import useLocalStorage from "@rehooks/local-storage";
 
 const DEFAULT_ARNS = 'dapp_ardrive';
 
@@ -152,21 +153,29 @@ export const ObservationListSingleGateway = ({ host }: Props) => {
     }
   ])
 
+  const [columnVisibility, setColumnVisibility] = useLocalStorage<VisibilityState>("report-list", {
+    "Observed Host": false,
+    "Expected Owner": false,
+    "Observed Owner": false,
+  });
+
   const table = useReactTable({
     data: gatewayAssessmentData,
     columns,
     getCoreRowModel: getCoreRowModel(),
     onSortingChange: setSorting,
     getSortedRowModel: getSortedRowModel(),
+    onColumnVisibilityChange: (updater) => {
+      const newValue = typeof updater === "function"
+        ? updater(columnVisibility) : updater
+      setColumnVisibility(newValue)
+    },
     state: {
       sorting,
+      columnVisibility,
     },
     initialState: {
-      columnVisibility: {
-        "Observed Host": false,
-        "Expected Owner": false,
-        "Observed Owner": false,
-      }
+      columnVisibility,
     }
   })
 
