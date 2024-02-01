@@ -167,7 +167,7 @@ const columns: ColumnDef<z.infer<typeof zGatewayAddressRegistryItem>>[] = [
   },
   {
     id: "Rating",
-    accessorKey: 'rating',
+    accessorKey: 'gatewayRating',
     header: "Rating",
     cell: (cell) => {
       return (
