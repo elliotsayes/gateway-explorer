@@ -1,14 +1,14 @@
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "./ui/hover-card"
 import { IncentiveSummary } from "./IncentiveSummary"
-import { incentiveInfoSchema } from "@/lib/incentive/schema"
 import { z } from "zod"
 import { useState } from "react"
+import { zGatewayAddressRegistryItem } from "@/types"
 
 interface Props {
-  incentiveInfo: z.infer<typeof incentiveInfoSchema>
+  garItem: z.infer<typeof zGatewayAddressRegistryItem>
 }
 
-const IncentiveHoverCard = ({incentiveInfo}: Props) => {
+const IncentiveHoverCard = ({garItem}: Props) => {
   const [open, setOpen] = useState(false);  
 
   return (
@@ -23,14 +23,14 @@ const IncentiveHoverCard = ({incentiveInfo}: Props) => {
         }}
       >
         <div className="max-w-[16rem]"><span className="text-secondary-foreground/80 line-clamp-1 underline cursor-pointer">
-          {`${(incentiveInfo.weights.normalizedCompositeWeight * 100).toFixed(2)}%`}
+          {`${(garItem.gatewayRating * 100).toFixed(2)}%`}
         </span></div>
       </HoverCardTrigger>
       <HoverCardContent 
         onClick={(e) => e.stopPropagation()}
         className="w-72"
       >
-        <IncentiveSummary incentiveInfo={incentiveInfo!} />
+        <IncentiveSummary incentiveInfo={garItem} />
       </HoverCardContent>
     </HoverCard>
   )

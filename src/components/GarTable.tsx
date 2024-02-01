@@ -166,19 +166,12 @@ const columns: ColumnDef<z.infer<typeof zGatewayAddressRegistryItem>>[] = [
     sortUndefined: -1,
   },
   {
-    id: "Rewards",
-    accessorFn: (item) => item.weights.normalizedCompositeWeight ?? 0,
-    header: "Rewards",
+    id: "Rating",
+    accessorKey: 'rating',
+    header: "Rating",
     cell: (cell) => {
-      const weight = cell.row.original.weights.normalizedCompositeWeight;
-      if (weight === undefined) return (
-        <div className="max-w-[16rem]"><span className="text-muted-foreground line-clamp-1">
-          ---
-        </span></div>
-      )
-      
       return (
-        <IncentiveHoverCard incentiveInfo={cell.row.original} />
+        <IncentiveHoverCard garItem={cell.row.original} />
       )
     }
   },
