@@ -15,6 +15,8 @@ const extractGarItems = (
       fqdnIndex === 0
         ? item.settings.fqdn
         : `${item.settings.fqdn}${`~${fqdnIndex}`}`;
+    const gatewayRating =
+      item.stats.passedEpochCount / item.stats.totalEpochParticipationCount;
 
     return {
       id: txId,
@@ -32,6 +34,7 @@ const extractGarItems = (
         item.settings.fqdn,
         item.settings.port
       ),
+      gatewayRating,
       ...item,
     };
   });
