@@ -24,8 +24,9 @@ export async function queryObserverReportTransactions(
   const pageArgs: GetObserverReportTxIdsArgs = {
     tags: [
       { name: "App-Name", values: ["AR-IO Observer"] },
+      // { name: "App-Name", values: ["SmartweaveAction"], op: TagOperator.Neq },
       // { name: "App-Version", values: ["0.0.1", "0.0.2"] },
-      // { name: "Content-Type", values: ["application/json"] },
+      { name: "Content-Type", values: ["application/json"] },
       // { name: "Content-Encoding", values: ["gzip"] },
     ],
     first: 100,
@@ -36,17 +37,18 @@ export async function queryObserverReportTransactions(
   return queryRes;
 }
 
+// Dead code
 export async function* generateObserverReportTransactions(
   args: GetObserverReportTxIdsArgs,
   all = true
 ) {
-  let queryRes: GetTransactionsQuery | undefined = undefined;
+  let queryRes: GetTransactionsQuery | undefined;
   do {
     const pageArgs: GetObserverReportTxIdsArgs = {
       tags: [
         { name: "App-Name", values: ["AR-IO Observer"] },
         // { name: "App-Version", values: ["0.0.1", "0.0.2"] },
-        // { name: "Content-Type", values: ["application/json"] },
+        { name: "Content-Type", values: ["application/json"] },
         // { name: "Content-Encoding", values: ["gzip"] },
       ],
       first: 100,

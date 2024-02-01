@@ -10,7 +10,7 @@ export interface ReportHistoryTableData {
   isSupportedVersion?: boolean;
 }
 
-const versionWhitelist = ["0.0.1", "0.0.2"];
+const versionWhitelist = ["0.0.1"];
 
 export const generateReportHistoryTableData = (
   gqlTransaction: Transaction

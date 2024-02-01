@@ -1,7 +1,6 @@
 import { generateGatewayAssessmentForHost } from "@/lib/observer/runObservation";
 import { Button } from "./ui/button";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import { garQuery } from "@/lib/query";
+import { useMutation } from "@tanstack/react-query";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { useRef, useState } from "react";
 import { generateGatewayAssessmentSummary } from "@/lib/observer/report";
@@ -24,6 +23,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { useNavigate } from "@tanstack/react-router";
 import { Input } from "@/components/ui/input";
 import { useToast } from "./ui/use-toast";
+import { useGarData } from "@/hooks/useGarData";
+import { useVisibilityStatePersistent } from "@/hooks/useVisibilityStatePersisent";
 
 const DEFAULT_ARNS = 'dapp_ardrive';
 
@@ -91,7 +92,7 @@ export const ObservationListSingleGateway = ({ host }: Props) => {
   const {
     data: garData,
     isError,
-  } = useQuery(garQuery);
+  } = useGarData();
 
   const target = garData?.find((item) => item.fqdnKey === host)
   const targetNotFound = (garData !== undefined) && (target === undefined);
@@ -152,22 +153,23 @@ export const ObservationListSingleGateway = ({ host }: Props) => {
     }
   ])
 
+  const [columnVisibility, onColumnVisibilityChange] = useVisibilityStatePersistent("observation-list", {
+    "Observed Host": false,
+    "Expected Owner": false,
+    "Observed Owner": false,
+  });
+
   const table = useReactTable({
     data: gatewayAssessmentData,
     columns,
     getCoreRowModel: getCoreRowModel(),
     onSortingChange: setSorting,
     getSortedRowModel: getSortedRowModel(),
+    onColumnVisibilityChange,
     state: {
       sorting,
+      columnVisibility,
     },
-    initialState: {
-      columnVisibility: {
-        "Observed Host": false,
-        "Expected Owner": false,
-        "Observed Owner": false,
-      }
-    }
   })
 
   const navigate = useNavigate()

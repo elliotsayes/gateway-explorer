@@ -27,6 +27,8 @@ import {
 import { Button } from "./ui/button"
 import { formatDuration } from "@/lib/utils"
 import { HostLinksDropdown } from "./HostLinksDropdown"
+import { useVisibilityStatePersistent } from "@/hooks/useVisibilityStatePersisent"
+import IncentiveHoverCard from "./IncentiveHoverCard"
 
 const columns: ColumnDef<z.infer<typeof zGatewayAddressRegistryItem>>[] = [
   {
@@ -168,12 +170,15 @@ const columns: ColumnDef<z.infer<typeof zGatewayAddressRegistryItem>>[] = [
     accessorFn: (item) => item.incentiveInfo?.weights.normalizedCompositeWeight ?? 0,
     header: "Rewards",
     cell: (cell) => {
-    const weight = cell.row.original.incentiveInfo?.weights.normalizedCompositeWeight;
-    return (
-        
+      const weight = cell.row.original.incentiveInfo?.weights.normalizedCompositeWeight;
+      if (weight === undefined) return (
         <div className="max-w-[16rem]"><span className="text-muted-foreground line-clamp-1">
-          {weight == undefined ? '---' : `${(weight * 100).toFixed(2)}%`}
+          ---
         </span></div>
+      )
+      
+      return (
+        <IncentiveHoverCard incentiveInfo={cell.row.original.incentiveInfo!} />
       )
     }
   },
@@ -209,25 +214,26 @@ const GarTable = ({ data, onRefresh, isRefreshing, onItemSelect, selectedItemId 
     },
   ])
 
+  const [columnVisibility, onColumnVisibilityChange] = useVisibilityStatePersistent('gar-table-visibility', {
+    "Owner ID": false,
+    "Properties ID": false,
+    "Status": false,
+    "Start Block": false,
+    "Note": false,
+    "Uptime": false,
+  });
+
   const table = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
     onSortingChange: setSorting,
     getSortedRowModel: getSortedRowModel(),
+    onColumnVisibilityChange,
     state: {
       sorting,
+      columnVisibility,
     },
-    initialState: {
-      columnVisibility: {
-        "Owner ID": false,
-        "Properties ID": false,
-        "Status": false,
-        "Start Block": false,
-        "Note": false,
-        "Uptime": false,
-      },
-    }
   })
 
   const healthy = data.filter((item) => item.health.status === "success").length
