@@ -21,6 +21,7 @@ export const contractTxIdMap: Record<Network, ContractTxIdConfig> = {
 
 type EndpointConfig = {
   garCache: string;
+  distributions: string;
 };
 
 const subdomainMap: Record<Network, string> = {
@@ -49,6 +50,11 @@ const configBuilder = (network: Network): NetworkConfig => {
       network,
       contractTxIds.garCache,
       "/read/gateways"
+    ),
+    distributions: endpointBuilder(
+      network,
+      contractTxIds.garCache,
+      "/distributions"
     ),
   };
   return { contractTxIds, endpoints };
