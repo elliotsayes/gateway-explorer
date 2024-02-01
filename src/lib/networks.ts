@@ -11,10 +11,10 @@ type ContractTxIdConfig = {
 export const contractTxIdMap: Record<Network, ContractTxIdConfig> = {
   mainnet: {
     garCache: "bLAgYxAdX2Ry-nt6aH2ixgvJXbpsEYm28NgJgyqfs-U",
-    incentive: "_NctcA2sRy1-J4OmIQZbYFPM17piNcbdBPH2ncX2RL8",
+    incentive: "bLAgYxAdX2Ry-nt6aH2ixgvJXbpsEYm28NgJgyqfs-U",
   },
   devnet: {
-    garCache: "bLAgYxAdX2Ry-nt6aH2ixgvJXbpsEYm28NgJgyqfs-U",
+    garCache: "_NctcA2sRy1-J4OmIQZbYFPM17piNcbdBPH2ncX2RL8",
     incentive: "_NctcA2sRy1-J4OmIQZbYFPM17piNcbdBPH2ncX2RL8",
   },
 };
