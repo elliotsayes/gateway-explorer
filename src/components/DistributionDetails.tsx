@@ -4,15 +4,18 @@ import { useQuery } from "@tanstack/react-query";
 
 const DistributionDetails = () => {
   const { network } = useNetwork();
-  const { data } = useQuery({
-    queryKey: ['distribution'],
+  const { data: distributionsData } = useQuery({
+    queryKey: ['distributions'],
     queryFn: () => fetchDistributions(network),
   });
 
-  if (data === undefined) return <div>Loading...</div>;
+  if (distributionsData === undefined) return <div>Loading...</div>;
 
   return (
-    <div>{JSON.stringify(data)}</div>
+    <div>
+      <p className="text-lg">Distributions for epoch {distributionsData.epochPeriod}</p>
+      <div>{JSON.stringify(distributionsData, undefined, 2)}</div>
+    </div>
   )
 }
 
