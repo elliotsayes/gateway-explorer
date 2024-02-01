@@ -4,9 +4,8 @@ import {
   downloadReportInfoForTransaction,
   querySingleTransaction,
 } from "./observer/downloadObservation";
-import { fetchIncentiveContractData } from "./incentive/fetchIncentiveContractData";
-import { zGatewayAddressRegistryCache } from "./gar/schema";
-import { Network, networkConfigMap } from "./networks";
+import { fetchGarCacheWithIncentiveContractData } from "./incentive/fetchIncentiveContractData";
+import { Network } from "./networks";
 
 export const queryClient = new QueryClient();
 
@@ -14,12 +13,10 @@ export const garQueryBuilder = (network: Network) =>
   queryOptions({
     queryKey: ["gar", network],
     queryFn: async () => {
-      const garCache = await fetch(networkConfigMap[network].endpoints.garCache)
-        .then((res) => res.json())
-        .then((json) => zGatewayAddressRegistryCache.parse(json));
-      const incentiveContractData = await fetchIncentiveContractData(network);
+      const garCacheWtihIncentiveContractData =
+        await fetchGarCacheWithIncentiveContractData(network);
 
-      const garItems = extractGarItems(garCache, incentiveContractData);
+      const garItems = extractGarItems(garCacheWtihIncentiveContractData);
       garItems.sort((a, b) => a.fqdnKey.localeCompare(b.fqdnKey));
       return garItems;
     },

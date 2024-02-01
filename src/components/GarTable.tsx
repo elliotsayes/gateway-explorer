@@ -167,10 +167,10 @@ const columns: ColumnDef<z.infer<typeof zGatewayAddressRegistryItem>>[] = [
   },
   {
     id: "Rewards",
-    accessorFn: (item) => item.incentiveInfo?.weights.normalizedCompositeWeight ?? 0,
+    accessorFn: (item) => item.weights.normalizedCompositeWeight ?? 0,
     header: "Rewards",
     cell: (cell) => {
-      const weight = cell.row.original.incentiveInfo?.weights.normalizedCompositeWeight;
+      const weight = cell.row.original.weights.normalizedCompositeWeight;
       if (weight === undefined) return (
         <div className="max-w-[16rem]"><span className="text-muted-foreground line-clamp-1">
           ---
@@ -178,7 +178,7 @@ const columns: ColumnDef<z.infer<typeof zGatewayAddressRegistryItem>>[] = [
       )
       
       return (
-        <IncentiveHoverCard incentiveInfo={cell.row.original.incentiveInfo!} />
+        <IncentiveHoverCard incentiveInfo={cell.row.original} />
       )
     }
   },

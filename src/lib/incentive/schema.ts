@@ -33,6 +33,6 @@ export const incentiveContractEndpointSchema = z.object({
   contractTxId: zArweaveTxId,
   result: incentiveContractSchema,
   evaluationOptions: z.object({
-    sourceType: z.string(),
+    sourceType: z.string().optional(),
   }),
 });

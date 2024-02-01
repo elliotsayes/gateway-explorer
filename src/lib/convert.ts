@@ -1,17 +1,12 @@
 import { zGatewayAddressRegistryItem } from "@/types";
 import { z } from "zod";
 import { linkFull, linkDisplay } from "./utils";
-import {
-  incentiveContractSchema,
-  incentiveInfoSchema,
-} from "./incentive/schema";
-import { zGatewayAddressRegistryCache } from "./gar/schema";
+import { incentiveContractSchema } from "./incentive/schema";
 
 const extractGarItems = (
-  garCache: z.infer<typeof zGatewayAddressRegistryCache>,
-  incentiveContractData?: z.infer<typeof incentiveContractSchema>
+  garCacheWtihIncentiveContractData: z.infer<typeof incentiveContractSchema>
 ): Array<z.infer<typeof zGatewayAddressRegistryItem>> => {
-  const gatewayEntries = Object.entries(garCache.gateways);
+  const gatewayEntries = Object.entries(garCacheWtihIncentiveContractData);
   return gatewayEntries.map(([txId, item]) => {
     const fqdnIndex = gatewayEntries
       .filter(([, matchItem]) => matchItem.settings.fqdn == item.settings.fqdn)
@@ -20,16 +15,6 @@ const extractGarItems = (
       fqdnIndex === 0
         ? item.settings.fqdn
         : `${item.settings.fqdn}${`~${fqdnIndex}`}`;
-
-    let incentiveInfo: z.infer<typeof incentiveInfoSchema> | undefined;
-    // TODO: find a better way to match these up
-    const incentiveItem = incentiveContractData?.[txId];
-    if (incentiveItem) {
-      incentiveInfo = {
-        stats: incentiveItem.stats,
-        weights: incentiveItem.weights,
-      };
-    }
 
     return {
       id: txId,
@@ -48,7 +33,6 @@ const extractGarItems = (
         item.settings.port
       ),
       ...item,
-      incentiveInfo,
     };
   });
 };

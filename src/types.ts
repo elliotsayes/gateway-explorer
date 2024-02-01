@@ -1,10 +1,6 @@
 import { z } from "zod";
-import { incentiveInfoSchema } from "./lib/incentive/schema";
-import {
-  zArioObservation,
-  zArweaveTxId,
-  zGatewayAddressRegistryItemData,
-} from "./lib/gar/schema";
+import { incentiveContractItemSchema } from "./lib/incentive/schema";
+import { zArioObservation, zArweaveTxId } from "./lib/gar/schema";
 
 export const zGatewayAddressRegistryItem = z.intersection(
   z.object({
@@ -39,9 +35,8 @@ export const zGatewayAddressRegistryItem = z.intersection(
         result: zArioObservation,
       }),
     ]),
-    incentiveInfo: incentiveInfoSchema.optional(),
   }),
-  zGatewayAddressRegistryItemData
+  incentiveContractItemSchema
 );
 
 export const zGatewayObserverInfo = z.object({

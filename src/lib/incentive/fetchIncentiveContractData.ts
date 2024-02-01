@@ -1,9 +1,11 @@
 import { Network, networkConfigMap } from "../networks";
 import { incentiveContractEndpointSchema } from "./schema";
 
-export const fetchIncentiveContractData = async (network: Network) => {
-  const contractTxId = networkConfigMap[network].contractTxIds.incentive;
-  const endpoint = networkConfigMap[network].endpoints.incentive;
+export const fetchGarCacheWithIncentiveContractData = async (
+  network: Network
+) => {
+  const contractTxId = networkConfigMap[network].contractTxIds.garCache;
+  const endpoint = networkConfigMap[network].endpoints.garCache;
   const contractEndpointData = await fetch(endpoint)
     .then((res) => res.json())
     .then((json) => incentiveContractEndpointSchema.parse(json));

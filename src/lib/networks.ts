@@ -1,31 +1,31 @@
-export const networks = ["mainnet", "devnet"] as const;
-export const defaultNetwork: Network = "mainnet";
+export const networks = ["mainnet", "testnet", "devnet"] as const;
+export const defaultNetwork: Network = "testnet";
 
 export type Network = (typeof networks)[number];
 
 type ContractTxIdConfig = {
   garCache: string;
-  incentive: string;
 };
 
 export const contractTxIdMap: Record<Network, ContractTxIdConfig> = {
   mainnet: {
     garCache: "bLAgYxAdX2Ry-nt6aH2ixgvJXbpsEYm28NgJgyqfs-U",
-    incentive: "_NctcA2sRy1-J4OmIQZbYFPM17piNcbdBPH2ncX2RL8",
+  },
+  testnet: {
+    garCache: "bLAgYxAdX2Ry-nt6aH2ixgvJXbpsEYm28NgJgyqfs-U",
   },
   devnet: {
-    garCache: "bLAgYxAdX2Ry-nt6aH2ixgvJXbpsEYm28NgJgyqfs-U",
-    incentive: "_NctcA2sRy1-J4OmIQZbYFPM17piNcbdBPH2ncX2RL8",
+    garCache: "_NctcA2sRy1-J4OmIQZbYFPM17piNcbdBPH2ncX2RL8",
   },
 };
 
 type EndpointConfig = {
   garCache: string;
-  incentive: string;
 };
 
 const subdomainMap: Record<Network, string> = {
   mainnet: "api",
+  testnet: "api",
   devnet: "dev",
 };
 
@@ -45,10 +45,9 @@ type NetworkConfig = {
 const configBuilder = (network: Network): NetworkConfig => {
   const contractTxIds = contractTxIdMap[network];
   const endpoints = {
-    garCache: endpointBuilder(network, contractTxIds.garCache, "/gateways"),
-    incentive: endpointBuilder(
+    garCache: endpointBuilder(
       network,
-      contractTxIds.incentive,
+      contractTxIds.garCache,
       "/read/gateways"
     ),
   };
@@ -57,5 +56,6 @@ const configBuilder = (network: Network): NetworkConfig => {
 
 export const networkConfigMap: Record<Network, NetworkConfig> = {
   mainnet: configBuilder("mainnet"),
+  testnet: configBuilder("testnet"),
   devnet: configBuilder("devnet"),
 };

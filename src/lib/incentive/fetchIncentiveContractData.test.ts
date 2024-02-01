@@ -1,9 +1,11 @@
 import { describe, it, expect } from "bun:test";
-import { fetchIncentiveContractData } from "./fetchIncentiveContractData";
+import { fetchGarCacheWithIncentiveContractData } from "./fetchIncentiveContractData";
 
 describe("fetchIncentiveContractData", () => {
   it("should fetch fetchIncentiveContractData from endpoint", async () => {
-    const observerInfo = await fetchIncentiveContractData();
+    const observerInfo = await fetchGarCacheWithIncentiveContractData(
+      "mainnet"
+    );
 
     // console.log(observerInfo);
 
