@@ -41,7 +41,11 @@ type NetworkConfig = {
 const configBuilder = (network: Network): NetworkConfig => {
   const contractTxIds = contractTxIdMap[network];
   const endpoints = {
-    garCache: endpointBuilder(network, contractTxIds.garCache, "/gateways"),
+    garCache: endpointBuilder(
+      network,
+      contractTxIds.garCache,
+      "/read/gateways"
+    ),
   };
   return { contractTxIds, endpoints };
 };
