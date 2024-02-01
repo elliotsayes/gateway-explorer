@@ -1,5 +1,5 @@
-export const networks = ["mainnet", "devnet"] as const;
-export const defaultNetwork: Network = "mainnet";
+export const networks = ["mainnet", "testnet", "devnet"] as const;
+export const defaultNetwork: Network = "testnet";
 
 export type Network = (typeof networks)[number];
 
@@ -9,6 +9,9 @@ type ContractTxIdConfig = {
 
 export const contractTxIdMap: Record<Network, ContractTxIdConfig> = {
   mainnet: {
+    garCache: "bLAgYxAdX2Ry-nt6aH2ixgvJXbpsEYm28NgJgyqfs-U",
+  },
+  testnet: {
     garCache: "bLAgYxAdX2Ry-nt6aH2ixgvJXbpsEYm28NgJgyqfs-U",
   },
   devnet: {
@@ -22,6 +25,7 @@ type EndpointConfig = {
 
 const subdomainMap: Record<Network, string> = {
   mainnet: "api",
+  testnet: "api",
   devnet: "dev",
 };
 
@@ -52,5 +56,6 @@ const configBuilder = (network: Network): NetworkConfig => {
 
 export const networkConfigMap: Record<Network, NetworkConfig> = {
   mainnet: configBuilder("mainnet"),
+  testnet: configBuilder("testnet"),
   devnet: configBuilder("devnet"),
 };
