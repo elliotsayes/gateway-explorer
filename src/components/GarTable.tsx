@@ -243,7 +243,7 @@ const GarTable = ({ data, onRefresh, isRefreshing, onItemSelect, selectedItemId 
           <RefreshButton onClick={onRefresh} isRefreshing={isRefreshing}/>
           <HoverCard>
             <HoverCardTrigger>
-              <Button onClick={undefined} disabled={true} variant={"secondary"}  >
+              <Button variant={"secondary"}  >
                 <PiggyBank className="h-4 w-4" />
               </Button>
             </HoverCardTrigger>
