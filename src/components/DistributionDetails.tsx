@@ -3,20 +3,27 @@ import { fetchDistributions } from "@/lib/distribution/fetchDistributions";
 import { useQuery } from "@tanstack/react-query";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./ui/tooltip";
 import { InfoIcon } from "lucide-react";
+import { fetchBalanceContract } from "@/lib/balance/fetchBalance";
 
 const DistributionDetails = () => {
   const { network } = useNetwork();
   const { data: distributionsData } = useQuery({
-    queryKey: ['distributions'],
+    queryKey: ['distributions', network],
     queryFn: () => fetchDistributions(network),
   });
 
-  if (distributionsData === undefined) return <div>Loading...</div>;
+  const { data: balanceData } = useQuery({
+    queryKey: ['balance', network],
+    queryFn: () => fetchBalanceContract(network),
+  })
+
+  if (distributionsData === undefined || balanceData === undefined) 
+    return <div>Loading...</div>;
 
   return (
     <div>
-      <p className="text-lg">Distributions for epoch {distributionsData.epochPeriod}</p>
-      <div>
+      <p className="text-lg">Epoch {distributionsData.epochPeriod} Distribution</p>
+      <div className="text-secondary-foreground/80">
         <div className="flex flex-row gap-1">
           <span>
             Height: {distributionsData.epochStartHeight} - {distributionsData.epochEndHeight}
@@ -33,6 +40,7 @@ const DistributionDetails = () => {
           </TooltipProvider>
         </div>
         <p>Next distribution at {distributionsData.nextDistributionHeight}</p>
+        <p>Distribution amount: {(balanceData*0.0025).toFixed(2)}</p>
       </div>
     </div>
   )
