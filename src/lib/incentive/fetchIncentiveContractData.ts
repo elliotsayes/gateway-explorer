@@ -4,8 +4,8 @@ import { incentiveContractEndpointSchema } from "./schema";
 export const fetchGarCacheWithIncentiveContractData = async (
   network: Network
 ) => {
-  const contractTxId = networkConfigMap[network].contractTxIds.incentive;
-  const endpoint = networkConfigMap[network].endpoints.incentive;
+  const contractTxId = networkConfigMap[network].contractTxIds.garCache;
+  const endpoint = networkConfigMap[network].endpoints.garCache;
   const contractEndpointData = await fetch(endpoint)
     .then((res) => res.json())
     .then((json) => incentiveContractEndpointSchema.parse(json));
