@@ -28,6 +28,7 @@ import { Button } from "./ui/button"
 import { formatDuration } from "@/lib/utils"
 import { HostLinksDropdown } from "./HostLinksDropdown"
 import { useVisibilityStatePersistent } from "@/hooks/useVisibilityStatePersisent"
+import IncentiveHoverCard from "./IncentiveHoverCard"
 
 const columns: ColumnDef<z.infer<typeof zGatewayAddressRegistryItem>>[] = [
   {
@@ -169,12 +170,15 @@ const columns: ColumnDef<z.infer<typeof zGatewayAddressRegistryItem>>[] = [
     accessorFn: (item) => item.incentiveInfo?.weights.normalizedCompositeWeight ?? 0,
     header: "Rewards",
     cell: (cell) => {
-    const weight = cell.row.original.incentiveInfo?.weights.normalizedCompositeWeight;
-    return (
-        
+      const weight = cell.row.original.incentiveInfo?.weights.normalizedCompositeWeight;
+      if (weight === undefined) return (
         <div className="max-w-[16rem]"><span className="text-muted-foreground line-clamp-1">
-          {weight == undefined ? '---' : `${(weight * 100).toFixed(2)}%`}
+          ---
         </span></div>
+      )
+      
+      return (
+        <IncentiveHoverCard incentiveInfo={cell.row.original.incentiveInfo!} />
       )
     }
   },
