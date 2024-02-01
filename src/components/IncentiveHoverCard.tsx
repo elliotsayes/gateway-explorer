@@ -2,15 +2,26 @@ import { HoverCard, HoverCardContent, HoverCardTrigger } from "./ui/hover-card"
 import { IncentiveSummary } from "./IncentiveSummary"
 import { incentiveInfoSchema } from "@/lib/incentive/schema"
 import { z } from "zod"
+import { useState } from "react"
 
 interface Props {
   incentiveInfo: z.infer<typeof incentiveInfoSchema>
 }
 
 const IncentiveHoverCard = ({incentiveInfo}: Props) => {
+  const [open, setOpen] = useState(false);  
+
   return (
-    <HoverCard>
-      <HoverCardTrigger>
+    <HoverCard
+      open={open}
+      onOpenChange={(o) => setOpen(o)}
+    >
+      <HoverCardTrigger
+        onClick={(e) => {
+          e.stopPropagation();
+          setOpen(true);
+        }}
+      >
         <div className="max-w-[16rem]"><span className="text-secondary-foreground/80 line-clamp-1 underline cursor-pointer">
           {`${(incentiveInfo.weights.normalizedCompositeWeight * 100).toFixed(2)}%`}
         </span></div>
