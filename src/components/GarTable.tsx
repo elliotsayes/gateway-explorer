@@ -176,6 +176,42 @@ const columns: ColumnDef<z.infer<typeof zGatewayAddressRegistryItem>>[] = [
     }
   },
   {
+    id: "Epochs Participated",
+    accessorKey: 'stats.totalEpochParticipationCount',
+    header: "Epochs Participated",
+    cell: (cell) => <p className="text-right">{cell.getValue() as number}</p>
+  },
+  {
+    id: "Epochs Passed",
+    accessorKey: 'stats.passedEpochCount',
+    header: "Epochs Passed",
+    cell: (cell) => <p className="text-right">{cell.getValue() as number}</p>
+  },
+  {
+    id: "Epochs Submitted",
+    accessorKey: 'stats.submittedEpochCount',
+    header: "Epochs Submitted",
+    cell: (cell) => <p className="text-right">{cell.getValue() as number}</p>
+  },
+  {
+    id: "Epochs Prescribed",
+    accessorKey: 'stats.totalEpochsPrescribedCount',
+    header: "Epochs Participated",
+    cell: (cell) => <p className="text-right">{cell.getValue() as number}</p>
+  },
+  {
+    id: "Epochs Failed",
+    accessorKey: 'stats.failedConsecutiveEpochs',
+    header: "Epochs Failed",
+    cell: (cell) => <p className="text-right">{cell.getValue() as number}</p>
+  },
+  {
+    id: "Observation Chance",
+    accessorKey: 'weights.normalizedCompositeWeight',
+    header: "Observation Chance",
+    cell: (cell) => <p className="text-right">{((cell.getValue() as number) * 100).toFixed(2)}%</p>
+  },
+  {
     id: "Dropdown Extra",
     accessorKey: "settings.fqdnKey",
     header: "",
@@ -214,6 +250,12 @@ const GarTable = ({ data, onRefresh, isRefreshing, onItemSelect, selectedItemId 
     "Start Block": false,
     "Note": false,
     "Uptime": false,
+    "Epochs Participated": false,
+    "Epochs Passed": false,
+    "Epochs Submitted": false,
+    "Epochs Prescribed": false,
+    "Epochs Failed": false,
+    "Observation Chance": false,
   });
 
   const table = useReactTable({
