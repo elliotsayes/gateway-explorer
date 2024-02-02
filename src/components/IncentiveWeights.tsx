@@ -21,8 +21,8 @@ const weightNames = [
 const weightLabels: Record<typeof weightNames[number], string> = {
   stakeWeight: "Stake",
   tenureWeight: "Tenure",
-  observerRewardRatioWeight: "Observer Reward Ratio",
-  gatewayRewardRatioWeight: "Gateway Reward Ratio",
+  observerRewardRatioWeight: "Observer Reward",
+  gatewayRewardRatioWeight: "Gateway Reward",
   compositeWeight: "Composite",
   normalizedCompositeWeight: "Normalized Composite",
 };
