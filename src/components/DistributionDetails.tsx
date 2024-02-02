@@ -1,9 +1,9 @@
 import { useNetwork } from "@/hooks/useNetwork";
 import { fetchDistributions } from "@/lib/distribution/fetchDistributions";
 import { useQuery } from "@tanstack/react-query";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./ui/tooltip";
-import { InfoIcon } from "lucide-react";
 import { fetchBalanceContract } from "@/lib/balance/fetchBalance";
+import { networkConfigMap } from "@/lib/networks";
+import { capitalizeWord } from "@/lib/utils";
 
 const DistributionDetails = () => {
   const { network } = useNetwork();
@@ -22,25 +22,19 @@ const DistributionDetails = () => {
 
   return (
     <div>
-      <p className="text-lg">Epoch {distributionsData.epochPeriod} Distribution</p>
+      <p className="text-lg pb-0.5">
+        <a href={`https://viewblock.io/arweave/tx/${networkConfigMap[network].contractTxIds.garCache}`} target="_blank" className="underline cursor-pointer"><span className=" ">{capitalizeWord(network)}</span> contract</a>&nbsp;
+        <span className="text-sm text-secondary-foreground/80">
+          (block <code className="text-xs">{distributionsData.epochZeroStartHeight}</code>+)
+        </span>
+      </p>
+      <p className="text-secondary-foreground/80">Epoch #{distributionsData.epochPeriod}&nbsp;
+        <span className="text-sm">
+          (block <code className="text-xs">{distributionsData.epochStartHeight}</code>–<code className="text-xs">{distributionsData.epochEndHeight}</code>)
+        </span>
+      </p>
       <div className="text-secondary-foreground/80">
-        <div className="flex flex-row gap-1">
-          <span>
-            Height: {distributionsData.epochStartHeight} - {distributionsData.epochEndHeight}
-          </span>
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger>
-                <InfoIcon size={12} />
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>Zero epoch height: {distributionsData.epochZeroStartHeight}</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-        </div>
-        <p>Next distribution at {distributionsData.nextDistributionHeight}</p>
-        <p>Distribution amount: {(balanceData*0.0025).toFixed(2)}</p>
+        <p className="text-sm">Distributing ~{(balanceData*0.0025).toFixed(2)} <a href="https://ar.io/start/" className="underline cursor-pointer">$IO</a> at block <code className="text-xs">{distributionsData.nextDistributionHeight}</code></p>
       </div>
     </div>
   )

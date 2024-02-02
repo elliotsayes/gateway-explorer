@@ -54,3 +54,7 @@ export const fromAsyncGenerator = async <T>(
   }
   return items;
 };
+
+export const capitalizeWord = (str: string) => {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+};

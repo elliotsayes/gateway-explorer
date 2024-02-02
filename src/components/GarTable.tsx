@@ -23,15 +23,12 @@ import {
   ArrowUpDown,
   ArrowDown,
   ArrowUp,
-  PiggyBank
 } from "lucide-react"
 import { Button } from "./ui/button"
 import { formatDuration } from "@/lib/utils"
 import { HostLinksDropdown } from "./HostLinksDropdown"
 import { useVisibilityStatePersistent } from "@/hooks/useVisibilityStatePersisent"
 import IncentiveHoverCard from "./IncentiveHoverCard"
-import { HoverCard, HoverCardContent, HoverCardTrigger } from "./ui/hover-card"
-import { DistributionDetails } from "./DistributionDetails"
 
 const columns: ColumnDef<z.infer<typeof zGatewayAddressRegistryItem>>[] = [
   {
@@ -241,16 +238,6 @@ const GarTable = ({ data, onRefresh, isRefreshing, onItemSelect, selectedItemId 
           <div className="ml-2 mr-auto md:mr-0 md:ml-auto text-muted-foreground">{healthy}/{data.length} online</div>
           <ColumnSelection table={table} />
           <RefreshButton onClick={onRefresh} isRefreshing={isRefreshing}/>
-          <HoverCard>
-            <HoverCardTrigger>
-              <Button variant={"secondary"}  >
-                <PiggyBank className="h-4 w-4" />
-              </Button>
-            </HoverCardTrigger>
-            <HoverCardContent className="w-72" align="end">
-              <DistributionDetails />
-            </HoverCardContent>
-          </HoverCard>
         </div>
       </div>
       <div className="rounded-md border">

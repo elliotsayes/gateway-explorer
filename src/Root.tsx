@@ -9,6 +9,7 @@ import { Toaster } from "./components/ui/toaster"
 import { useNetwork } from "./hooks/useNetwork"
 import { ArrowLeftRightIcon, InfoIcon } from "lucide-react"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./components/ui/tooltip"
+import { DistributionDetails } from "./components/DistributionDetails"
 
 export const Root = () => {
   const { network, setNetwork } = useNetwork();
@@ -42,7 +43,7 @@ export const Root = () => {
                             e.preventDefault()
                             setNetwork('testnet')
                             window.location.reload()
-                          }} className="underline cursor-pointer flex flex-row items-baseline">
+                          }} className="underline cursor-pointer flex flex-row items-baseline mt-2">
                             <span className="">Switch to testnet</span><ArrowLeftRightIcon size={12} className='flex ml-0.5' />
                           </a>
                         </TooltipContent>
@@ -60,11 +61,12 @@ export const Root = () => {
                           <InfoIcon size={12} className="ml-0.5" />
                         </TooltipTrigger>
                         <TooltipContent align="start" className="z-50 font-normal text-sm">
+                          <DistributionDetails />
                           <a onClick={(e) => {
                             e.preventDefault()
                             setNetwork('devnet')
                             window.location.reload()
-                          }} className="underline cursor-pointer flex flex-row items-baseline">
+                          }} className="underline cursor-pointer flex flex-row items-baseline mt-2">
                             <span className="">Switch to devnet</span><ArrowLeftRightIcon size={12} className='flex ml-0.5' />
                           </a>
                         </TooltipContent>
@@ -82,11 +84,12 @@ export const Root = () => {
                           <InfoIcon size={12} className="ml-0.5" />
                         </TooltipTrigger>
                         <TooltipContent align="start" className="z-50 font-normal text-sm">
+                          <DistributionDetails />
                           <a onClick={(e) => {
                             e.preventDefault()
                             setNetwork('testnet')
                             window.location.reload()
-                          }} className="underline cursor-pointer flex flex-row items-baseline">
+                          }} className="underline cursor-pointer flex flex-row items-baseline mt-2">
                             <span className="">Switch to testnet</span><ArrowLeftRightIcon size={12} className='flex ml-0.5' />
                           </a>
                         </TooltipContent>
