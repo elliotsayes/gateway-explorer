@@ -4,7 +4,7 @@ import { useCallback } from "react";
 
 export const useVisibilityStatePersistent = (key: string, defaultValue?: VisibilityState) => {
   const [visibilityState, setVisibilityState] = 
-    useLocalStorage<VisibilityState>(key, defaultValue ?? {});
+    useLocalStorage<VisibilityState>(`visibility-state-${key}`, defaultValue ?? {});
   
   const onVisibilityChange = useCallback((updater: Updater<VisibilityState>) => {
     if (typeof updater === 'function') {
