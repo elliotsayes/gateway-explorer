@@ -179,37 +179,37 @@ const columns: ColumnDef<z.infer<typeof zGatewayAddressRegistryItem>>[] = [
     id: "Epochs Participated",
     accessorKey: 'stats.totalEpochParticipationCount',
     header: "Epochs Participated",
-    cell: (cell) => <p className="text-right">{cell.getValue() as number}</p>
+    cell: (cell) => <p className="text-center">{cell.getValue() as number}</p>,
   },
   {
     id: "Epochs Passed",
     accessorKey: 'stats.passedEpochCount',
     header: "Epochs Passed",
-    cell: (cell) => <p className="text-right">{cell.getValue() as number}</p>
+    cell: (cell) => <p className="text-center">{cell.getValue() as number}</p>
   },
   {
     id: "Epochs Submitted",
     accessorKey: 'stats.submittedEpochCount',
     header: "Epochs Submitted",
-    cell: (cell) => <p className="text-right">{cell.getValue() as number}</p>
+    cell: (cell) => <p className="text-center">{cell.getValue() as number}</p>
   },
   {
     id: "Epochs Prescribed",
     accessorKey: 'stats.totalEpochsPrescribedCount',
     header: "Epochs Participated",
-    cell: (cell) => <p className="text-right">{cell.getValue() as number}</p>
+    cell: (cell) => <p className="text-center">{cell.getValue() as number}</p>
   },
   {
     id: "Epochs Failed",
     accessorKey: 'stats.failedConsecutiveEpochs',
     header: "Epochs Failed",
-    cell: (cell) => <p className="text-right">{cell.getValue() as number}</p>
+    cell: (cell) => <p className="text-center">{cell.getValue() as number}</p>
   },
   {
     id: "Observation Chance",
     accessorKey: 'weights.normalizedCompositeWeight',
     header: "Observation Chance",
-    cell: (cell) => <p className="text-right">{((cell.getValue() as number) * 100).toFixed(2)}%</p>
+    cell: (cell) => <p className="text-center">{((cell.getValue() as number) * 100).toFixed(2)}%</p>
   },
   {
     id: "Dropdown Extra",

@@ -22,7 +22,7 @@ const IncentiveHoverCard = ({garItem}: Props) => {
           setOpen(true);
         }}
       >
-        <div className="max-w-[16rem]"><span className="text-secondary-foreground/80 line-clamp-1 underline cursor-pointer">
+        <div className="max-w-[16rem]"><span className="text-secondary-foreground/80 line-clamp-1 underline cursor-pointer text-center">
           {`${(garItem.gatewayRating * 100).toFixed(2)}%`}
         </span></div>
       </HoverCardTrigger>
