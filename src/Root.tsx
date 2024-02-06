@@ -6,13 +6,11 @@ import {
 } from "@/components/ui/card"
 import arioLogo from './assets/ar.io-white.png'
 import { Toaster } from "./components/ui/toaster"
+import { NetworkInfo } from "./components/NetworkInfo"
 import { useNetwork } from "./hooks/useNetwork"
-import { ArrowLeftRightIcon, InfoIcon } from "lucide-react"
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./components/ui/tooltip"
-import { DistributionDetails } from "./components/DistributionDetails"
 
 export const Root = () => {
-  const { network, setNetwork } = useNetwork();
+  const { network } = useNetwork();
 
   return (
     <>
@@ -30,72 +28,12 @@ export const Root = () => {
                 </span>
               </a>
               {
-                network == "mainnet" && 
-                  <sup className='text-lg text-muted-foreground'>
-                    <TooltipProvider>
-                      <Tooltip>
-                        <TooltipTrigger>
-                          <InfoIcon size={12} />
-                        </TooltipTrigger>
-                        <TooltipContent align="start" className="z-50 font-normal text-sm">
-                          <span>On mainnet</span>
-                          <a onClick={(e) => {
-                            e.preventDefault()
-                            setNetwork('testnet')
-                            window.location.reload()
-                          }} className="underline cursor-pointer flex flex-row items-baseline mt-2">
-                            <span className="">Switch to testnet</span><ArrowLeftRightIcon size={12} className='flex ml-0.5' />
-                          </a>
-                        </TooltipContent>
-                      </Tooltip>
-                    </TooltipProvider>
-                  </sup>
-              }
-              {
-                network == "testnet" && 
-                  <sup className='text-lg text-muted-foreground'>
-                    &nbsp;test
-                    <TooltipProvider>
-                      <Tooltip>
-                        <TooltipTrigger>
-                          <InfoIcon size={12} className="ml-0.5" />
-                        </TooltipTrigger>
-                        <TooltipContent align="start" className="z-50 font-normal text-sm">
-                          <DistributionDetails />
-                          <a onClick={(e) => {
-                            e.preventDefault()
-                            setNetwork('devnet')
-                            window.location.reload()
-                          }} className="underline cursor-pointer flex flex-row items-baseline mt-2">
-                            <span className="">Switch to devnet</span><ArrowLeftRightIcon size={12} className='flex ml-0.5' />
-                          </a>
-                        </TooltipContent>
-                      </Tooltip>
-                    </TooltipProvider>
-                  </sup>
+                network === "testnet" && 
+                  <NetworkInfo nextNetwork="devnet" />
               }
               {
                 network == "devnet" && 
-                  <sup className='text-lg text-muted-foreground'>
-                    &nbsp;dev
-                    <TooltipProvider>
-                      <Tooltip>
-                        <TooltipTrigger>
-                          <InfoIcon size={12} className="ml-0.5" />
-                        </TooltipTrigger>
-                        <TooltipContent align="start" className="z-50 font-normal text-sm">
-                          <DistributionDetails />
-                          <a onClick={(e) => {
-                            e.preventDefault()
-                            setNetwork('testnet')
-                            window.location.reload()
-                          }} className="underline cursor-pointer flex flex-row items-baseline mt-2">
-                            <span className="">Switch to testnet</span><ArrowLeftRightIcon size={12} className='flex ml-0.5' />
-                          </a>
-                        </TooltipContent>
-                      </Tooltip>
-                    </TooltipProvider>
-                  </sup>
+                  <NetworkInfo nextNetwork="testnet" />
               }
             </CardTitle>
             {/* <CardDescription>List of all Gateways</CardDescription> */}
