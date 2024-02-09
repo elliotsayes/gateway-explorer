@@ -10,7 +10,7 @@ export const zGatewayVault = z.object({
 });
 
 export const zGatewayAddressRegistryItemData = z.object({
-  operatorStake: z.number().int().nonnegative(),
+  operatorStake: z.number().nonnegative(),
   vaults: z.record(zArweaveTxId, zGatewayVault),
   settings: z.object({
     label: z.string(),
