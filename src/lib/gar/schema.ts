@@ -4,7 +4,7 @@ import { arnsResolutionSchema } from "../../lib/observer/schema";
 export const zArweaveTxId = z.string().regex(/^[\w-]{43}$/);
 
 export const zGatewayVault = z.object({
-  balance: z.number().int().nonnegative(),
+  balance: z.number().nonnegative(),
   start: z.number().int().nonnegative(),
   end: z.number().int().nonnegative(),
 });
