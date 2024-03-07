@@ -20,7 +20,7 @@ export const zGatewayAddressRegistryItemData = z.object({
     properties: z.string().optional(),
     note: z.string().optional(),
   }),
-  status: z.enum(["joined"]),
+  status: z.enum(["joined", "leaving"]),
   start: z.number().int().nonnegative(),
   end: z.number().int().nonnegative(),
   observerWallet: zArweaveTxId,
