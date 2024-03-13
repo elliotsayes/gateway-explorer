@@ -1,4 +1,4 @@
-import { Outlet } from "@tanstack/react-router"
+import { Link, Outlet } from "@tanstack/react-router"
 import {
   CardContent,
   CardHeader,
@@ -18,22 +18,22 @@ export const Root = () => {
         <div>
           <CardHeader>
             <CardTitle className='flex flex-col md:flex-row px-2 items-center md:items-baseline'>
-              <a
-                href='/'
+              <Link
+                to={'/'}
                 className='flex items-center px-1 flex-col md:flex-row gap-2 md:gap-4'
               >
                 <img src={arioLogo} width='100rem' />
                 <span className='font-ario text-3xl'>
                   Gateway Explorer
                 </span>
-              </a>
+              </Link>
               {
-                network === "testnet" && 
-                  <NetworkInfo nextNetwork="devnet" />
+                network === "testnet" &&
+                <NetworkInfo nextNetwork="devnet" />
               }
               {
-                network == "devnet" && 
-                  <NetworkInfo nextNetwork="testnet" />
+                network == "devnet" &&
+                <NetworkInfo nextNetwork="testnet" />
               }
             </CardTitle>
             {/* <CardDescription>List of all Gateways</CardDescription> */}
