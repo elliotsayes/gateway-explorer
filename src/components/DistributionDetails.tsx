@@ -34,7 +34,7 @@ const DistributionDetails = () => {
         </span>
       </p>
       <div className="text-secondary-foreground/80">
-        <p className="text-sm">Distributing ~{(balanceData*0.0025).toFixed(2)} <a href="https://docs.ar.io/token/" className="underline cursor-pointer">$IO</a> at block <code className="text-xs">{distributionsData.nextDistributionHeight}</code></p>
+        <p className="text-sm">Distributing ~{(balanceData / 1_000_000).toFixed(2)} <a href="https://docs.ar.io/token/" className="underline cursor-pointer">$IO</a> at block <code className="text-xs">{distributionsData.nextDistributionHeight}</code></p>
       </div>
     </div>
   )
