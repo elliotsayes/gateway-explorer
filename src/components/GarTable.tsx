@@ -304,6 +304,8 @@ const GarTable = ({ data, onRefresh, isRefreshing, onItemSelect, selectedItemId 
   const [columnVisibility, onColumnVisibilityChange] = useVisibilityStatePersistent('gar-table', {
     "Owner ID": false,
     "Properties ID": false,
+    "Delegate Settings": false,
+    "Delegate Rewards": false,
     "Status": false,
     "Start Block": false,
     "Note": false,
