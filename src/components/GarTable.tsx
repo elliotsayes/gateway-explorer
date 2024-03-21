@@ -36,7 +36,7 @@ const columns: ColumnDef<z.infer<typeof zGatewayAddressRegistryItem>>[] = [
     id: "Label",
     accessorKey: "settings.label",
     header: "Label",
-    enableHiding: false,
+    // enableHiding: false,
   },
   {
     id: "Address",
