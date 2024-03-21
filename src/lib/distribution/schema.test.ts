@@ -1,7 +1,8 @@
 import { describe, it, expect } from "bun:test";
-import Distributions from "../../fixtures/Distributions.json";
-
 import { zDistributionEndpointSchema } from "./schema";
+
+// From /distributions
+import Distributions from "../../fixtures/Distributions.json";
 
 describe("schema", () => {
   it("should parse Distributions", () => {
