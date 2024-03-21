@@ -2,6 +2,7 @@ import { z } from "zod"
 import { zGatewayAddressRegistryItem } from "@/types";
 import { useMemo } from "react";
 import { Table, TableBody, TableCell, TableHeader, TableRow } from "./ui/table";
+import { ScrollArea } from "./ui/scroll-area";
 
 interface Props {
   delegates: z.infer<typeof zGatewayAddressRegistryItem>['delegates']
@@ -16,7 +17,7 @@ const DelegateSummary = ({delegates}: Props) => {
 
   return (
     <div>
-      <div>
+      <ScrollArea className="h-[40vh] w-full pr-4">
         {/* <p className="text-lg">Delegates</p> */}
         <Table>
           <TableHeader>
@@ -50,7 +51,7 @@ const DelegateSummary = ({delegates}: Props) => {
             ))}
           </TableBody>
         </Table>
-      </div>
+      </ScrollArea>
     </div>
   )
 }
