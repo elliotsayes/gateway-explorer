@@ -29,6 +29,7 @@ import { formatDuration } from "@/lib/utils"
 import { HostLinksDropdown } from "./HostLinksDropdown"
 import { useVisibilityStatePersistent } from "@/hooks/useVisibilityStatePersisent"
 import IncentiveHoverCard from "./IncentiveHoverCard"
+import DelegatedStakeHoverCard from "./DelegatedStakeHoverCard"
 
 const columns: ColumnDef<z.infer<typeof zGatewayAddressRegistryItem>>[] = [
   {
@@ -83,6 +84,15 @@ const columns: ColumnDef<z.infer<typeof zGatewayAddressRegistryItem>>[] = [
     id: "Stake",
     accessorKey: "operatorStake",
     header: "Stake",
+  },
+  {
+    id: "Delegated Stake",
+    accessorKey: "totalDelegatedStake",
+    header: "Delegated Stake",
+    cell: (cell) => <DelegatedStakeHoverCard 
+      totalDelegatedStake={cell.row.original.totalDelegatedStake}
+      delegates={cell.row.original.delegates}
+    />
   },
   {
     id: "Status",
