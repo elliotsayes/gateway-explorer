@@ -16,6 +16,10 @@ const extractGarItems = (
         ? item.settings.fqdn
         : `${item.settings.fqdn}${`~${fqdnIndex}`}`;
     const gatewayRating = item.weights.gatewayRewardRatioWeight;
+    const delegateRewardProportion = item.settings.delegateRewardShareRatio / 100
+    const delegateEffectiveRewardProportion = item.settings.allowDelegatedStaking 
+      ? delegateRewardProportion
+      : 0;
 
     return {
       id: txId,
@@ -34,6 +38,8 @@ const extractGarItems = (
         item.settings.port
       ),
       gatewayRating,
+      delegateRewardProportion,
+      delegateEffectiveRewardProportion,
       ...item,
     };
   });

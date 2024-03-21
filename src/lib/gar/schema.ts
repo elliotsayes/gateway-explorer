@@ -15,6 +15,9 @@ export const zGatewayAddressRegistryItemData = z.object({
   operatorStake: z.number().nonnegative(),
   vaults: zGatewayVaults,
   settings: z.object({
+    allowDelegatedStaking: z.boolean(),
+    autoStake: z.boolean(),
+    delegateRewardShareRatio: z.number().nonnegative(),
     label: z.string(),
     fqdn: z.string().regex(/^[a-z0-9-]+(\.[a-z0-9-]+)*$/i),
     port: z.number().int().nonnegative(),

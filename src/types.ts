@@ -36,6 +36,8 @@ export const zGatewayAddressRegistryItem = z.intersection(
       }),
     ]),
     gatewayRating: z.number().nonnegative(),
+    delegateRewardProportion: z.number(),
+    delegateEffectiveRewardProportion: z.number(),
   }),
   incentiveContractItemSchema
 );

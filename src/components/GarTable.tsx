@@ -93,6 +93,12 @@ const columns: ColumnDef<z.infer<typeof zGatewayAddressRegistryItem>>[] = [
     }
   },
   {
+    id: "Auto Stake",
+    accessorKey: "settings.autoStake",
+    header: "Auto Stake",
+    cell: (cell) => <p className="text-center">{cell.row.original.settings.autoStake ? 'Enabled' : 'Disabled'}</p>
+  },
+  {
     id: "Delegated Stake",
     accessorKey: "totalDelegatedStake",
     header: "Delegated Stake",
@@ -108,6 +114,26 @@ const columns: ColumnDef<z.infer<typeof zGatewayAddressRegistryItem>>[] = [
           delegates={cell.row.original.delegates}
         />
       </div>
+    }
+  },
+  {
+    id: "Delegate Status",
+    accessorKey: "settings.allowDelegatedStaking",
+    header: "Delegate Status",
+    cell: (cell) => <p className="text-center">{cell.row.original.settings.allowDelegatedStaking ? 'Allowed' : 'Disabled'}</p>
+  },
+  {
+    id: "Delegate Rewards",
+    accessorKey: "delegateEffectiveRewardProportion",
+    header: "Delegate Rewards",
+    cell: (cell) => {
+      const isEnabled = cell.row.original.settings.allowDelegatedStaking;
+      const originalProportionNonZero = cell.row.original.delegateRewardProportion !== 0;
+      return (
+        <p className={`text-center ${isEnabled ? "" : `text-muted-foreground ${originalProportionNonZero ? "line-through" : ""}`}`}>
+          {(cell.row.original.delegateRewardProportion * 100).toFixed(1)}%
+        </p>
+      )
     }
   },
   {
@@ -272,6 +298,9 @@ const GarTable = ({ data, onRefresh, isRefreshing, onItemSelect, selectedItemId 
   const [columnVisibility, onColumnVisibilityChange] = useVisibilityStatePersistent('gar-table', {
     "Owner ID": false,
     "Properties ID": false,
+    "Auto Stake": false,
+    "Delegate Status": false,
+    "Delegate Rewards": false,
     "Status": false,
     "Start Block": false,
     "Note": false,
