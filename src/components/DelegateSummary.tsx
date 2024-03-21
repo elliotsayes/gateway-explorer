@@ -17,7 +17,7 @@ const DelegateSummary = ({delegates}: Props) => {
 
   return (
     <div>
-      <ScrollArea className="h-64 w-full pr-4">
+      <ScrollArea className="h-60 w-full pr-4">
         {/* <p className="text-lg">Delegates</p> */}
         <Table>
           <TableHeader>
