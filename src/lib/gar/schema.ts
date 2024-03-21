@@ -9,9 +9,11 @@ export const zGatewayVault = z.object({
   end: z.number().int().nonnegative(),
 });
 
+export const zGatewayVaults = z.record(zArweaveTxId, zGatewayVault);
+
 export const zGatewayAddressRegistryItemData = z.object({
   operatorStake: z.number().nonnegative(),
-  vaults: z.record(zArweaveTxId, zGatewayVault),
+  vaults: zGatewayVaults,
   settings: z.object({
     label: z.string(),
     fqdn: z.string().regex(/^[a-z0-9-]+(\.[a-z0-9-]+)*$/i),
@@ -24,6 +26,15 @@ export const zGatewayAddressRegistryItemData = z.object({
   start: z.number().int().nonnegative(),
   end: z.number().int().nonnegative(),
   observerWallet: zArweaveTxId,
+  totalDelegatedStake: z.number().nonnegative(),
+  delegates: z.record(
+    zArweaveTxId,
+    z.object({
+      delegatedStake: z.number().nonnegative(),
+      start: z.number().int().nonnegative(),
+      vaults: zGatewayVaults,
+    }),
+  ),
 });
 
 export const zGatewayAddressRegistryCache = z.object({
