@@ -23,9 +23,9 @@ const DelegatedStakeHoverCard = ({totalDelegatedStake, delegates}: Props) => {
           setOpen(true);
         }}
       >
-        <div className="max-w-[16rem]"><span className="text-secondary-foreground/80 line-clamp-1 underline cursor-pointer text-center">
+        <span className="line-clamp-1 underline cursor-pointer text-center">
           {totalDelegatedStake}
-        </span></div>
+        </span>
       </HoverCardTrigger>
       <HoverCardContent 
         onClick={(e) => e.stopPropagation()}

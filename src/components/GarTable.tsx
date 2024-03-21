@@ -84,15 +84,31 @@ const columns: ColumnDef<z.infer<typeof zGatewayAddressRegistryItem>>[] = [
     id: "Stake",
     accessorKey: "operatorStake",
     header: "Stake",
+    cell: (cell) => {
+      return (
+        <p className="text-right">
+          {cell.row.original.operatorStake}
+        </p>
+      )
+    }
   },
   {
     id: "Delegated Stake",
     accessorKey: "totalDelegatedStake",
     header: "Delegated Stake",
-    cell: (cell) => <DelegatedStakeHoverCard 
-      totalDelegatedStake={cell.row.original.totalDelegatedStake}
-      delegates={cell.row.original.delegates}
-    />
+    cell: (cell) => {
+      if (cell.row.original.totalDelegatedStake === 0) {
+        return (
+          <p className="text-right">0</p>
+        )
+      }
+      return <div className="flex justify-end">
+        <DelegatedStakeHoverCard 
+          totalDelegatedStake={cell.row.original.totalDelegatedStake}
+          delegates={cell.row.original.delegates}
+        />
+      </div>
+    }
   },
   {
     id: "Status",
