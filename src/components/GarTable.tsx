@@ -93,6 +93,12 @@ const columns: ColumnDef<z.infer<typeof zGatewayAddressRegistryItem>>[] = [
     }
   },
   {
+    id: "Auto Stake",
+    accessorKey: "settings.autoStake",
+    header: "Auto Stake",
+    cell: (cell) => <p className="text-center">{cell.row.original.settings.autoStake ? 'Enabled' : 'Disabled'}</p>
+  },
+  {
     id: "Delegated Stake",
     accessorKey: "totalDelegatedStake",
     header: "Delegated Stake",
@@ -111,35 +117,22 @@ const columns: ColumnDef<z.infer<typeof zGatewayAddressRegistryItem>>[] = [
     }
   },
   {
-    id: "Delegate Settings",
+    id: "Delegate Status",
     accessorKey: "settings.allowDelegatedStaking",
-    header: "Delegate Settings",
-    cell: (cell) => {
-      if (cell.row.original.settings.allowDelegatedStaking) {
-        return (
-          <p>Allowed ({cell.row.original.settings.autoStake ? 'auto': 'manual'})</p>
-        )
-      } else {
-        return (
-          <p>Disabled</p>
-        )
-      }
-    }
+    header: "Delegate Status",
+    cell: (cell) => <p className="text-center">{cell.row.original.settings.allowDelegatedStaking ? 'Allowed' : 'Disabled'}</p>
   },
   {
     id: "Delegate Rewards",
-    accessorKey: "settings.delegateRewardShareRatio",
+    accessorKey: "delegateEffectiveRewardProportion",
     header: "Delegate Rewards",
     cell: (cell) => {
-      if (cell.row.original.settings.delegateRewardShareRatio > 0) {
-        return (
-          <p>1:{cell.row.original.settings.delegateRewardShareRatio}</p>
-        )
-      } else {
-        return (
-          <p>---</p>
-        )
-      }
+      const isEnabled = cell.row.original.settings.allowDelegatedStaking;
+      return (
+        <p className={`text-center ${isEnabled ? "" : "text-muted-foreground"}`}>
+          {(cell.row.original.delegateRewardProportion * 100).toFixed(1)}%
+        </p>
+      )
     }
   },
   {
@@ -304,7 +297,8 @@ const GarTable = ({ data, onRefresh, isRefreshing, onItemSelect, selectedItemId 
   const [columnVisibility, onColumnVisibilityChange] = useVisibilityStatePersistent('gar-table', {
     "Owner ID": false,
     "Properties ID": false,
-    "Delegate Settings": false,
+    "Auto Stake": false,
+    "Delegate Status": false,
     "Delegate Rewards": false,
     "Status": false,
     "Start Block": false,
