@@ -17,12 +17,12 @@ const DelegateSummary = ({delegates}: Props) => {
 
   return (
     <div>
-      <ScrollArea className="h-60 w-full pr-4">
-        {/* <p className="text-lg">Delegates</p> */}
+      <ScrollArea className="h-60 w-full pr-4" type="always">
+        <p className="text-lg">Delegates ({sortedDelegates.length})</p>
         <Table>
           <TableHeader>
             <TableCell className="text-md">
-              Delegate Address
+              Address
             </TableCell>
             <TableCell className="text-md text-right">
               Stake
