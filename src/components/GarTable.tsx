@@ -111,6 +111,38 @@ const columns: ColumnDef<z.infer<typeof zGatewayAddressRegistryItem>>[] = [
     }
   },
   {
+    id: "Delegate Settings",
+    accessorKey: "settings.allowDelegatedStaking",
+    header: "Delegated Settings",
+    cell: (cell) => {
+      if (cell.row.original.settings.allowDelegatedStaking) {
+        return (
+          <p>Allowed ({cell.row.original.settings.autoStake ? 'auto': 'manual'})</p>
+        )
+      } else {
+        return (
+          <p>Disabled</p>
+        )
+      }
+    }
+  },
+  {
+    id: "Delegate Rewards",
+    accessorKey: "settings.delegateRewardShareRatio",
+    header: "Delegated Rewards",
+    cell: (cell) => {
+      if (cell.row.original.settings.delegateRewardShareRatio > 0) {
+        return (
+          <p>1:{cell.row.original.settings.delegateRewardShareRatio}</p>
+        )
+      } else {
+        return (
+          <p>---</p>
+        )
+      }
+    }
+  },
+  {
     id: "Status",
     accessorKey: "status",
     header: "Status",
