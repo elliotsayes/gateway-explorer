@@ -128,8 +128,9 @@ const columns: ColumnDef<z.infer<typeof zGatewayAddressRegistryItem>>[] = [
     header: "Delegate Rewards",
     cell: (cell) => {
       const isEnabled = cell.row.original.settings.allowDelegatedStaking;
+      const originalProportionNonZero = cell.row.original.delegateRewardProportion !== 0;
       return (
-        <p className={`text-center ${isEnabled ? "" : "text-muted-foreground"}`}>
+        <p className={`text-center ${isEnabled ? "" : `text-muted-foreground ${originalProportionNonZero ? "line-through" : ""}`}`}>
           {(cell.row.original.delegateRewardProportion * 100).toFixed(1)}%
         </p>
       )
