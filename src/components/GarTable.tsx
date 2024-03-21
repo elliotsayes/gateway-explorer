@@ -113,7 +113,7 @@ const columns: ColumnDef<z.infer<typeof zGatewayAddressRegistryItem>>[] = [
   {
     id: "Delegate Settings",
     accessorKey: "settings.allowDelegatedStaking",
-    header: "Delegated Settings",
+    header: "Delegate Settings",
     cell: (cell) => {
       if (cell.row.original.settings.allowDelegatedStaking) {
         return (
@@ -129,7 +129,7 @@ const columns: ColumnDef<z.infer<typeof zGatewayAddressRegistryItem>>[] = [
   {
     id: "Delegate Rewards",
     accessorKey: "settings.delegateRewardShareRatio",
-    header: "Delegated Rewards",
+    header: "Delegate Rewards",
     cell: (cell) => {
       if (cell.row.original.settings.delegateRewardShareRatio > 0) {
         return (
