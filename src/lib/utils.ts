@@ -36,6 +36,8 @@ export const linkDisplay = (protocol: string, fqdn: string, port: number) => {
   return linkFull(protocol, fqdn, port);
 };
 
+export const mIoToIo = (mIo: number) => mIo / 1_000_000;
+
 export const base64ToBase64url = (base64: string) => {
   return base64.replace(/\+/g, "-").replace(/\//g, "_").replace(/=*$/g, "");
 };

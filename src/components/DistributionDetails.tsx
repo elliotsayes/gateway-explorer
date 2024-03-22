@@ -3,7 +3,7 @@ import { fetchDistributions } from "@/lib/distribution/fetchDistributions";
 import { useQuery } from "@tanstack/react-query";
 import { fetchBalanceContract } from "@/lib/balance/fetchBalance";
 import { networkConfigMap } from "@/lib/networks";
-import { capitalizeWord } from "@/lib/utils";
+import { capitalizeWord, mIoToIo } from "@/lib/utils";
 
 const DistributionDetails = () => {
   const { network } = useNetwork();
@@ -34,7 +34,7 @@ const DistributionDetails = () => {
         </span>
       </p>
       <div className="text-secondary-foreground/80">
-        <p className="text-sm">Distributing ~{(balanceData / 1_000_000).toFixed(2)} <a href="https://docs.ar.io/token/" className="underline cursor-pointer">$IO</a> at block <code className="text-xs">{distributionsData.nextDistributionHeight}</code></p>
+        <p className="text-sm">Distributing ~{mIoToIo(balanceData).toFixed(2)} <a href="https://docs.ar.io/token/" className="underline cursor-pointer">$IO</a> at block <code className="text-xs">{distributionsData.nextDistributionHeight}</code></p>
       </div>
     </div>
   )

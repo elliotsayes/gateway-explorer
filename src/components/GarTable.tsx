@@ -25,7 +25,7 @@ import {
   ArrowUp,
 } from "lucide-react"
 import { Button } from "./ui/button"
-import { formatDuration } from "@/lib/utils"
+import { formatDuration, mIoToIo } from "@/lib/utils"
 import { HostLinksDropdown } from "./HostLinksDropdown"
 import { useVisibilityStatePersistent } from "@/hooks/useVisibilityStatePersisent"
 import IncentiveHoverCard from "./IncentiveHoverCard"
@@ -87,7 +87,7 @@ const columns: ColumnDef<z.infer<typeof zGatewayAddressRegistryItem>>[] = [
     cell: (cell) => {
       return (
         <p className="text-right">
-          {cell.row.original.operatorStake}
+          {mIoToIo(cell.row.original.operatorStake).toFixed(2)}
         </p>
       )
     }
@@ -105,7 +105,7 @@ const columns: ColumnDef<z.infer<typeof zGatewayAddressRegistryItem>>[] = [
     cell: (cell) => {
       if (cell.row.original.totalDelegatedStake === 0) {
         return (
-          <p className="text-right">0</p>
+          <p className="text-right">0.00</p>
         )
       }
       return <div className="flex justify-end">

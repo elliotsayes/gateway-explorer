@@ -3,6 +3,7 @@ import { z } from "zod"
 import { useState } from "react"
 import { zGatewayAddressRegistryItem } from "@/types"
 import { DelegateSummary } from "./DelegateSummary"
+import { mIoToIo } from "@/lib/utils"
 
 interface Props {
   totalDelegatedStake: z.infer<typeof zGatewayAddressRegistryItem>['totalDelegatedStake']
@@ -24,7 +25,7 @@ const DelegatedStakeHoverCard = ({totalDelegatedStake, delegates}: Props) => {
         }}
       >
         <span className="line-clamp-1 underline cursor-pointer text-center">
-          {totalDelegatedStake}
+          {mIoToIo(totalDelegatedStake).toFixed(2)}
         </span>
       </HoverCardTrigger>
       <HoverCardContent 
