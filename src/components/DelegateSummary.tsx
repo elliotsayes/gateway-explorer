@@ -3,6 +3,7 @@ import { zGatewayAddressRegistryItem } from "@/types";
 import { useMemo } from "react";
 import { Table, TableBody, TableCell, TableHeader, TableRow } from "./ui/table";
 import { ScrollArea } from "./ui/scroll-area";
+import { mIoToIo } from "@/lib/utils";
 
 interface Props {
   delegates: z.infer<typeof zGatewayAddressRegistryItem>['delegates']
@@ -44,7 +45,7 @@ const DelegateSummary = ({delegates}: Props) => {
                 </TableCell>
                 <TableCell className="text-right py-2">
                   <code className="text-secondary-foreground/80">
-                    {delegateInfo.delegatedStake}
+                    {mIoToIo(delegateInfo.delegatedStake).toFixed(2)}
                   </code>
                 </TableCell>
               </TableRow>

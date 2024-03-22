@@ -20,6 +20,7 @@ const extractGarItems = (
     const delegateEffectiveRewardProportion = item.settings.allowDelegatedStaking 
       ? delegateRewardProportion
       : 0;
+    const delegateCount = Object.keys(item.delegates).length;
 
     return {
       id: txId,
@@ -40,6 +41,7 @@ const extractGarItems = (
       gatewayRating,
       delegateRewardProportion,
       delegateEffectiveRewardProportion,
+      delegateCount,
       ...item,
     };
   });
