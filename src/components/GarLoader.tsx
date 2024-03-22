@@ -14,6 +14,7 @@ const GarLoader = () => {
     isLoading,
     isFetching,
     error,
+    refetch,
   } = useGarData();
 
   const {
@@ -47,7 +48,13 @@ const GarLoader = () => {
   
   const [isDetailsSheetOpen, setIsDetailsSheetOpen] = useState(false)
   
-  if (error) return <div>Error: {JSON.stringify(error)}</div>
+  if (error) return (
+    <div>
+      <p>Error: {JSON.stringify(error)}</p>
+      <button onClick={() => refetch()}>Retry</button>
+    </div>
+  )
+
 
   return (
     <>

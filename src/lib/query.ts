@@ -25,6 +25,10 @@ export const garQueryBuilder = (network: Network) =>
     refetchOnReconnect: false,
     refetchIntervalInBackground: false,
     refetchOnWindowFocus: false,
+    retry: (failureCount, error) => {
+      console.error(error);
+      return failureCount <= 10;
+    }
   });
 
 export const reportTxQueryBuilder = (txId: string) =>
