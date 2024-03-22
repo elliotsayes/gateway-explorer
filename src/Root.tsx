@@ -69,7 +69,7 @@ export const Root = () => {
             </div>
           </div>
           <div>
-            ©2023 ar.io
+            ©2024 ar.io
           </div>
           {/* <div className={`${isDetailsSheetOpen ? 'h-[calc(50vh+3em)]' : 'h-[2em]'} transition-all duration-200`} /> */}
           <div className={`h-[2em] transition-all duration-200`} />
