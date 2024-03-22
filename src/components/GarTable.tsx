@@ -123,6 +123,12 @@ const columns: ColumnDef<z.infer<typeof zGatewayAddressRegistryItem>>[] = [
     cell: (cell) => <p className="text-center">{cell.row.original.settings.allowDelegatedStaking ? 'Allowed' : 'Disabled'}</p>
   },
   {
+    id: "Delegate Count",
+    accessorKey: "delegateCount",
+    header: "Delegate Count",
+    cell: (cell) => <p className="text-center">{cell.row.original.delegateCount}</p>
+  },
+  {
     id: "Delegate Rewards",
     accessorKey: "delegateEffectiveRewardProportion",
     header: "Delegate Rewards",
@@ -300,6 +306,7 @@ const GarTable = ({ data, onRefresh, isRefreshing, onItemSelect, selectedItemId 
     "Properties ID": false,
     "Auto Stake": false,
     "Delegate Status": false,
+    "Delegate Count": false,
     "Delegate Rewards": false,
     "Status": false,
     "Start Block": false,
