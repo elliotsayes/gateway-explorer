@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { fetchBalanceContract } from "@/lib/balance/fetchBalance";
 import { networkConfigMap } from "@/lib/networks";
 import { capitalizeWord, mIoToIo } from "@/lib/utils";
+import { DISTRIBUTION_PROPORTION_PER_EPOCH } from "@/lib/distribution/distribution";
 
 const DistributionDetails = () => {
   const { network } = useNetwork();
@@ -12,12 +13,12 @@ const DistributionDetails = () => {
     queryFn: () => fetchDistributions(network),
   });
 
-  const { data: balanceData } = useQuery({
+  const { data: balanceContractData } = useQuery({
     queryKey: ['balance', network],
     queryFn: () => fetchBalanceContract(network),
   })
 
-  if (distributionsData === undefined || balanceData === undefined) 
+  if (distributionsData === undefined || balanceContractData === undefined) 
     return <div>Loading...</div>;
 
   return (
@@ -34,7 +35,7 @@ const DistributionDetails = () => {
         </span>
       </p>
       <div className="text-secondary-foreground/80">
-        <p className="text-sm">Distributing ~{mIoToIo(balanceData).toFixed(2)} <a href="https://docs.ar.io/token/" className="underline cursor-pointer">$IO</a> at block <code className="text-xs">{distributionsData.nextDistributionHeight}</code></p>
+        <p className="text-sm">Distributing ~{mIoToIo(balanceContractData * DISTRIBUTION_PROPORTION_PER_EPOCH).toFixed(2)} <a href="https://docs.ar.io/token/" className="underline cursor-pointer">$IO</a> at block <code className="text-xs">{distributionsData.nextDistributionHeight}</code></p>
       </div>
     </div>
   )
