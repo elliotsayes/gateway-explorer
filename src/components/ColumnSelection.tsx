@@ -9,6 +9,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu"
+import { ScrollArea } from "./ui/scroll-area"
 
 interface ColumnSelection<TData> {
   table: Table<TData>
@@ -28,7 +29,8 @@ export function ColumnSelection<TData>({
           View
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-[150px]">
+      <DropdownMenuContent align="end" className="w-[200px]">
+        <ScrollArea className="h-[500px] pr-3">
         <DropdownMenuLabel>Toggle columns</DropdownMenuLabel>
         <DropdownMenuSeparator />
         {table
@@ -49,6 +51,7 @@ export function ColumnSelection<TData>({
               </DropdownMenuCheckboxItem>
             )
           })}
+        </ScrollArea>
       </DropdownMenuContent>
     </DropdownMenu>
   )
